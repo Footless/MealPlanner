@@ -1,4 +1,4 @@
-**Aihe:** Aterioiden suunnittelija, jossa kalorit ja makrot määrittelemällä ohjelma ehdottaa sinulle sopivaa annosta tarkoilla grammamäärillä. Valittavissa muutamia pääraaka-aineita, lisukkeita ja kastikkeita.
+**Aihe:** Aterioiden suunnittelija, jossa kalorit ja makrot määrittelemällä ohjelma ehdottaa sinulle sopivaa annosta tarkoilla grammamäärillä. Valittavissa muutamia pääraaka-aineita, lisukkeita ja kastikkeita. Kaikki ravintoarvot saadaan Finelin tarjoamasta avoimesta tietokannasta, joka tulee ohjelman mukana scv-tiedostoina. Ohjelmaan tulee myös todennäköisesti mahdollisuus selata ja hakea koko tietokantaa, noin 4000+ tuotetta.
 
 **Käyttäjät:** tavoitteellisten kuntoilijoiden, laihduttajien ja vaikkapa personal trainereiden käyttöön
 
