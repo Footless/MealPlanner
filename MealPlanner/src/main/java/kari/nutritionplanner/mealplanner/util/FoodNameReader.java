@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import kari.nutritionplanner.mealplanner.domain.Ingredient;
 
 /**
  *
@@ -19,8 +20,14 @@ public class FoodNameReader extends SCVReader {
     public FoodNameReader(String fileName) {
         super(fileName);
     }
+    /**
+     * Hakee csv-tiedostosta ruoka-aineen tiedot annetun sanan perusteella
+     * 
+     * @param s haettava ruoka-aine stringinä
+     * @return Ingredien-olio jossa id ja nimi
+     */
 
-    public void search(String s) {
+    public Ingredient search(String s) {
         String line = null;
         Scanner scanner = null;
         try {
@@ -28,10 +35,14 @@ public class FoodNameReader extends SCVReader {
                 scanner = new Scanner(line);
                 scanner.useDelimiter(";");
                 int i = 0;
+                String id = "";
                 while (scanner.hasNext()) {
                     String next = scanner.next();
-                    if (i == 1 && next.contains(s)) {
-                        System.out.println(next);
+                    if (i == 0) {
+                        id = next;
+                    }
+                    if (i == 1 && next.toLowerCase().contains(s)) {
+                        return new Ingredient(Integer.parseInt(id), next);
                     }
                     i++;
                 }
@@ -40,5 +51,6 @@ public class FoodNameReader extends SCVReader {
         } catch (IOException ex) {
             Logger.getLogger(SCVReader.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return null;
     }
 }

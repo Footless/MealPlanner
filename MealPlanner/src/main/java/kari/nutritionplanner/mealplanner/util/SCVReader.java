@@ -8,6 +8,7 @@ package kari.nutritionplanner.mealplanner.util;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import kari.nutritionplanner.mealplanner.domain.Ingredient;
 
 /**
  *
@@ -18,7 +19,7 @@ public abstract class SCVReader {
     protected BufferedReader reader;
 
     public SCVReader(String fileName) {
-        String path = "Fineli_Rel17_Fine74_open/";
+        String path = "assets/Fineli_Rel17_Fine74_open/";
         String fileToLoad = path + fileName;
         try {
             this.reader = new BufferedReader(new FileReader(fileToLoad));
@@ -27,5 +28,4 @@ public abstract class SCVReader {
             System.out.println("Tiedostoa ei löytynyt");
         }
     }
-
 }
