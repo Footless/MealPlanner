@@ -82,6 +82,10 @@ public class Ingredient {
     public double getFiber() {
         return fiber;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return "" + name;
+    }
+
 }

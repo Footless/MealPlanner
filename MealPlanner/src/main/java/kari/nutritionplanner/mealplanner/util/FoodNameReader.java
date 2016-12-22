@@ -6,6 +6,7 @@
 package kari.nutritionplanner.mealplanner.util;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,9 +21,10 @@ public class FoodNameReader extends SCVReader {
     public FoodNameReader(String fileName) {
         super(fileName);
     }
+
     /**
      * Hakee csv-tiedostosta ruoka-aineen tiedot annetun sanan perusteella
-     * 
+     *
      * @param s haettava ruoka-aine stringinä
      * @return Ingredien-olio jossa id ja nimi
      */

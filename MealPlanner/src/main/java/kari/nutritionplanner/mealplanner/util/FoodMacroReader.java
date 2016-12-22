@@ -43,7 +43,7 @@ public class FoodMacroReader extends SCVReader {
                             ing.setProtein(Double.parseDouble(scanner.next().replace(',', '.')));
                         } else if (macro.contains("FIBC")) {
                             ing.setFiber(Double.parseDouble(scanner.next().replace(',', '.')));
-//                            return;
+                            return;
                         }
                     }
                     i++;
@@ -54,5 +54,5 @@ public class FoodMacroReader extends SCVReader {
             Logger.getLogger(SCVReader.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
 }

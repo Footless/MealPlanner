@@ -5,7 +5,9 @@
  */
 package kari.nutritionplanner.mealplanner;
 
+import java.util.Map;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
+import kari.nutritionplanner.mealplanner.servicelayer.ProcessIngredients;
 import kari.nutritionplanner.mealplanner.util.FoodMacroReader;
 import kari.nutritionplanner.mealplanner.util.FoodNameReader;
 
@@ -19,17 +21,14 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        FoodNameReader scvr = new FoodNameReader("food_utf.csv");
-        Ingredient ingredient = scvr.search("kuha");
-        System.out.println(ingredient.getId());
-        System.out.println(ingredient.getName());
-        FoodMacroReader fmr = new FoodMacroReader("component_value.csv");
-        fmr.search(ingredient);
-        System.out.println(ingredient.getCalories());
-        System.out.println(ingredient.getCarb());
-        System.out.println(ingredient.getFat());
-        System.out.println(ingredient.getProtein());
-        System.out.println(ingredient.getFiber());
+        ProcessIngredients pi = new ProcessIngredients();
+        Map<String, Map<String, Ingredient>> ings = pi.getIngredients();
+        for (String s : ings.keySet()) {
+            for (String str : ings.get(s).keySet()) {
+                System.out.println(ings.get(s).get(str));
+            }
+            System.out.println("------");
+        }
     }
 
 }

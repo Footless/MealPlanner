@@ -12,12 +12,14 @@ import java.util.Map;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
 import kari.nutritionplanner.mealplanner.util.FoodMacroReader;
 import kari.nutritionplanner.mealplanner.util.FoodNameReader;
+import kari.nutritionplanner.mealplanner.util.LocalFoodNameReader;
 
 /**
  *
  * @author kari
  */
 public class ProcessIngredients {
+
     private Map<String, Ingredient> mainIgredients;
     private Map<String, Ingredient> sideIgredients;
     private Map<String, Ingredient> sauces;
@@ -28,29 +30,68 @@ public class ProcessIngredients {
         this.sidesAndMisc = new HashMap<>();
         this.sauces = new HashMap<>();
         this.sideIgredients = new HashMap<>();
+        addAll();
     }
-    
-    private void addMAinIngredient(String s) {
-        mainIgredients.put(addIngredient(s).getName(), addIngredient(s));
+
+    private void addMainIngredients() {
+        LocalFoodNameReader lfnr = new LocalFoodNameReader("main_ingredients.csv");
+        List<Ingredient> ingredients = lfnr.searchAll();
+
+        for (Ingredient ingredient : ingredients) {
+            addIngredient(ingredient);
+            mainIgredients.put(ingredient.getName(), ingredient);
+        }
     }
-    
-    private void addSideIngredient(String s) {
-        sideIgredients.put(addIngredient(s).getName(), addIngredient(s));
+
+    private void addSideIngredients() {
+        LocalFoodNameReader lfnr = new LocalFoodNameReader("side_ingredients.csv");
+        List<Ingredient> ingredients = lfnr.searchAll();
+
+        for (Ingredient ingredient : ingredients) {
+            addIngredient(ingredient);
+            sideIgredients.put(ingredient.getName(), ingredient);
+        }
     }
-    
-    private void addSauce(String s) {
-        sauces.put(addIngredient(s).getName(), addIngredient(s));
+
+    private void addSauces() {
+        LocalFoodNameReader lfnr = new LocalFoodNameReader("sauces.csv");
+        List<Ingredient> ingredients = lfnr.searchAll();
+
+        for (Ingredient ingredient : ingredients) {
+            addIngredient(ingredient);
+            sauces.put(ingredient.getName(), ingredient);
+        }
     }
-    
-    private void addSidesAndStuff(String s) {
-        sidesAndMisc.put(addIngredient(s).getName(), addIngredient(s));
+
+    private void addSidesAndStuffs() {
+        LocalFoodNameReader lfnr = new LocalFoodNameReader("sidesAndStuff.csv");
+        List<Ingredient> ingredients = lfnr.searchAll();
+
+        for (Ingredient ingredient : ingredients) {
+            addIngredient(ingredient);
+            sidesAndMisc.put(ingredient.getName(), ingredient);
+        }
     }
-    
-    private Ingredient addIngredient(String s) {
-        FoodNameReader fNameR = new FoodNameReader("food_utf.csv");
-        Ingredient ing = fNameR.search(s);
+
+    private Ingredient addIngredient(Ingredient ing) {
         FoodMacroReader fMacroR = new FoodMacroReader("component_value.csv");
         fMacroR.search(ing);
         return ing;
+    }
+
+    private void addAll() {
+        addMainIngredients();
+        addSideIngredients();
+        addSauces();
+        addSidesAndStuffs();
+    }
+
+    public Map<String, Map<String, Ingredient>> getIngredients() {
+        Map<String, Map<String, Ingredient>> ingredients = new HashMap<>();
+        ingredients.put("mains", mainIgredients);
+        ingredients.put("sides", sideIgredients);
+        ingredients.put("sauces", sauces);
+        ingredients.put("sidesAndMisc", sidesAndMisc);
+        return ingredients;
     }
 }
