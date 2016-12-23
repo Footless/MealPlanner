@@ -20,12 +20,6 @@ public class Ingredient {
     private double carb;
     private double fiber;
 
-    public Ingredient(int id, String name, String category) {
-        this.id = id;
-        this.name = name;
-        this.category = category;
-    }
-
     public Ingredient(int id, String name) {
         this.id = id;
         this.name = name;
@@ -57,10 +51,6 @@ public class Ingredient {
 
     public void setFiber(double fiber) {
         this.fiber = fiber;
-    }
-
-    public String getCategory() {
-        return category;
     }
 
     public double getCalories() {

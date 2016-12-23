@@ -19,6 +19,7 @@ import static org.junit.Assert.*;
  */
 public class MacroCalculatorTest {
     MacroCalculator mc;
+    private double delta = 0.0001;
     
     public MacroCalculatorTest() {
     }
@@ -33,10 +34,47 @@ public class MacroCalculatorTest {
     }
     
     @Test
+    public void testEmptyMainIngredient() {
+        Ingredient ing = new Ingredient(1, "test");
+        double toTest = mc.calculateMainIngredientAmount(40, ing);
+        assertEquals(0, toTest, delta);
+    }
+    
+    @Test
+    public void testEmptySauceIngredient() {
+        Ingredient ing = new Ingredient(1, "test");
+        double toTest = mc.calculateSauceAmount(40, ing);
+        assertEquals(0, toTest, delta);
+    }
+    
+    @Test
+    public void testEmptySideIngredient() {
+        Ingredient ing = new Ingredient(1, "test");
+        double toTest = mc.calculateSideAmount(40, ing);
+        assertEquals(0, toTest, delta);
+    }
+    
+    @Test
     public void testMainIngredientCalculator() {
         Ingredient ing = new Ingredient(1, "test");
         ing.setProtein(20.0);
         double toTest = mc.calculateMainIngredientAmount(40, ing);
-        assertEquals(200.0, toTest, 0.0001);
+        assertEquals(200.0, toTest, delta);
+    }
+    
+    @Test
+    public void testSauceCalculator() {
+        Ingredient ing = new Ingredient(1, "test");
+        ing.setFat(20.0);
+        double toTest = mc.calculateSauceAmount(40, ing);
+        assertEquals(200.0, toTest, delta);
+    }
+    
+    @Test
+    public void testSideCalculator() {
+        Ingredient ing = new Ingredient(1, "test");
+        ing.setCarb(20.0);
+        double toTest = mc.calculateSideAmount(40, ing);
+        assertEquals(200.0, toTest, delta);
     }
 }
