@@ -36,10 +36,12 @@
                     <targetClasses>
                         <param>kari.nutritionplanner.mealplanner.domain.*</param>
                         <param>kari.nutritionplanner.mealplanner.util.*</param>
+                        <param>kari.nutritionplanner.mealplanner.servicelayer.*</param>                    
                     </targetClasses>
                     <targetTests>
-                        <param>superohjelma.logiikka.*</param>
-                        <param>superohjelma.tekoaly.*</param>
+                        <param>kari.nutritionplanner.mealplanner.domain.*</param>
+                        <param>kari.nutritionplanner.mealplanner.util.*</param>
+                        <param>kari.nutritionplanner.mealplanner.servicelayer.*</param>
                     </targetTests>
                 </configuration>
             </plugin>

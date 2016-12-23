@@ -35,7 +35,7 @@ public class Meal {
         this.misc = misc;
     }
 
-    public void setMainIngedientAmount(double mainIngedientAmount) {
+    public void setMainIngredientAmount(double mainIngedientAmount) {
         this.mainIngredientAmount = mainIngedientAmount;
     }
 
@@ -52,9 +52,9 @@ public class Meal {
     }
     
     public double getProtein() {
-        if (mainIngedient) {
-            
+        if (mainIngredient != null) {
+            return mainIngredientAmount * mainIngredient.getProtein();
         }
-        return mainIngredientAmount * mainIngredient.getProtein();
+        return 0;
     }
 }
