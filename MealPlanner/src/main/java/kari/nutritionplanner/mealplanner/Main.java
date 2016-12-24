@@ -8,8 +8,6 @@ package kari.nutritionplanner.mealplanner;
 import java.util.Map;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
 import kari.nutritionplanner.mealplanner.servicelayer.ProcessIngredients;
-import kari.nutritionplanner.mealplanner.util.FoodMacroReader;
-import kari.nutritionplanner.mealplanner.util.FoodNameReader;
 
 /**
  *

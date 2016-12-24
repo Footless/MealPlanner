@@ -5,14 +5,11 @@
  */
 package kari.nutritionplanner.mealplanner.servicelayer;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
-import kari.nutritionplanner.mealplanner.util.FoodMacroReader;
-import kari.nutritionplanner.mealplanner.util.FoodNameReader;
-import kari.nutritionplanner.mealplanner.util.LocalFoodNameReader;
+import kari.nutritionplanner.mealplanner.util.SCVReader;
 
 /**
  *
@@ -34,7 +31,7 @@ public class ProcessIngredients {
     }
 
     private void addMainIngredients() {
-        LocalFoodNameReader lfnr = new LocalFoodNameReader("main_ingredients.csv");
+        SCVReader lfnr = new SCVReader("main_ingredients.csv");
         List<Ingredient> ingredients = lfnr.searchAll();
 
         for (Ingredient ingredient : ingredients) {
@@ -44,7 +41,7 @@ public class ProcessIngredients {
     }
 
     private void addSideIngredients() {
-        LocalFoodNameReader lfnr = new LocalFoodNameReader("side_ingredients.csv");
+        SCVReader lfnr = new SCVReader("side_ingredients.csv");
         List<Ingredient> ingredients = lfnr.searchAll();
 
         for (Ingredient ingredient : ingredients) {
@@ -54,7 +51,7 @@ public class ProcessIngredients {
     }
 
     private void addSauces() {
-        LocalFoodNameReader lfnr = new LocalFoodNameReader("sauces.csv");
+        SCVReader lfnr = new SCVReader("sauces.csv");
         List<Ingredient> ingredients = lfnr.searchAll();
 
         for (Ingredient ingredient : ingredients) {
@@ -64,7 +61,7 @@ public class ProcessIngredients {
     }
 
     private void addSidesAndStuffs() {
-        LocalFoodNameReader lfnr = new LocalFoodNameReader("sidesAndStuff.csv");
+        SCVReader lfnr = new SCVReader("sidesAndStuff.csv");
         List<Ingredient> ingredients = lfnr.searchAll();
 
         for (Ingredient ingredient : ingredients) {
@@ -74,8 +71,8 @@ public class ProcessIngredients {
     }
 
     private Ingredient addIngredient(Ingredient ing) {
-        FoodMacroReader fMacroR = new FoodMacroReader("component_value.csv");
-        fMacroR.search(ing);
+        SCVReader fMacroR = new SCVReader("component_value.csv");
+        fMacroR.searchMacros(ing);
         return ing;
     }
 
