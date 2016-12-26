@@ -2,7 +2,7 @@
 
 ***
 
-Ohjelman tarkoituksena on tarjota työkalu, jolla käyttäjä voi kalorimäärän sekä makrojen perusteella saada selville mitä pitäisi syödä ja paljonko. Ohjelma käyttää avointa dataa jonka tarjoaa [Terveyden ja hyvinvoinnin laitos, Fineli](https://fineli.fi/fineli/fi/index) ([Creative Commons 4.0 nimeä (CC-BY 4.0)](https://creativecommons.org/licenses/by/4.0/deed.fi))
+Ohjelman tarkoituksena on tarjota työkalu, jolla käyttäjä voi kalorimäärän sekä makrojen perusteella saada selville mitä pitäisi syödä ja paljonko, esimerkiksi lounaalla. Käyttäjä syöttää haluamansa kalorimäärän sekä proteiinin ja rasvan määrän ja saa vastauksena grammamääräisenä tarvittavat ruoka-aineet joista lounaan tulee koostua. Ohjelma käyttää avointa dataa jonka tarjoaa [Terveyden ja hyvinvoinnin laitos, Fineli](https://fineli.fi/fineli/fi/index) ([Creative Commons 4.0 nimeä (CC-BY 4.0)](https://creativecommons.org/licenses/by/4.0/deed.fi)). Dataan on lisätty ravintotiedot Nyhtökauran osalta, koska sitä ei (vielä) Finelin tietokannasta löydy. Uusi päivitys on luvattu vuodenvaihteessa, jos se toteutuu tullaan ohjelmassa luonnollisesti käyttämään uusinta dataa. Nyhtökauran osalta ravintotiedot ovat siis Gold and Green -yhtiön antamia, eivätkä THL:n laskemia.
 
 ###Dokumentaatio###
 
