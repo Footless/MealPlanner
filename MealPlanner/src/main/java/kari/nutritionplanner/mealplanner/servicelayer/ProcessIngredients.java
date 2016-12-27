@@ -32,7 +32,7 @@ public class ProcessIngredients {
 
     private void addMainIngredients() {
         SCVReader lfnr = new SCVReader("main_ingredients.csv");
-        List<Ingredient> ingredients = lfnr.searchAll();
+        List<Ingredient> ingredients = lfnr.searchAllIngredients();
 
         for (Ingredient ingredient : ingredients) {
             addIngredient(ingredient);
@@ -42,7 +42,7 @@ public class ProcessIngredients {
 
     private void addSideIngredients() {
         SCVReader lfnr = new SCVReader("side_ingredients.csv");
-        List<Ingredient> ingredients = lfnr.searchAll();
+        List<Ingredient> ingredients = lfnr.searchAllIngredients();
 
         for (Ingredient ingredient : ingredients) {
             addIngredient(ingredient);
@@ -52,7 +52,7 @@ public class ProcessIngredients {
 
     private void addSauces() {
         SCVReader lfnr = new SCVReader("sauces.csv");
-        List<Ingredient> ingredients = lfnr.searchAll();
+        List<Ingredient> ingredients = lfnr.searchAllIngredients();
 
         for (Ingredient ingredient : ingredients) {
             addIngredient(ingredient);
@@ -62,7 +62,7 @@ public class ProcessIngredients {
 
     private void addSidesAndStuffs() {
         SCVReader lfnr = new SCVReader("sidesAndStuff.csv");
-        List<Ingredient> ingredients = lfnr.searchAll();
+        List<Ingredient> ingredients = lfnr.searchAllIngredients();
 
         for (Ingredient ingredient : ingredients) {
             addIngredient(ingredient);

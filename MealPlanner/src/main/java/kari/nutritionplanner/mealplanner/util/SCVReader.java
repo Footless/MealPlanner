@@ -35,13 +35,13 @@ public class SCVReader {
         }
     }
 
-    public List<Ingredient> searchAll() {
+    public List<Ingredient> searchAllIngredients() {
         String line = null;
         Scanner scanner = null;
         List<Ingredient> ingredients = new ArrayList<>();
         try {
             while ((line = reader.readLine()) != null) {
-                processLine(ingredients, scanner, line);
+                searchIngredient(ingredients, scanner, line);
             }
         } catch (IOException ex) {
             Logger.getLogger(SCVReader.class.getName()).log(Level.SEVERE, null, ex);
@@ -54,29 +54,7 @@ public class SCVReader {
         Scanner scanner = null;
         try {
             while ((line = reader.readLine()) != null) {
-                scanner = new Scanner(line);
-                scanner.useDelimiter(";");
-                int i = 0;
-                while (scanner.hasNext()) {
-                    String next = scanner.next();
-                    if (i == 0 && next.length() < 6 && Integer.parseInt(next) == ing.getId()) {
-                        String macro = scanner.next();
-                        if (macro.contains("ENERC")) {
-                            ing.setCalories(Double.parseDouble(scanner.next().replace(',', '.')) / 4.184);
-                        } else if (macro.contains("CHOAVL")) {
-                            ing.setCarb(Double.parseDouble(scanner.next().replace(',', '.')));
-                        } else if (macro.contentEquals("FAT")) {
-                            ing.setFat(Double.parseDouble(scanner.next().replace(',', '.')));
-                        } else if (macro.contains("PROT")) {
-                            ing.setProtein(Double.parseDouble(scanner.next().replace(',', '.')));
-                        } else if (macro.contains("FIBC")) {
-                            ing.setFiber(Double.parseDouble(scanner.next().replace(',', '.')));
-                            return;
-                        }
-                    }
-                    i++;
-                }
-                i = 0;
+                setMacros(scanner, line, ing);
             }
         } catch (IOException ex) {
             Logger.getLogger(SCVReader.class.getName()).log(Level.SEVERE, null, ex);
@@ -86,23 +64,11 @@ public class SCVReader {
     public Ingredient search(String s) {
         String line = null;
         Scanner scanner = null;
+        Ingredient returnIng = null;
         try {
             while ((line = reader.readLine()) != null) {
-                scanner = new Scanner(line);
-                scanner.useDelimiter(";");
-                int i = 0;
-                String id = "";
-                while (scanner.hasNext()) {
-                    String next = scanner.next();
-                    if (i == 0) {
-                        id = next;
-                    }
-                    if (i == 1 && next.toLowerCase().contains(s)) {
-                        return new Ingredient(Integer.parseInt(id), next);
-                    }
-                    i++;
-                }
-                i = 0;
+                returnIng = searchIngredient(scanner, s, line);
+                
             }
         } catch (IOException ex) {
             Logger.getLogger(SCVReader.class.getName()).log(Level.SEVERE, null, ex);
@@ -110,7 +76,7 @@ public class SCVReader {
         return null;
     }
 
-    private void processLine(List<Ingredient> ingredients, Scanner scanner, String line) {
+    private void searchIngredient(List<Ingredient> ingredients, Scanner scanner, String line) {
         scanner = new Scanner(line);
         scanner.useDelimiter(";");
         int i = 0;
@@ -126,5 +92,50 @@ public class SCVReader {
             i++;
         }
         i = 0;
+    }
+
+    private void setMacros(Scanner scanner, String line, Ingredient ing) {
+        scanner = new Scanner(line);
+        scanner.useDelimiter(";");
+        int i = 0;
+        while (scanner.hasNext()) {
+            String next = scanner.next();
+            if (i == 0 && next.length() < 6 && Integer.parseInt(next) == ing.getId()) {
+                String macro = scanner.next();
+                if (macro.contains("ENERC")) {
+                    ing.setCalories(Double.parseDouble(scanner.next().replace(',', '.')) / 4.184);
+                } else if (macro.contains("CHOAVL")) {
+                    ing.setCarb(Double.parseDouble(scanner.next().replace(',', '.')));
+                } else if (macro.contentEquals("FAT")) {
+                    ing.setFat(Double.parseDouble(scanner.next().replace(',', '.')));
+                } else if (macro.contains("PROT")) {
+                    ing.setProtein(Double.parseDouble(scanner.next().replace(',', '.')));
+                } else if (macro.contains("FIBC")) {
+                    ing.setFiber(Double.parseDouble(scanner.next().replace(',', '.')));
+                    return;
+                }
+            }
+            i++;
+        }
+        i = 0;
+    }
+
+    private Ingredient searchIngredient(Scanner scanner, String s, String line) {
+        scanner = new Scanner(line);
+                scanner.useDelimiter(";");
+                int i = 0;
+                while (scanner.hasNext()) {
+                    String id = "";
+                    String next = scanner.next();
+                    if (i == 0) {
+                        id = next;
+                    }
+                    if (i == 1 && next.toLowerCase().contains(s)) {
+                        return new Ingredient(Integer.parseInt(id), next);
+                    }
+                    i++;
+                }
+                i = 0;
+                return null;
     }
 }
