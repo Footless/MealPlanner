@@ -22,4 +22,10 @@ public class CalculateMeal {
         this.ingredientProcessor = new ProcessIngredients();
         this.ingredients = ingredientProcessor.getIngredients();
     }
+
+    public Map<String, Map<String, Ingredient>> getIngredients() {
+        return ingredients;
+    }
+    
+    
 }
