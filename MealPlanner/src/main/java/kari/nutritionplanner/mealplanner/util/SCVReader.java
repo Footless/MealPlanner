@@ -35,7 +35,7 @@ public class SCVReader {
         }
     }
 
-    public List<Ingredient> searchAllIngredients() {
+    public List<Ingredient> getAllIngredients() {
         String line = null;
         Scanner scanner = null;
         List<Ingredient> ingredients = new ArrayList<>();
@@ -75,7 +75,6 @@ public class SCVReader {
 //        }
 //        return null;
 //    }
-
     private void searchIngredient(List<Ingredient> ingredients, Scanner scanner, String line) {
         scanner = new Scanner(line);
         scanner.useDelimiter(";");

@@ -7,6 +7,7 @@ package kari.nutritionplanner.mealplanner.servicelayer;
 
 import java.util.Map;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
+import kari.nutritionplanner.mealplanner.domain.Meal;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -21,6 +22,7 @@ import static org.junit.Assert.*;
 public class CalculateMealTest {
 
     private CalculateMeal cm;
+    private Meal meal;
 
     public CalculateMealTest() {
     }
@@ -47,15 +49,15 @@ public class CalculateMealTest {
     //
     @Test
     public void testGetIngredientsCreated() {
-        Map<String, Map<String, Ingredient>> ings = cm.getIngredients();
+        Map<String, Map<Integer, Ingredient>> ings = cm.getIngredients();
         assertTrue(ings.size() > 0);
     }
     
     @Test
     public void testGetIngredientsNotEmpty() {
-        Map<String, Map<String, Ingredient>> ings = cm.getIngredients();
-        Map<String, Ingredient> mains = ings.get("mains");
+        Map<String, Map<Integer, Ingredient>> ings = cm.getIngredients();
+        Map<Integer, Ingredient> mains = ings.get("mains");
         assertTrue(mains.size() > 0);
-        assertEquals("Kana", mains.get("Kana").getName());
+        assertEquals("Kana", mains.get(750).getName());
     }
 }

@@ -64,7 +64,7 @@ public class SCVReaderTest {
      
      @Test
      public void testSearchAllIngs() {
-         List<Ingredient> ings = reader.searchAllIngredients();
+         List<Ingredient> ings = reader.getAllIngredients();
          assertTrue(ings.size() > 0);
      }
 }

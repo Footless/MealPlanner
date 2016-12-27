@@ -47,12 +47,12 @@ public class ProcessIngredientsTest {
     //
      @Test
      public void testGetIngredients() {
-         Map<String, Map<String, Ingredient>> ingredients = pi.getIngredients();
+         Map<String, Map<Integer, Ingredient>> ingredients = pi.getIngredients();
          assertTrue(ingredients.containsKey("mains"));
          assertTrue(ingredients.containsKey("sides"));
          assertTrue(ingredients.containsKey("sauces"));
          assertTrue(ingredients.containsKey("sidesAndMisc"));
-         Map<String, Ingredient> mains = ingredients.get("mains");
+         Map<Integer, Ingredient> mains = ingredients.get("mains");
          assertTrue(mains.size() > 0);
      }
      

@@ -20,10 +20,10 @@ public class Main {
      */
     public static void main(String[] args) {
         ProcessIngredients pi = new ProcessIngredients();
-        Map<String, Map<String, Ingredient>> ings = pi.getIngredients();
+        Map<String, Map<Integer, Ingredient>> ings = pi.getIngredients();
         for (String s : ings.keySet()) {
-            for (String str : ings.get(s).keySet()) {
-                System.out.println(ings.get(s).get(str));
+            for (Integer i: ings.get(s).keySet()) {
+                System.out.println(ings.get(s).get(i));
             }
             System.out.println("------");
         }

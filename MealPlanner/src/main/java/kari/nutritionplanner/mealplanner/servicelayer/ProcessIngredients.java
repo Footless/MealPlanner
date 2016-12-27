@@ -17,10 +17,10 @@ import kari.nutritionplanner.mealplanner.util.SCVReader;
  */
 public class ProcessIngredients {
 
-    private Map<String, Ingredient> mainIgredients;
-    private Map<String, Ingredient> sideIgredients;
-    private Map<String, Ingredient> sauces;
-    private Map<String, Ingredient> sidesAndMisc;
+    private Map<Integer, Ingredient> mainIgredients;
+    private Map<Integer, Ingredient> sideIgredients;
+    private Map<Integer, Ingredient> sauces;
+    private Map<Integer, Ingredient> sidesAndMisc;
 
     public ProcessIngredients() {
         this.mainIgredients = new HashMap<>();
@@ -32,41 +32,41 @@ public class ProcessIngredients {
 
     private void addMainIngredients() {
         SCVReader lfnr = new SCVReader("main_ingredients.csv");
-        List<Ingredient> ingredients = lfnr.searchAllIngredients();
+        List<Ingredient> ingredients = lfnr.getAllIngredients();
 
         for (Ingredient ingredient : ingredients) {
             addIngredient(ingredient);
-            mainIgredients.put(ingredient.getName(), ingredient);
+            mainIgredients.put(ingredient.getId(), ingredient);
         }
     }
 
     private void addSideIngredients() {
         SCVReader lfnr = new SCVReader("side_ingredients.csv");
-        List<Ingredient> ingredients = lfnr.searchAllIngredients();
+        List<Ingredient> ingredients = lfnr.getAllIngredients();
 
         for (Ingredient ingredient : ingredients) {
             addIngredient(ingredient);
-            sideIgredients.put(ingredient.getName(), ingredient);
+            sideIgredients.put(ingredient.getId(), ingredient);
         }
     }
 
     private void addSauces() {
         SCVReader lfnr = new SCVReader("sauces.csv");
-        List<Ingredient> ingredients = lfnr.searchAllIngredients();
+        List<Ingredient> ingredients = lfnr.getAllIngredients();
 
         for (Ingredient ingredient : ingredients) {
             addIngredient(ingredient);
-            sauces.put(ingredient.getName(), ingredient);
+            sauces.put(ingredient.getId(), ingredient);
         }
     }
 
     private void addSidesAndStuffs() {
         SCVReader lfnr = new SCVReader("sidesAndStuff.csv");
-        List<Ingredient> ingredients = lfnr.searchAllIngredients();
+        List<Ingredient> ingredients = lfnr.getAllIngredients();
 
         for (Ingredient ingredient : ingredients) {
             addIngredient(ingredient);
-            sidesAndMisc.put(ingredient.getName(), ingredient);
+            sidesAndMisc.put(ingredient.getId(), ingredient);
         }
     }
 
@@ -83,8 +83,8 @@ public class ProcessIngredients {
         addSidesAndStuffs();
     }
 
-    public Map<String, Map<String, Ingredient>> getIngredients() {
-        Map<String, Map<String, Ingredient>> ingredients = new HashMap<>();
+    public Map<String, Map<Integer, Ingredient>> getIngredients() {
+        Map<String, Map<Integer, Ingredient>> ingredients = new HashMap<>();
         ingredients.put("mains", mainIgredients);
         ingredients.put("sides", sideIgredients);
         ingredients.put("sauces", sauces);
