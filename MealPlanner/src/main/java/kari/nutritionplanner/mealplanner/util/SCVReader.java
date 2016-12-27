@@ -61,20 +61,20 @@ public class SCVReader {
         }
     }
 
-    public Ingredient search(String s) {
-        String line = null;
-        Scanner scanner = null;
-        Ingredient returnIng = null;
-        try {
-            while ((line = reader.readLine()) != null) {
-                returnIng = searchIngredient(scanner, s, line);
-                
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(SCVReader.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
+//    public Ingredient search(String s) {
+//        String line = null;
+//        Scanner scanner = null;
+//        Ingredient returnIng = null;
+//        try {
+//            while ((line = reader.readLine()) != null) {
+//                returnIng = searchIngredient(scanner, s, line);
+//                
+//            }
+//        } catch (IOException ex) {
+//            Logger.getLogger(SCVReader.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return null;
+//    }
 
     private void searchIngredient(List<Ingredient> ingredients, Scanner scanner, String line) {
         scanner = new Scanner(line);

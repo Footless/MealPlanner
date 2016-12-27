@@ -71,7 +71,7 @@ public class ProcessIngredients {
     }
 
     private Ingredient addIngredient(Ingredient ing) {
-        SCVReader fMacroR = new SCVReader("component_value.csv");
+        SCVReader fMacroR = new SCVReader("component_value_stub.csv");
         fMacroR.searchMacros(ing);
         return ing;
     }

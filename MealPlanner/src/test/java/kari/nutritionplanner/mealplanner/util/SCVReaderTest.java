@@ -5,6 +5,7 @@
  */
 package kari.nutritionplanner.mealplanner.util;
 
+import java.util.List;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -59,5 +60,11 @@ public class SCVReaderTest {
          assertEquals(3.762, ing.getFat(), delta);
          assertEquals(5.64, ing.getProtein(), delta);
          assertEquals(0.333, ing.getFiber(), delta);
+     }
+     
+     @Test
+     public void testSearchAllIngs() {
+         List<Ingredient> ings = reader.searchAllIngredients();
+         assertTrue(ings.size() > 0);
      }
 }
