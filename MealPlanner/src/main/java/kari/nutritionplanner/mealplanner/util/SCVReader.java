@@ -88,10 +88,10 @@ public class SCVReader {
             }
             if (i == 1) {
                 ingredients.add(new Ingredient(Integer.parseInt(id), next));
+                return;
             }
             i++;
         }
-        i = 0;
     }
 
     private void setMacros(Scanner scanner, String line, Ingredient ing) {
@@ -117,25 +117,24 @@ public class SCVReader {
             }
             i++;
         }
-        i = 0;
     }
 
-    private Ingredient searchIngredient(Scanner scanner, String s, String line) {
-        scanner = new Scanner(line);
-                scanner.useDelimiter(";");
-                int i = 0;
-                while (scanner.hasNext()) {
-                    String id = "";
-                    String next = scanner.next();
-                    if (i == 0) {
-                        id = next;
-                    }
-                    if (i == 1 && next.toLowerCase().contains(s)) {
-                        return new Ingredient(Integer.parseInt(id), next);
-                    }
-                    i++;
-                }
-                i = 0;
-                return null;
-    }
+//    private Ingredient searchIngredient(Scanner scanner, String s, String line) {
+//        scanner = new Scanner(line);
+//                scanner.useDelimiter(";");
+//                int i = 0;
+//                while (scanner.hasNext()) {
+//                    String id = "";
+//                    String next = scanner.next();
+//                    if (i == 0) {
+//                        id = next;
+//                    }
+//                    if (i == 1 && next.toLowerCase().contains(s)) {
+//                        return new Ingredient(Integer.parseInt(id), next);
+//                    }
+//                    i++;
+//                }
+//                i = 0;
+//                return null;
+//    }
 }
