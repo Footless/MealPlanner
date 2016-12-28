@@ -13,7 +13,6 @@ public class Ingredient {
 
     private int id;
     private String name;
-    private String category;
     private double calories;
     private double protein;
     private double fat;

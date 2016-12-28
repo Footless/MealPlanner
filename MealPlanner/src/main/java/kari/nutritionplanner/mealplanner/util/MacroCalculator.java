@@ -15,21 +15,21 @@ public class MacroCalculator {
 
     public double calculateMainIngredientAmount(double protein, Ingredient ing) {
         if (ing.getProtein() > 0) {
-            return protein / ing.getProtein() * 100;
+            return protein / ing.getProtein(); // kertaa sata jos haluaa grammoina
         }
         return 0;
     }
     
-    public double calculateSauceAmount(double calories, Ingredient ing) {
+    public double calculateSauceAmount(double fat, Ingredient ing) {
         if (ing.getFat() > 0) {
-            return calories / ing.getFat() * 100;
+            return fat / ing.getFat(); // kertaa sata jos haluaa grammoina
         }
         return 0;
     }
     
     public double calculateSideAmount(double calories, Ingredient ing) {
-        if (ing.getCarb() > 0) {
-            return calories / ing.getCarb() * 100;
+        if (ing.getCalories() > 0) {
+            return calories / ing.getCalories(); // kertaa sata jos haluaa grammoina
         }
         return 0;
     }

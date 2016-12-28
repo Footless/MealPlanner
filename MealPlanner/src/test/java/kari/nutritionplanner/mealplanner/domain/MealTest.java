@@ -68,8 +68,32 @@ public class MealTest {
          Ingredient ing = new Ingredient(1, "test");
          ing.setProtein(20.5);
          meal.setMainIngredient(ing);
-         meal.setMainIngredientAmount(100);
+         meal.setMainIngredientAmount(10);
          double toTest = meal.getProtein();
-         assertEquals(2050, toTest, delta);
+         assertEquals(205, toTest, delta);
      }
+     
+     @Test
+     public void testGetCalories() {
+         Ingredient ingredient = new Ingredient(100000, "test");
+         Ingredient ingredient2 = new Ingredient(100000, "test");
+         Ingredient ingredient3 = new Ingredient(100000, "test");
+         Ingredient ingredient4 = new Ingredient(100000, "test");
+         ingredient.setCalories(20);
+         meal.setMainIngredient(ingredient);
+         meal.setMainIngredientAmount(10);
+         ingredient2.setCalories(100);
+         meal.setSauce(ingredient2);
+         meal.setSauceAmount(1);
+         ingredient3.setCalories(50);
+         meal.setMisc(ingredient3);
+         meal.setMiscAmount(1);
+         ingredient4.setCalories(25);
+         meal.setSideIngredient(ingredient4);
+         meal.setSideIngredientAmount(1);
+         double toTest = meal.getCalories();
+         assertEquals(375, toTest, delta);
+     }
+     
+     
 }

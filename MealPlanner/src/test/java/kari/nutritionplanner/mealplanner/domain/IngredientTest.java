@@ -61,6 +61,8 @@ public class IngredientTest {
          ing.setCalories(140.3);
          double toTest = ing.getCalories();
          assertEquals(140.3, toTest, delta);
+         ing.setCalories(30);
+         assertEquals(30, ing.getCalories(), delta);
      }
      
      @Test

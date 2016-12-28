@@ -23,6 +23,8 @@ public class CalculateMealTest {
 
     private CalculateMeal cm;
     private Meal meal;
+    private double delta = 0.0001;
+    private double bigDelta = 2.5;
 
     public CalculateMealTest() {
     }
@@ -60,4 +62,62 @@ public class CalculateMealTest {
         assertTrue(mains.size() > 0);
         assertEquals("Kana", mains.get(750).getName());
     }
+    
+    @Test
+    public void testMainIngSetter() {
+        boolean success = cm.setMainIngredient(805, 25, 15);
+        assertTrue(success);
+        double protein = cm.getMeal().getProtein();
+        assertEquals(25, protein, delta);
+        assertEquals(1.339907814, cm.getMeal().getMainIngredientAmount(), delta);
+        assertEquals(0.58018, cm.getMeal().getFat(), delta);
+    }
+    
+    @Test
+    public void testSauceSetter() {
+        cm.setMainIngredient(805, 25, 15);
+        boolean success = cm.setSauce(30);
+        assertTrue(success);
+        assertEquals(30, cm.getMeal().getFat(), delta);
+        assertEquals(0.693896408, cm.getMeal().getSauceAmount(), delta);
+    }
+    
+    @Test 
+    public void testMiscSetter() {
+        cm.setMisc();
+        double calories = cm.getMeal().getCalories();
+        assertEquals(22.474904398, calories, delta);
+    }
+    
+    @Test
+    public void testSideSetterOnEmptyMeal() {
+        cm.setSideIngredient(400);
+        assertEquals(400, cm.getMeal().getCalories(), delta);
+    }
+    
+    @Test
+    public void testSideSetter() {
+        cm.setMainIngredient(805, 25, 15);
+        cm.setSauce(30);
+        cm.setMisc();
+        cm.setSideIngredient(800);
+        assertEquals(800, cm.getMeal().getCalories(), delta);
+    }
+//    
+//    @Test
+//    public void testSetMeal() {
+//        cm.setMainIngredient(805, 25, 15);
+//        cm.setSauce(15);
+//        cm.setMisc();
+//        cm.setSideIngredient(800);
+//        assertEquals(800, cm.getMeal().getCalories(), delta);
+//        assertEquals(15, cm.getMeal().getFat(), bigDelta);
+//        assertEquals(25, cm.getMeal().getProtein(), bigDelta);
+//    }
+    
+    @Test
+    public void testSetWholeMeal() {
+        assertTrue(cm.calculateAllMeal(805, 500, 25, 15));
+    }
+    
 }
