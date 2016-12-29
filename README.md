@@ -9,3 +9,7 @@ Ohjelman tarkoituksena on tarjota työkalu, jolla käyttäjä voi kalorimäärä
 [Aiheen kuvaus ja rakenne](https://github.com/Footless/MealPlanner/blob/master/dokumentaatio/aiheenKuvausJaRakenne.md)
 
 [Tuntikirjanpito](https://github.com/Footless/MealPlanner/blob/master/dokumentaatio/tuntikirjanpito.md)
+
+[pit-raportti](https://htmlpreview.github.io/?https://github.com/Footless/MealPlanner/blob/master/dokumentaatio/pit-raportti/index.html)
+
+[checkstyle](https://htmlpreview.github.io/?https://github.com/Footless/MealPlanner/blob/master/dokumentaatio/checkstyle-raportti/checkstyle.html)
