@@ -1,0 +1,712 @@
+<html>
+<head>
+<style type='text/css'>
+html, body, div, span, p, blockquote, pre {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+	vertical-align: baseline;
+}
+
+body{
+	line-height: 1;
+	color: black;
+	background: white;
+	margin-left: 20px;
+}
+
+.src { 
+	border: 1px solid #dddddd;
+	padding-top: 10px;
+	padding-right: 5px;
+	padding-left: 5px;
+	font-family: Consolas, Courier, monospace;
+}
+
+
+.covered {background-color: #ddffdd}
+.uncovered {background-color: #ffdddd}
+.killed {background-color: #aaffaa}
+.survived {background-color: #ffaaaa}
+.uncertain {background-color: #dde7ef}
+.run_error {background-color: #dde7ef}
+.na {background-color: #eeeeee}
+.timed_out {background-color: #dde7ef}
+.non_viable {background-color: #aaffaa}
+.memory_error {background-color: #dde7ef}
+.not_started {background-color: #dde7ef; color : red}
+.no_coverage {background-color: #ffaaaa}
+
+
+.pop {outline:none; }
+.pop strong {line-height:30px;}
+.pop {text-decoration:none;}
+.pop span { z-index:10;display:none; padding:14px 20px; margin-top:-30px; margin-left:28px; width:800px; line-height:16px; word-wrap:break-word; }
+.pop:hover span{ display:inline; position:absolute; color:#111; border:1px solid #DCA; background:#fffAF0;}
+
+.pop span { border-radius:4px; -moz-border-radius: 4px; -webkit-border-radius: 4px; -moz-box-shadow: 5px 5px 8px #CCC; -webkit-box-shadow: 5px 5px 8px #CCC; box-shadow: 5px 5px 8px #CCC; }
+</style>
+
+</head>
+<body>
+
+
+<h1>MacroCalculator.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@51d719bc_1'/>
+1
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_1'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/*</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@51d719bc_2'/>
+2
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_2'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * To change this license header, choose License Headers in Project Properties.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@51d719bc_3'/>
+3
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_3'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * To change this template file, choose Tools | Templates</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@51d719bc_4'/>
+4
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_4'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * and open the template in the editor.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@51d719bc_5'/>
+5
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_5'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@51d719bc_6'/>
+6
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_6'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>package kari.nutritionplanner.mealplanner.util;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@51d719bc_7'/>
+7
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_7'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@51d719bc_8'/>
+8
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_8'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import kari.nutritionplanner.mealplanner.domain.Ingredient;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@51d719bc_9'/>
+9
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_9'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@51d719bc_10'/>
+10
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_10'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@51d719bc_11'/>
+11
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_11'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@51d719bc_12'/>
+12
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_12'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @author kari</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@51d719bc_13'/>
+13
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_13'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@51d719bc_14'/>
+14
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_14'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>public class MacroCalculator {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@51d719bc_15'/>
+15
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_15'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@51d719bc_16'/>
+16
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_16'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public double calculateMainIngredientAmount(double protein, Ingredient ing) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@51d719bc_17'/>
+17
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_17'>2</a>
+<span>
+1. calculateMainIngredientAmount : changed conditional boundary &rarr; KILLED<br/>
+2. calculateMainIngredientAmount : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        if (ing.getProtein() &#62; 0) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@51d719bc_18'/>
+18
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_18'>2</a>
+<span>
+1. calculateMainIngredientAmount : Replaced double division with multiplication &rarr; KILLED<br/>
+2. calculateMainIngredientAmount : replaced return of double value with -(x + 1) for kari/nutritionplanner/mealplanner/util/MacroCalculator::calculateMainIngredientAmount &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            return protein / ing.getProtein(); // kertaa sata jos haluaa grammoina</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@51d719bc_19'/>
+19
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_19'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@51d719bc_20'/>
+20
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_20'>1</a>
+<span>
+1. calculateMainIngredientAmount : replaced return of double value with -(x + 1) for kari/nutritionplanner/mealplanner/util/MacroCalculator::calculateMainIngredientAmount &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return 0;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@51d719bc_21'/>
+21
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_21'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@51d719bc_22'/>
+22
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_22'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    </span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@51d719bc_23'/>
+23
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_23'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public double calculateSauceAmount(double fat, Ingredient ing) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@51d719bc_24'/>
+24
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_24'>2</a>
+<span>
+1. calculateSauceAmount : changed conditional boundary &rarr; KILLED<br/>
+2. calculateSauceAmount : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        if (ing.getFat() &#62; 0) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@51d719bc_25'/>
+25
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_25'>2</a>
+<span>
+1. calculateSauceAmount : Replaced double division with multiplication &rarr; KILLED<br/>
+2. calculateSauceAmount : replaced return of double value with -(x + 1) for kari/nutritionplanner/mealplanner/util/MacroCalculator::calculateSauceAmount &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            return fat / ing.getFat(); // kertaa sata jos haluaa grammoina</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@51d719bc_26'/>
+26
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_26'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@51d719bc_27'/>
+27
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_27'>1</a>
+<span>
+1. calculateSauceAmount : replaced return of double value with -(x + 1) for kari/nutritionplanner/mealplanner/util/MacroCalculator::calculateSauceAmount &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return 0;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@51d719bc_28'/>
+28
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_28'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@51d719bc_29'/>
+29
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_29'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    </span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@51d719bc_30'/>
+30
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_30'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public double calculateSideAmount(double calories, Ingredient ing) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@51d719bc_31'/>
+31
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_31'>2</a>
+<span>
+1. calculateSideAmount : changed conditional boundary &rarr; KILLED<br/>
+2. calculateSideAmount : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        if (ing.getCalories() &#62; 0) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@51d719bc_32'/>
+32
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_32'>2</a>
+<span>
+1. calculateSideAmount : Replaced double division with multiplication &rarr; KILLED<br/>
+2. calculateSideAmount : replaced return of double value with -(x + 1) for kari/nutritionplanner/mealplanner/util/MacroCalculator::calculateSideAmount &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            return calories / ing.getCalories(); // kertaa sata jos haluaa grammoina</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@51d719bc_33'/>
+33
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_33'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@51d719bc_34'/>
+34
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_34'>1</a>
+<span>
+1. calculateSideAmount : replaced return of double value with -(x + 1) for kari/nutritionplanner/mealplanner/util/MacroCalculator::calculateSideAmount &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return 0;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@51d719bc_35'/>
+35
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_35'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@51d719bc_36'/>
+36
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_36'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@51d719bc_17'>17</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_17'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>calculateMainIngredientAmount<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.util.MacroCalculatorTest.testEmptyMainIngredient(kari.nutritionplanner.mealplanner.util.MacroCalculatorTest)</span></span> changed conditional boundary &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>calculateMainIngredientAmount<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.util.MacroCalculatorTest.testEmptyMainIngredient(kari.nutritionplanner.mealplanner.util.MacroCalculatorTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@51d719bc_18'>18</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_18'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>calculateMainIngredientAmount<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.util.MacroCalculatorTest.testMainIngredientCalculator(kari.nutritionplanner.mealplanner.util.MacroCalculatorTest)</span></span> Replaced double division with multiplication &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>calculateMainIngredientAmount<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.util.MacroCalculatorTest.testMainIngredientCalculator(kari.nutritionplanner.mealplanner.util.MacroCalculatorTest)</span></span> replaced return of double value with -(x + 1) for kari/nutritionplanner/mealplanner/util/MacroCalculator::calculateMainIngredientAmount &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@51d719bc_20'>20</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_20'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>calculateMainIngredientAmount<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.util.MacroCalculatorTest.testEmptyMainIngredient(kari.nutritionplanner.mealplanner.util.MacroCalculatorTest)</span></span> replaced return of double value with -(x + 1) for kari/nutritionplanner/mealplanner/util/MacroCalculator::calculateMainIngredientAmount &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@51d719bc_24'>24</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_24'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>calculateSauceAmount<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.util.MacroCalculatorTest.testEmptySauceIngredient(kari.nutritionplanner.mealplanner.util.MacroCalculatorTest)</span></span> changed conditional boundary &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>calculateSauceAmount<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.util.MacroCalculatorTest.testEmptySauceIngredient(kari.nutritionplanner.mealplanner.util.MacroCalculatorTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@51d719bc_25'>25</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_25'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>calculateSauceAmount<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.util.MacroCalculatorTest.testSauceCalculator(kari.nutritionplanner.mealplanner.util.MacroCalculatorTest)</span></span> Replaced double division with multiplication &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>calculateSauceAmount<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.util.MacroCalculatorTest.testSauceCalculator(kari.nutritionplanner.mealplanner.util.MacroCalculatorTest)</span></span> replaced return of double value with -(x + 1) for kari/nutritionplanner/mealplanner/util/MacroCalculator::calculateSauceAmount &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@51d719bc_27'>27</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_27'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>calculateSauceAmount<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.util.MacroCalculatorTest.testEmptySauceIngredient(kari.nutritionplanner.mealplanner.util.MacroCalculatorTest)</span></span> replaced return of double value with -(x + 1) for kari/nutritionplanner/mealplanner/util/MacroCalculator::calculateSauceAmount &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@51d719bc_31'>31</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_31'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>calculateSideAmount<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.util.MacroCalculatorTest.testEmptySideIngredient(kari.nutritionplanner.mealplanner.util.MacroCalculatorTest)</span></span> changed conditional boundary &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>calculateSideAmount<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.util.MacroCalculatorTest.testEmptySideIngredient(kari.nutritionplanner.mealplanner.util.MacroCalculatorTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@51d719bc_32'>32</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_32'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>calculateSideAmount<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.util.MacroCalculatorTest.testSideCalculator(kari.nutritionplanner.mealplanner.util.MacroCalculatorTest)</span></span> Replaced double division with multiplication &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>calculateSideAmount<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.util.MacroCalculatorTest.testSideCalculator(kari.nutritionplanner.mealplanner.util.MacroCalculatorTest)</span></span> replaced return of double value with -(x + 1) for kari/nutritionplanner/mealplanner/util/MacroCalculator::calculateSideAmount &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@51d719bc_34'>34</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@51d719bc_34'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>calculateSideAmount<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.util.MacroCalculatorTest.testEmptySideIngredient(kari.nutritionplanner.mealplanner.util.MacroCalculatorTest)</span></span> replaced return of double value with -(x + 1) for kari/nutritionplanner/mealplanner/util/MacroCalculator::calculateSideAmount &rarr; KILLED</p> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+<li class='mutator'>INCREMENTS_MUTATOR</li>
+<li class='mutator'>VOID_METHOD_CALL_MUTATOR</li>
+<li class='mutator'>RETURN_VALS_MUTATOR</li>
+<li class='mutator'>MATH_MUTATOR</li>
+<li class='mutator'>NEGATE_CONDITIONALS_MUTATOR</li>
+<li class='mutator'>INVERT_NEGS_MUTATOR</li>
+<li class='mutator'>CONDITIONALS_BOUNDARY_MUTATOR</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>kari.nutritionplanner.mealplanner.util.MacroCalculatorTest.testSideCalculator(kari.nutritionplanner.mealplanner.util.MacroCalculatorTest) (0 ms)</li><li>kari.nutritionplanner.mealplanner.util.MacroCalculatorTest.testEmptySideIngredient(kari.nutritionplanner.mealplanner.util.MacroCalculatorTest) (1 ms)</li><li>kari.nutritionplanner.mealplanner.util.MacroCalculatorTest.testMainIngredientCalculator(kari.nutritionplanner.mealplanner.util.MacroCalculatorTest) (1 ms)</li><li>kari.nutritionplanner.mealplanner.util.MacroCalculatorTest.testSauceCalculator(kari.nutritionplanner.mealplanner.util.MacroCalculatorTest) (1 ms)</li><li>kari.nutritionplanner.mealplanner.util.MacroCalculatorTest.testEmptySauceIngredient(kari.nutritionplanner.mealplanner.util.MacroCalculatorTest) (0 ms)</li><li>kari.nutritionplanner.mealplanner.servicelayer.CalculateMealTest.kari.nutritionplanner.mealplanner.servicelayer.CalculateMealTest (1021 ms)</li><li>kari.nutritionplanner.mealplanner.util.MacroCalculatorTest.testEmptyMainIngredient(kari.nutritionplanner.mealplanner.util.MacroCalculatorTest) (1 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='http://pitest.org'>PIT</a> 1.1.8
+
+</body>
+</html>
