@@ -9,4 +9,5 @@ Päivä | Tunnit | Kuvaus
 26.12.2016 | 4h | dokumentaatiota ja logiikan jatkoa, lisää testejä readerille
 27.12.2016 | 5h | testailua, logiikkaa
 28.12.2016 | 1.5h | checkstylen kanssa tappelua
+29.12.2016 | 6h | laajentamista ja testailua
 
