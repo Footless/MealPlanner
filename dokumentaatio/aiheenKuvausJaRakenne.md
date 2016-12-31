@@ -11,3 +11,7 @@
 ###Määrittelyvaiheen luokkakaavio###
 
 ![Määrittelyvaiheen luokkakaavio](luokkakaavio_maarittelyvaihe.png)
+
+###Toteutusvaiheen eräs luokkakaavio###
+
+![Toteutusvaiheen luokkakaavio](luokkakaavio.png)

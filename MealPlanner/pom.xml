@@ -49,12 +49,14 @@
                     <targetClasses>
                         <param>kari.nutritionplanner.mealplanner.domain.*</param>
                         <param>kari.nutritionplanner.mealplanner.util.*</param>
-                        <param>kari.nutritionplanner.mealplanner.servicelayer.*</param>                    
+                        <param>kari.nutritionplanner.mealplanner.servicelayer.*</param>      
+                        <param>kari.nutritionplanner.mealplanner.gui.*</param>               
                     </targetClasses>
                     <targetTests>
                         <param>kari.nutritionplanner.mealplanner.domain.*</param>
                         <param>kari.nutritionplanner.mealplanner.util.*</param>
                         <param>kari.nutritionplanner.mealplanner.servicelayer.*</param>
+                        <param>kari.nutritionplanner.mealplanner.gui.*</param> 
                     </targetTests>
                 </configuration>
             </plugin>

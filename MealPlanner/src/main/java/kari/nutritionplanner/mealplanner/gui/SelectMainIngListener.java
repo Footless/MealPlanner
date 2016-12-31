@@ -20,7 +20,7 @@ import kari.nutritionplanner.mealplanner.servicelayer.CalculateMeal;
  * @author kari
  */
 public class SelectMainIngListener implements ActionListener {
-    
+
     private final CardLayout cards;
     private final Container container;
     private final JComboBox box;
@@ -30,7 +30,7 @@ public class SelectMainIngListener implements ActionListener {
     private CalculateMeal cm;
     private UserInterface ui;
 
-    public SelectMainIngListener(UserInterface ui, CardLayout cards, Container container, JComboBox box, JSlider proteinSlider, 
+    public SelectMainIngListener(UserInterface ui, CardLayout cards, Container container, JComboBox box, JSlider proteinSlider,
             JSlider fatSlider, JSlider calorieSlider, CalculateMeal cm) {
         this.cards = cards;
         this.container = container;
@@ -41,14 +41,12 @@ public class SelectMainIngListener implements ActionListener {
         this.calorieSlider = calorieSlider;
         this.ui = ui;
     }
-    
-    
-    
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        String mainIng = (String)box.getSelectedItem();
+        String mainIng = (String) box.getSelectedItem();
         int id = cm.getMainIngId(mainIng);
-        if (cm.calculateAllMeal(id, calorieSlider.getValue() , proteinSlider.getValue(), fatSlider.getValue())) {
+        if (cm.calculateAllMeal(id, calorieSlider.getValue(), proteinSlider.getValue(), fatSlider.getValue())) {
             ui.createMealCard(container);
             cards.show(container, "readyMeal");
         } else {
@@ -56,5 +54,5 @@ public class SelectMainIngListener implements ActionListener {
                     + " rasvan määrää");
         }
     }
-    
+
 }
