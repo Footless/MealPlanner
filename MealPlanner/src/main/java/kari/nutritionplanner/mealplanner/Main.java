@@ -6,9 +6,11 @@
 package kari.nutritionplanner.mealplanner;
 
 import java.util.Map;
+import javax.swing.SwingUtilities;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
+import kari.nutritionplanner.mealplanner.gui.UserInterface;
 import kari.nutritionplanner.mealplanner.servicelayer.CalculateMeal;
-import kari.nutritionplanner.mealplanner.servicelayer.ProcessIngredients;
+import kari.nutritionplanner.mealplanner.util.ProcessIngredients;
 
 /**
  *
@@ -28,10 +30,12 @@ public class Main {
 //            }
 //            System.out.println("------");
 //        }
-        CalculateMeal cm = new CalculateMeal();
-        if (cm.calculateAllMeal(805, 500, 40, 15)) {
-            System.out.println("success");
-        }
-        System.out.println(cm.getMeal());
+//        CalculateMeal cm = new CalculateMeal();
+//        if (cm.calculateAllMeal(805, 500, 40, 15)) {
+//            System.out.println("success");
+//        }
+//        System.out.println(cm.getMeal());
+        UserInterface ui = new UserInterface();
+        SwingUtilities.invokeLater(ui);
     }
 }

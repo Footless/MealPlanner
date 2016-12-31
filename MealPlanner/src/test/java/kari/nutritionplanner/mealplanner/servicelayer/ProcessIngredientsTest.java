@@ -5,6 +5,7 @@
  */
 package kari.nutritionplanner.mealplanner.servicelayer;
 
+import kari.nutritionplanner.mealplanner.util.ProcessIngredients;
 import java.util.Map;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
 import org.junit.After;

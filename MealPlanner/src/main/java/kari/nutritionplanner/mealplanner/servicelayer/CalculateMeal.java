@@ -5,7 +5,8 @@
  */
 package kari.nutritionplanner.mealplanner.servicelayer;
 
-import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
+import kari.nutritionplanner.mealplanner.util.ProcessIngredients;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
@@ -113,7 +114,6 @@ public class CalculateMeal {
     }
     
     private void roundUpIngredients() {
-        double jotain = Math.ceil(5.5);
         double main = Math.ceil(meal.getMainIngredientAmount() * 100) / 100;
         double side = Math.ceil(meal.getSideIngredientAmount() * 100) / 100;
         double sauce = Math.ceil(meal.getSauceAmount() * 100) / 100;
@@ -137,5 +137,18 @@ public class CalculateMeal {
     public Meal getMeal() {
         return meal;
     }
+    
+    public int getMainIngId(String name) {
+        Map<Integer, Ingredient> mains = ingredients.get("mains");
+        for (Integer i : mains.keySet()) {
+            if (mains.get(i).getName().contains(name)) {
+                return i;
+            }
+        }
+        return 0;
+    }
 
+    public List<Ingredient> getMainIngredients() {
+        return ingredientProcessor.getMainIngredients();
+    }
 }

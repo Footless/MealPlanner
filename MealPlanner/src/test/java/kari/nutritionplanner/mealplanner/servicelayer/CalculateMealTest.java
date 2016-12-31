@@ -25,6 +25,7 @@ public class CalculateMealTest {
     private Meal meal;
     private double delta = 0.0001;
     private double bigDelta = 2.5;
+    private double hugeDelta = 5.5;
 
     public CalculateMealTest() {
     }
@@ -103,21 +104,13 @@ public class CalculateMealTest {
         cm.setSideIngredient(800);
         assertEquals(800, cm.getMeal().getCalories(), delta);
     }
-//    
-//    @Test
-//    public void testSetMeal() {
-//        cm.setMainIngredient(805, 25, 15);
-//        cm.setSauce(15);
-//        cm.setMisc();
-//        cm.setSideIngredient(800);
-//        assertEquals(800, cm.getMeal().getCalories(), delta);
-//        assertEquals(15, cm.getMeal().getFat(), bigDelta);
-//        assertEquals(25, cm.getMeal().getProtein(), bigDelta);
-//    }
     
     @Test
     public void testSetWholeMeal() {
         assertTrue(cm.calculateAllMeal(805, 500, 25, 15));
+        assertEquals(500, cm.getMeal().getCalories(), hugeDelta);
+        assertEquals(25, cm.getMeal().getProtein(), bigDelta);
+        assertEquals(15, cm.getMeal().getFat(), bigDelta);
     }
     
 }

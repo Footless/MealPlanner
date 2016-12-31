@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kari.nutritionplanner.mealplanner.servicelayer;
+package kari.nutritionplanner.mealplanner.util;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,6 +82,12 @@ public class ProcessIngredients {
         addSideIngredients();
         addSauces();
         addSidesAndStuffs();
+    }
+    
+    public List<Ingredient> getMainIngredients() {
+        SCVReader lfnr = new SCVReader("main_ingredients.csv");
+        List<Ingredient> mains = lfnr.getAllIngredients();
+        return mains;
     }
 
     public Map<String, Map<Integer, Ingredient>> getIngredients() {
