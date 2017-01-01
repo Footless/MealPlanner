@@ -7,10 +7,6 @@
 
 **Käyttäjien toiminnot:** Käyttäjä valitsee haluamansa pääraaka-aineen sekä haluamansa kalorimäärän, proteiinin määrän ja rasvan määrän. Ainakin alkuvaiheessa ohjelma valitsee lisukkeet ja kastikkeen, mutta tulevaisuudessa käyttäjä voi vaikuttaa siihen myös itse. Lopuksi  ohjelma kertoo paljonko mitäkin raaka-ainetta pitää olla ja paljonko kaloreita lopullisessa annoksessa on. Ohjelma kertoo myös makrot ja mahdolliseti tarkempia ravintotietoja, data mahdollistaa myös allergeenien sekä vitamiinimäärien näyttämisen, myös rasvojen erottelu eri aminohappokoostumuksiin on mahdollista.
 
-###Määrittelyvaiheen luokkakaavio###
-
-![Määrittelyvaiheen luokkakaavio](luokkakaavio_maarittelyvaihe.png)
-
 ###Toteutusvaiheen eräs luokkakaavio###
 
 ![Toteutusvaiheen luokkakaavio](luokkakaavio.png)
