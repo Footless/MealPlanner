@@ -25,17 +25,17 @@ public class SCVReader {
 
     private BufferedReader reader;
 
-    public SCVReader(String fileName) {
+    public SCVReader(String fileName) throws FileNotFoundException {
         ClassLoader classLoader = getClass().getClassLoader();
         File file = new File(classLoader.getResource("file/" + fileName).getFile());
         try {
             this.reader = new BufferedReader(new FileReader(file));
         } catch (FileNotFoundException ex) {
-            System.out.println("Tiedostoa ei löytynyt");
+            throw new FileNotFoundException(fileName);
         }
     }
 
-    public List<Ingredient> getAllIngredients() {
+    public List<Ingredient> getAllIngredients() throws IOException {
         String line = null;
         Scanner scanner = null;
         List<Ingredient> ingredients = new ArrayList<>();
@@ -44,21 +44,27 @@ public class SCVReader {
                 searchIngredient(ingredients, scanner, line);
             }
         } catch (IOException ex) {
-            Logger.getLogger(SCVReader.class.getName()).log(Level.SEVERE, null, ex);
+            throw new IOException("joku meni vituiksi: " + ex);
         }
         return ingredients;
     }
 
-    public void searchMacros(Ingredient ing) {
+    public boolean searchMacros(Ingredient ing) throws IOException {
+        if (ing == null) {
+            return false;
+        }
         String line = null;
         Scanner scanner = null;
         try {
             while ((line = reader.readLine()) != null) {
-                setMacros(scanner, line, ing);
+                if (setMacros(scanner, line, ing)) {
+                    return true;
+                }
             }
         } catch (IOException ex) {
-            Logger.getLogger(SCVReader.class.getName()).log(Level.SEVERE, null, ex);
+            throw new IOException("joku meni vituiksi: " + ex);
         }
+        return false;
     }
 
 //    public Ingredient search(String s) {
@@ -93,7 +99,7 @@ public class SCVReader {
         }
     }
 
-    private void setMacros(Scanner scanner, String line, Ingredient ing) {
+    private boolean setMacros(Scanner scanner, String line, Ingredient ing) {
         scanner = new Scanner(line);
         scanner.useDelimiter(";");
         int i = 0;
@@ -111,11 +117,12 @@ public class SCVReader {
                     ing.setProtein(Double.parseDouble(scanner.next().replace(',', '.')));
                 } else if (macro.contains("FIBC")) {
                     ing.setFiber(Double.parseDouble(scanner.next().replace(',', '.')));
-                    return;
+                    return true;
                 }
             }
             i++;
         }
+        return false;
     }
 
 //    private Ingredient searchIngredient(Scanner scanner, String s, String line) {

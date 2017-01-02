@@ -11,4 +11,7 @@ Päivä | Tunnit | Kuvaus
 28.12.2016 | 1.5h | checkstylen kanssa tappelua
 29.12.2016 | 6h | laajentamista ja testailua
 30.12.2016 | 6h | GUI:n ensimmäinen versio valmiiksi
+31.12.2016 | 1h | GUI:n hieromista
+1.1.2017 | 4h | logiikan hieromista
+2.1.2017 | 5h | logiikan ja sen testauksen parantelua
 

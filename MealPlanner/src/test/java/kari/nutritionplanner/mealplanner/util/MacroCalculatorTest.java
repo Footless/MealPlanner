@@ -36,21 +36,21 @@ public class MacroCalculatorTest {
     @Test
     public void testEmptyMainIngredient() {
         Ingredient ing = new Ingredient(1, "test");
-        double toTest = mc.calculateMainIngredientAmount(40, ing);
+        double toTest = mc.calculateAmountForProtein(40, ing);
         assertEquals(0, toTest, delta);
     }
     
     @Test
     public void testEmptySauceIngredient() {
         Ingredient ing = new Ingredient(1, "test");
-        double toTest = mc.calculateSauceAmount(40, ing);
+        double toTest = mc.calculateAmountForFat(40, ing);
         assertEquals(0, toTest, delta);
     }
     
     @Test
     public void testEmptySideIngredient() {
         Ingredient ing = new Ingredient(1, "test");
-        double toTest = mc.calculateSideAmount(40, ing);
+        double toTest = mc.calculateAmountForCalories(40, ing);
         assertEquals(0, toTest, delta);
     }
     
@@ -58,7 +58,7 @@ public class MacroCalculatorTest {
     public void testMainIngredientCalculator() {
         Ingredient ing = new Ingredient(1, "test");
         ing.setProtein(20.0);
-        double toTest = mc.calculateMainIngredientAmount(40, ing);
+        double toTest = mc.calculateAmountForProtein(40, ing);
         assertEquals(2.0, toTest, delta);
     }
     
@@ -66,7 +66,7 @@ public class MacroCalculatorTest {
     public void testSauceCalculator() {
         Ingredient ing = new Ingredient(1, "test");
         ing.setFat(20.0);
-        double toTest = mc.calculateSauceAmount(40, ing);
+        double toTest = mc.calculateAmountForFat(40, ing);
         assertEquals(2.0, toTest, delta);
     }
     
@@ -74,7 +74,7 @@ public class MacroCalculatorTest {
     public void testSideCalculator() {
         Ingredient ing = new Ingredient(1, "test");
         ing.setCalories(20.0);
-        double toTest = mc.calculateSideAmount(40, ing);
+        double toTest = mc.calculateAmountForCalories(40, ing);
         assertEquals(2.0, toTest, delta);
     }
 }

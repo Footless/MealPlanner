@@ -5,6 +5,8 @@
  */
 package kari.nutritionplanner.mealplanner.util;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
 import org.junit.After;
@@ -34,7 +36,7 @@ public class SCVReaderTest {
     }
     
     @Before
-    public void setUp() {
+    public void setUp() throws FileNotFoundException {
         reader = new SCVReader("main_ingredients.csv");
     }
     
@@ -51,7 +53,7 @@ public class SCVReaderTest {
      }
      
      @Test
-     public void testSearchMacros() {
+     public void testSearchMacros() throws FileNotFoundException, IOException {
          reader = new SCVReader("component_value.csv");
          Ingredient ing = new Ingredient(8062, "test");
          reader.searchMacros(ing);
@@ -63,8 +65,22 @@ public class SCVReaderTest {
      }
      
      @Test
-     public void testSearchAllIngs() {
+     public void testSearchAllIngs() throws IOException {
          List<Ingredient> ings = reader.getAllIngredients();
          assertTrue(ings.size() > 0);
+     }
+     
+     @Test
+     public void testSearchMacrosInvalidIng() throws FileNotFoundException, IOException {
+         reader = new SCVReader("component_value.csv");
+         Ingredient ing = new Ingredient(56033, "test");
+         assertFalse(reader.searchMacros(ing));
+     }
+     
+     @Test
+     public void testSearchMacrosNullIng() throws FileNotFoundException, IOException {
+         reader = new SCVReader("component_value.csv");
+         Ingredient ing = null;
+         assertFalse(reader.searchMacros(ing));
      }
 }

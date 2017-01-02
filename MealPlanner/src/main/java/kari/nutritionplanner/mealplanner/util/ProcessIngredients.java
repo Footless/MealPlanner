@@ -5,12 +5,12 @@
  */
 package kari.nutritionplanner.mealplanner.util;
 
-import java.util.ArrayList;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
-import kari.nutritionplanner.mealplanner.util.SCVReader;
 
 /**
  *
@@ -18,12 +18,12 @@ import kari.nutritionplanner.mealplanner.util.SCVReader;
  */
 public class ProcessIngredients {
 
-    private Map<Integer, Ingredient> mainIgredients;
-    private Map<Integer, Ingredient> sideIgredients;
-    private Map<Integer, Ingredient> sauces;
-    private Map<Integer, Ingredient> sidesAndMisc;
+    private final Map<Integer, Ingredient> mainIgredients;
+    private final Map<Integer, Ingredient> sideIgredients;
+    private final Map<Integer, Ingredient> sauces;
+    private final Map<Integer, Ingredient> sidesAndMisc;
 
-    public ProcessIngredients() {
+    public ProcessIngredients() throws IOException {
         this.mainIgredients = new HashMap<>();
         this.sidesAndMisc = new HashMap<>();
         this.sauces = new HashMap<>();
@@ -31,60 +31,67 @@ public class ProcessIngredients {
         addAll();
     }
 
-    private void addMainIngredients() {
+    private void addMainIngredients() throws IOException {
         SCVReader lfnr = new SCVReader("main_ingredients.csv");
         List<Ingredient> ingredients = lfnr.getAllIngredients();
 
         for (Ingredient ingredient : ingredients) {
-            addIngredient(ingredient);
-            mainIgredients.put(ingredient.getId(), ingredient);
+            if (addIngredient(ingredient)) {
+                mainIgredients.put(ingredient.getId(), ingredient);
+            }
         }
     }
 
-    private void addSideIngredients() {
+    private void addSideIngredients() throws FileNotFoundException, IOException {
         SCVReader lfnr = new SCVReader("side_ingredients.csv");
         List<Ingredient> ingredients = lfnr.getAllIngredients();
 
         for (Ingredient ingredient : ingredients) {
-            addIngredient(ingredient);
-            sideIgredients.put(ingredient.getId(), ingredient);
+            if (addIngredient(ingredient)) {
+                sideIgredients.put(ingredient.getId(), ingredient);
+            }
         }
     }
 
-    private void addSauces() {
+    private void addSauces() throws FileNotFoundException, IOException {
         SCVReader lfnr = new SCVReader("sauces.csv");
         List<Ingredient> ingredients = lfnr.getAllIngredients();
 
         for (Ingredient ingredient : ingredients) {
-            addIngredient(ingredient);
-            sauces.put(ingredient.getId(), ingredient);
+            if (addIngredient(ingredient)) {
+                sauces.put(ingredient.getId(), ingredient);
+            }
         }
     }
 
-    private void addSidesAndStuffs() {
+    private void addSidesAndStuffs() throws FileNotFoundException, IOException {
         SCVReader lfnr = new SCVReader("sidesAndStuff.csv");
         List<Ingredient> ingredients = lfnr.getAllIngredients();
 
         for (Ingredient ingredient : ingredients) {
-            addIngredient(ingredient);
-            sidesAndMisc.put(ingredient.getId(), ingredient);
+            if (addIngredient(ingredient)) {
+                sidesAndMisc.put(ingredient.getId(), ingredient);
+            }
         }
     }
 
-    private Ingredient addIngredient(Ingredient ing) {
+    private boolean addIngredient(Ingredient ing) throws FileNotFoundException, IOException {
         SCVReader fMacroR = new SCVReader("component_value_stub.csv");
-        fMacroR.searchMacros(ing);
-        return ing;
+        if (fMacroR.searchMacros(ing)) {
+            return true;
+        }
+        ;
+        return false;
     }
 
-    private void addAll() {
+    private void addAll() throws IOException {
         addMainIngredients();
         addSideIngredients();
         addSauces();
         addSidesAndStuffs();
     }
-    
-    public List<Ingredient> getMainIngredients() {
+
+    public List<Ingredient> getMainIngredients() throws FileNotFoundException, IOException {
         SCVReader lfnr = new SCVReader("main_ingredients.csv");
         List<Ingredient> mains = lfnr.getAllIngredients();
         return mains;

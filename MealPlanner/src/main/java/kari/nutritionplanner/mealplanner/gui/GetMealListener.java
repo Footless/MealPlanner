@@ -19,7 +19,7 @@ import kari.nutritionplanner.mealplanner.servicelayer.CalculateMeal;
  *
  * @author kari
  */
-public class SelectMainIngListener implements ActionListener {
+public class GetMealListener implements ActionListener {
 
     private final CardLayout cards;
     private final Container container;
@@ -30,7 +30,7 @@ public class SelectMainIngListener implements ActionListener {
     private CalculateMeal cm;
     private UserInterface ui;
 
-    public SelectMainIngListener(UserInterface ui, CardLayout cards, Container container, JComboBox box, JSlider proteinSlider,
+    public GetMealListener(UserInterface ui, CardLayout cards, Container container, JComboBox box, JSlider proteinSlider,
             JSlider fatSlider, JSlider calorieSlider, CalculateMeal cm) {
         this.cards = cards;
         this.container = container;
@@ -47,6 +47,7 @@ public class SelectMainIngListener implements ActionListener {
         String mainIng = (String) box.getSelectedItem();
         int id = cm.getMainIngId(mainIng);
         if (cm.calculateAllMeal(id, calorieSlider.getValue(), proteinSlider.getValue(), fatSlider.getValue())) {
+            ui.setDesiredMacros(calorieSlider.getValue(), proteinSlider.getValue(), fatSlider.getValue());
             ui.createMealCard(container);
             cards.show(container, "readyMeal");
         } else {

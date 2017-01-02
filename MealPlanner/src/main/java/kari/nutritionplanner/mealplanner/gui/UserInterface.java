@@ -11,8 +11,11 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -33,25 +36,36 @@ public class UserInterface implements Runnable {
     private CardLayout cardL;
     private CalculateMeal mealCalculator;
     private Color mainColor;
+    private int desiredCalories;
+    private int desiredProtein;
+    private int desiredFat;
 
     @Override
     public void run() {
         frame = new JFrame("Meal Planner");
         frame.setPreferredSize(new Dimension(650, 500));
         cardL = new CardLayout();
-        mealCalculator = new CalculateMeal();
+        try {
+            mealCalculator = new CalculateMeal();
+        } catch (IOException ex) {
+            Logger.getLogger(UserInterface.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.mainColor = Color.white;
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        createComponents(frame.getContentPane());
+        try {
+            createComponents(frame.getContentPane());
+        } catch (IOException ex) {
+            Logger.getLogger(UserInterface.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         frame.setLocationByPlatform(true);
         frame.pack();
         frame.setVisible(true);
     }
 
-    private void createComponents(Container contentPane) {
+    private void createComponents(Container contentPane) throws IOException {
         JPanel cards = new JPanel(cardL);
         JPanel startCard = createStartCard(cards);
         JPanel mainIngredientCard = createMainIngredientCard(cards);
@@ -72,7 +86,7 @@ public class UserInterface implements Runnable {
         startCard.setLayout(new GridLayout(3, 1, 2, 2));
         
         JButton getMeal = createButton("Laske ateria");
-        StartNewMealListener snml = new StartNewMealListener(cardL, container);
+        SelectCardListener snml = new SelectCardListener(cardL, container, "askMainIngredient");
         getMeal.addActionListener(snml);
         
         JButton addIngredients = createButton("Lisää uusia raaka-aineita");
@@ -85,7 +99,7 @@ public class UserInterface implements Runnable {
         return startCard;
     }
 
-    private JPanel createMainIngredientCard(JPanel cards) {
+    private JPanel createMainIngredientCard(JPanel cards) throws IOException {
         JPanel card = new JPanel();
         card.setBackground(Color.black);
         GridLayout layout = new GridLayout(4, 1);  // perusjako kortille
@@ -102,22 +116,22 @@ public class UserInterface implements Runnable {
         JPanel restMacros = new JPanel(new GridLayout(3,1));
         JSlider proteinSlider = createSlider(10, 60, 20);
         JTextArea fatInstructions = createTextArea("Valitse haluamasi rasvan määrä");
-        JSlider fatSlider = createSlider(10, 50, 20);
+        JSlider fatSlider = createSlider(10, 40, 20);
         restMacros.add(proteinSlider);
         restMacros.add(fatInstructions);
         restMacros.add(fatSlider);
         
         JPanel calories = new JPanel(new GridLayout(2, 1));
-        JTextArea caloriesInstructions = createTextArea("Valitse haluamasi määrä proteiinia:");
-        JSlider calorieSlider = createSlider(200, 2000, 400);
+        JTextArea caloriesInstructions = createTextArea("Valitse haluamasi määrä kaloreita:");
+        JSlider calorieSlider = createSlider(300, 800, 400);
         calories.add(caloriesInstructions);
         calories.add(calorieSlider);
         
         JPanel buttons = new JPanel(new GridLayout(2, 1));
-        JButton ok = new JButton("Laske ateria");
-        SelectMainIngListener sml = new SelectMainIngListener(this, cardL, cards, box, proteinSlider, fatSlider, calorieSlider, mealCalculator);
+        JButton ok = createButton("Laske ateria");
+        GetMealListener sml = new GetMealListener(this, cardL, cards, box, proteinSlider, fatSlider, calorieSlider, mealCalculator);
         ok.addActionListener(sml);
-        JButton back = new JButton("Takaisin alkuun");
+        JButton back = createButton("Takaisin alkuun");
         BackButtonListener bbl = new BackButtonListener(cardL, cards);
         back.addActionListener(bbl);
         buttons.add(ok);
@@ -129,16 +143,31 @@ public class UserInterface implements Runnable {
         return card;
     }
     
+    protected void setDesiredMacros(int calories, int protein, int fat) {
+        this.desiredCalories = calories;
+        this.desiredProtein = protein;
+        this.desiredFat = fat;
+    }
+    
     protected JPanel createMealCard(Container container) {
-        JPanel card = new JPanel(new GridLayout(1, 1));
-        JTextArea meal = createTextArea(mealCalculator.getMeal().toString());
-        card.add(meal);
-        container.add(card);
+        JPanel card = new JPanel(new GridLayout(5, 1));
+        JTextArea ingsInfo = createTextArea(mealCalculator.getMeal().toString());
+        JPanel ings = createMealIngredients();
+        JTextArea macrosInfo = createTextArea("macros jajaj");
+        JPanel macros = createMealMacros();
+        JButton back = createButton("Takaisin alkuun");
+        BackButtonListener bbl = new BackButtonListener(cardL, container);
+        back.addActionListener(bbl);
+        card.add(ingsInfo);
+        card.add(ings);
+        card.add(macrosInfo);
+        card.add(macros);
+        card.add(back);
         container.add(card, "readyMeal");
         return card;
     }
 
-    private JComboBox createProteinComboBox() {
+    private JComboBox createProteinComboBox() throws IOException {
         List<String> mainsAsList = new ArrayList<>();
         for (Ingredient ing : mealCalculator.getMainIngredients()) {
             mainsAsList.add(ing.getName());
@@ -170,9 +199,37 @@ public class UserInterface implements Runnable {
         slider.setMajorTickSpacing(min);
         slider.setPaintTicks(true);
         slider.setPaintLabels(true);
-        slider.setLabelTable(slider.createStandardLabels(min));
+        slider.setLabelTable(slider.createStandardLabels(max / 10));
         slider.setBackground(mainColor);
         return slider;
+    }
+
+    private JPanel createMealIngredients() {
+        JPanel ings = new JPanel(new GridLayout(4, 1));
+        JTextArea main = createTextArea("main ing");
+        JTextArea side = createTextArea("side ing");
+        JTextArea misc = createTextArea("misc");
+        JTextArea sauce = createTextArea("sauce");
+        ings.add(main);
+        ings.add(side);
+        ings.add(misc);
+        ings.add(sauce);
+        return ings;
+    }
+
+    private JPanel createMealMacros() {
+        JPanel ings = new JPanel(new GridLayout(5, 1));
+        JTextArea calories = createTextArea("calories");
+        JTextArea protein = createTextArea("protein");
+        JTextArea fat = createTextArea("fat");
+        JTextArea carbs = createTextArea("carbs");
+        JTextArea fiber = createTextArea("fiber");
+        ings.add(calories);
+        ings.add(protein);
+        ings.add(fat);
+        ings.add(carbs);
+        ings.add(fiber);
+        return ings;
     }
 
 }

@@ -15,18 +15,20 @@ import javax.swing.JFrame;
  *
  * @author kari
  */
-public class StartNewMealListener implements ActionListener {
+public class SelectCardListener implements ActionListener {
     private final CardLayout cards;
     private final Container container;
+    private final String card;
     
-    public StartNewMealListener(CardLayout cards, Container container) {
+    public SelectCardListener(CardLayout cards, Container container, String card) {
         this.cards = cards;
         this.container = container;
+        this.card = card;
     }
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        cards.show(container, "askMainIngredient");
+        cards.show(container, card);
     }
     
 }

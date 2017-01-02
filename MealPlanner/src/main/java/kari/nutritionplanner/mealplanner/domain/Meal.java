@@ -14,8 +14,8 @@ import java.util.Map;
  */
 public class Meal {
 
-    private Map<Integer, Ingredient> ingredients;
-    private Map<Integer, Double> amounts;
+    private final Map<Integer, Ingredient> ingredients;
+    private final Map<Integer, Double> amounts;
     
     public Meal() {
         this.ingredients = new HashMap<>();
@@ -104,6 +104,10 @@ public class Meal {
 
     public Ingredient getSideIngredient() {
         return ingredients.get(4);
+    }
+    
+    public Ingredient getMisc() {
+        return ingredients.get(3);
     }
 
     public double getMainIngredientAmount() {   //kerrotaan sadalla tulostusvaiheessa

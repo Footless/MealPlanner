@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kari.nutritionplanner.mealplanner.servicelayer;
+package kari.nutritionplanner.mealplanner.util;
 
+import java.io.IOException;
 import kari.nutritionplanner.mealplanner.util.ProcessIngredients;
 import java.util.Map;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
@@ -35,7 +36,7 @@ public class ProcessIngredientsTest {
     }
     
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
         this.pi = new ProcessIngredients();
     }
     
