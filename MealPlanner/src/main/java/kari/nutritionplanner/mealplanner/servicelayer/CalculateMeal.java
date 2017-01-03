@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package kari.nutritionplanner.mealplanner.servicelayer;
 
 import java.io.IOException;
@@ -15,9 +10,12 @@ import kari.nutritionplanner.mealplanner.domain.Meal;
 import kari.nutritionplanner.mealplanner.util.MacroCalculator;
 
 /**
- *
+ * Käyttöliittymän ja logiikkaluokkien väliin sijoittuva luokka. Tarkoitettu
+ * halutun aterian muodostamiseen, ja tarjoaa myös apumetodeja sen muodostamiseen.
+ * 
  * @author kari
  */
+
 public class CalculateMeal {
     
     private final Meal meal;
@@ -30,14 +28,39 @@ public class CalculateMeal {
         meal = new Meal();
     }
     
+    /**
+     * Palauttaa Map-olion, jossa sisällä eri Mapeissa kaikki raaka-aineet.
+     * Raaka-aineet koodattu int-arvoilla seuraavasti:
+     * 1 = pääraaka-aine
+     * 2 = kastike
+     * 3 = lisuke, esim. lämmin lisäke tai salaatti
+     * 4 = varsinainen lisäke, esim. peruna tai pasta
+     * 
+     * @return Map, jossa jossa sisällä neljä eri Map-oliota, joissa kaikki raaka-aineet
+     * aterian rakennusta varten.
+     */
+    
     public Map<String, Map<Integer, Ingredient>> getIngredients() {
         return ingredients;
     }
     
+    /**
+     * Luokan päämetodi, joka annettujen makrojen perusteella muodostaa aterian. Jos annetut arvot
+     * ovat sallittujen rajojen sisällä ja realistisia (esim. rasvaa ateriassa ei voi olla vähemmän
+     * kuin pääraaka-aineesta tulee ateriaan) tekee aterian ja palauttaa true.
+     * 
+     * @param id pääraaka-aineen id-numero
+     * @param calories halutut kalorit
+     * @param protein haluttu proteiinin määrä grammoina
+     * @param fat haluttu rasvan määrä grammoina
+     * @return onnistuiko aterian luonti annetuilla arvoilla
+     * @see Ingredient
+     */
+    
     public boolean calculateAllMeal(int id, double calories, double protein, double fat) {
         randomSide();
         setMisc();
-        if (setMainIngredient(id, protein, fat)) {
+        if (setMainIngredient(id, protein, fat, calories)) {
             setSauce(fat);
             setSideIngredientAmount(calories);
             evenUpIngredients(calories, protein, fat);
@@ -49,12 +72,15 @@ public class CalculateMeal {
         return false;
     }
     
-    private boolean setMainIngredient(int id, double protein, double fat) {
+    private boolean setMainIngredient(int id, double protein, double fat, double calories) {
         Ingredient main = ingredients.get("mains").get(id);
+        if (protein < 10 || fat < 5 || calories < 50) {
+            return false;
+        }
         double proteinToAdd = protein - meal.getProtein();
         MacroCalculator mc = new MacroCalculator();
         double mainAmount = mc.calculateAmountForProtein(proteinToAdd, main);
-        if (mainAmount * main.getFat() < fat) {
+        if (mainAmount * main.getFat() <= fat && mainAmount * main.getCalories() <= calories && mainAmount > 0) {
             meal.setMainIngredientAmount(mainAmount);
             meal.setMainIngredient(main);
             return true;
@@ -180,9 +206,24 @@ public class CalculateMeal {
         }
     }
     
+    /**
+     * Palauttaa aterian Meal-oliona
+     * 
+     * @return Meal-olio
+     * @see Meal
+     */
     public Meal getMeal() {
         return meal;
     }
+    
+    /**
+     * Käyttöliittymälle tarjottu metodi, joka palauttaa pääraaka-aineen
+     * id-numeron nimen perusteella
+     * 
+     * @param name haettavan raaka-aineen nimi
+     * @return haetun raaka-aineen id
+     * @see Ingredient
+     */
     
     public int getMainIngId(String name) {
         Map<Integer, Ingredient> mains = ingredients.get("mains");
@@ -194,6 +235,14 @@ public class CalculateMeal {
         return 0;
     }
     
+    /**
+     * Käyttöliittymälle tarjottu metodi, joka palauttaa listan kaikista valittavissa
+     * olevista pääraaka-aineista.
+     * 
+     * @return listan pääraaka-aineista, jotka ovat käyttäjän valittavissa.
+     * @throws IOException 
+     * @see Ingredient
+     */
     public List<Ingredient> getMainIngredients() throws IOException {
         return ingredientProcessor.getMainIngredients();
     }

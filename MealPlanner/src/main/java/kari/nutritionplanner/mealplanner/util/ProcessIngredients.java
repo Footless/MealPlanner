@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package kari.nutritionplanner.mealplanner.util;
 
 import java.io.FileNotFoundException;
@@ -12,10 +7,6 @@ import java.util.List;
 import java.util.Map;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
 
-/**
- *
- * @author kari
- */
 public class ProcessIngredients {
 
     private final Map<Integer, Ingredient> mainIgredients;
@@ -42,7 +33,7 @@ public class ProcessIngredients {
         }
     }
 
-    private void addSideIngredients() throws FileNotFoundException, IOException {
+    private void addSideIngredients() throws IOException {
         SCVReader lfnr = new SCVReader("side_ingredients.csv");
         List<Ingredient> ingredients = lfnr.getAllIngredients();
 
@@ -53,7 +44,7 @@ public class ProcessIngredients {
         }
     }
 
-    private void addSauces() throws FileNotFoundException, IOException {
+    private void addSauces() throws IOException {
         SCVReader lfnr = new SCVReader("sauces.csv");
         List<Ingredient> ingredients = lfnr.getAllIngredients();
 
@@ -64,7 +55,7 @@ public class ProcessIngredients {
         }
     }
 
-    private void addSidesAndStuffs() throws FileNotFoundException, IOException {
+    private void addSidesAndStuffs() throws IOException {
         SCVReader lfnr = new SCVReader("sidesAndStuff.csv");
         List<Ingredient> ingredients = lfnr.getAllIngredients();
 
@@ -75,7 +66,7 @@ public class ProcessIngredients {
         }
     }
 
-    private boolean addIngredient(Ingredient ing) throws FileNotFoundException, IOException {
+    private boolean addIngredient(Ingredient ing) throws IOException {
         SCVReader fMacroR = new SCVReader("component_value_stub.csv");
         if (fMacroR.searchMacros(ing)) {
             return true;
@@ -91,7 +82,7 @@ public class ProcessIngredients {
         addSidesAndStuffs();
     }
 
-    public List<Ingredient> getMainIngredients() throws FileNotFoundException, IOException {
+    public List<Ingredient> getMainIngredients() throws IOException {
         SCVReader lfnr = new SCVReader("main_ingredients.csv");
         List<Ingredient> mains = lfnr.getAllIngredients();
         return mains;

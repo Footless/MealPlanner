@@ -142,11 +142,11 @@ public class Meal {
                 + ingredients.get(2).getName() + ": " + getSauceAmount() * 100 + "gr\n"
                 + ingredients.get(3).getName() + ": " + getMiscAmount() * 100 + "gr\n\n"
                 + "Ravintoarvot: \n"
-                + "Kilokalorit: " + getCalories() + "kcal\n"
-                + "Proteiini: " + getProtein() + "gr\n"
-                + "Rasva: " + getFat() + "gr\n"
-                + "Hiilihydraatit: " + getCarbs() + "gr\n"
-                + "Kuidut: " + getFiber() + "gr\n";
+                + "Kilokalorit: " + Math.ceil(getCalories()) + "kcal\n"
+                + "Proteiini: " + Math.ceil(getProtein()) + "gr\n"
+                + "Rasva: " + Math.ceil(getFat()) + "gr\n"
+                + "Hiilihydraatit: " + Math.ceil(getCarbs()) + "gr\n"
+                + "Kuidut: " + Math.ceil(getFiber()) + "gr\n";
     }
 
 }

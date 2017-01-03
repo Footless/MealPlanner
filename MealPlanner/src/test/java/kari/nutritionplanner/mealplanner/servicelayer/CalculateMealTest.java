@@ -112,7 +112,7 @@ public class CalculateMealTest {
     public void testGetMainIngId() {
         int id = cm.getMainIngId("Kuha");
         assertEquals(805, id);
-        id = cm.getMainIngId("Tofu");
+        id = cm.getMainIngId("Tofu, soijavalmiste, soijapapujuusto");
         assertEquals(33501, id);
         id = cm.getMainIngId("Nyhtökaura, nude");
         assertEquals(34307, id);
@@ -128,7 +128,7 @@ public class CalculateMealTest {
 
     @Test
     public void testSetWholeMeal() throws IOException {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 100; i++) {
             cm = new CalculateMeal();
             int calories = new Random().nextInt(300) + 400;
             int protein = calories / 20;
@@ -156,9 +156,37 @@ public class CalculateMealTest {
     
     @Test
     public void testLowFatMeal() {
+        assertFalse(cm.calculateAllMeal(750, 300, 50, 5));
+        assertFalse(cm.calculateAllMeal(750, 300, 10, 5));
         assertTrue(cm.calculateAllMeal(805, 500, 50, 10));
         assertEquals(10, cm.getMeal().getFat(), bigDelta);
         assertEquals(0, cm.getMeal().getSauceAmount(), bigDelta);
+    }
+    
+    @Test
+    public void testSetMainIng() {
+        assertFalse(cm.calculateAllMeal(805, 50, 10, 4));
+        assertFalse(cm.calculateAllMeal(805, 50, 9, 5));
+        assertFalse(cm.calculateAllMeal(805, 50, 9, 4));
+        assertTrue(cm.calculateAllMeal(805, 50, 10, 5));
+        assertFalse(cm.calculateAllMeal(805, 49, 10, 5));
+        assertFalse(cm.calculateAllMeal(805, 49, 9, 4));
+        assertFalse(cm.calculateAllMeal(805, 49, 10, 4));
+    }
+    
+    @Test
+    public void testZeroCaloriesMeal() {
+        assertFalse(cm.calculateAllMeal(805, 0, 30, 30));
+    }
+    
+    @Test
+    public void testZeroProteinMeal() {
+        assertFalse(cm.calculateAllMeal(805, 500, 0, 20));
+    }
+    
+    @Test
+    public void testZeroFatMeal() {
+        assertFalse(cm.calculateAllMeal(805, 500, 50, 0));
     }
 
     @Test
