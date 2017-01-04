@@ -10,7 +10,8 @@ import java.util.Scanner;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
 
 /**
- *
+ * SCV-tiedostojen lukemiseen tarkoitettu luokka. Konstruktori saa parametrinä
+ * tiedoston nimen.
  * @author kari
  */
 public class SCVReader {

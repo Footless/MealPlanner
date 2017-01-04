@@ -9,7 +9,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
+ * Ateria-luokka. Sisältää kaikki raaka-aineet sekä metodit aterian sisällön
+ * käsittelyyn.
+ * 
  * @author kari
  */
 public class Meal {
@@ -134,19 +136,19 @@ public class Meal {
         return amounts.get(4);
     }
 
-    @Override
-    public String toString() {
-        return "Ainekset:\n"
-                + ingredients.get(1).getName() + ": " + getMainIngredientAmount() * 100 + "gr\n"
-                + ingredients.get(4).getName() + ": " + getSideIngredientAmount() * 100 + "gr\n"
-                + ingredients.get(2).getName() + ": " + getSauceAmount() * 100 + "gr\n"
-                + ingredients.get(3).getName() + ": " + getMiscAmount() * 100 + "gr\n\n"
-                + "Ravintoarvot: \n"
-                + "Kilokalorit: " + Math.ceil(getCalories()) + "kcal\n"
-                + "Proteiini: " + Math.ceil(getProtein()) + "gr\n"
-                + "Rasva: " + Math.ceil(getFat()) + "gr\n"
-                + "Hiilihydraatit: " + Math.ceil(getCarbs()) + "gr\n"
-                + "Kuidut: " + Math.ceil(getFiber()) + "gr\n";
-    }
+//    @Override
+//    public String toString() {
+//        return "\nAinekset:\n"
+//                + ingredients.get(1).getName() + ": " + getMainIngredientAmount() * 100 + "gr\n"
+//                + ingredients.get(4).getName() + ": " + getSideIngredientAmount() * 100 + "gr\n"
+//                + ingredients.get(2).getName() + ": " + getSauceAmount() * 100 + "gr\n"
+//                + ingredients.get(3).getName() + ": " + getMiscAmount() * 100 + "gr\n\n"
+//                + "Ravintoarvot: \n"
+//                + "Kilokalorit: " + Math.ceil(getCalories()) + "kcal\n"
+//                + "Proteiini: " + Math.ceil(getProtein()) + "gr\n"
+//                + "Rasva: " + Math.ceil(getFat()) + "gr\n"
+//                + "Hiilihydraatit: " + Math.ceil(getCarbs()) + "gr\n"
+//                + "Kuidut: " + Math.ceil(getFiber()) + "gr\n";
+//    }
 
 }

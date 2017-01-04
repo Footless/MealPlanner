@@ -11,7 +11,7 @@ import kari.nutritionplanner.mealplanner.util.MacroCalculator;
 
 /**
  * Käyttöliittymän ja logiikkaluokkien väliin sijoittuva luokka. Tarkoitettu
- * halutun aterian muodostamiseen, ja tarjoaa myös apumetodeja sen muodostamiseen.
+ * halutun aterian muodostamiseen ja tarjoaa apumetodeja sen muodostamiseen.
  * 
  * @author kari
  */
@@ -80,7 +80,10 @@ public class CalculateMeal {
         double proteinToAdd = protein - meal.getProtein();
         MacroCalculator mc = new MacroCalculator();
         double mainAmount = mc.calculateAmountForProtein(proteinToAdd, main);
-        if (mainAmount * main.getFat() <= fat && mainAmount * main.getCalories() <= calories && mainAmount > 0) {
+        if (mainAmount < 0.5) {
+            mainAmount = 0.5;
+        }
+        if (mainAmount * main.getFat() <= fat && mainAmount > 0) {
             meal.setMainIngredientAmount(mainAmount);
             meal.setMainIngredient(main);
             return true;
@@ -207,7 +210,7 @@ public class CalculateMeal {
     }
     
     /**
-     * Palauttaa aterian Meal-oliona
+     * Palauttaa aterian Meal-oliona.
      * 
      * @return Meal-olio
      * @see Meal
@@ -218,7 +221,7 @@ public class CalculateMeal {
     
     /**
      * Käyttöliittymälle tarjottu metodi, joka palauttaa pääraaka-aineen
-     * id-numeron nimen perusteella
+     * id-numeron nimen perusteella.
      * 
      * @param name haettavan raaka-aineen nimi
      * @return haetun raaka-aineen id
@@ -228,7 +231,7 @@ public class CalculateMeal {
     public int getMainIngId(String name) {
         Map<Integer, Ingredient> mains = ingredients.get("mains");
         for (Integer i : mains.keySet()) {
-            if (mains.get(i).getName().contains(name)) {
+            if (mains.get(i).getName().toLowerCase().contains(name.toLowerCase())) {
                 return i;
             }
         }

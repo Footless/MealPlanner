@@ -74,6 +74,26 @@ public class MealTest {
      }
      
      @Test
+     public void testGetFiber() {
+         Ingredient ing = new Ingredient(1, "test");
+         ing.setFiber(10.5);
+         meal.setMainIngredient(ing);
+         meal.setMainIngredientAmount(10);
+         double toTest = meal.getFiber();
+         assertEquals(105, toTest, delta);
+     }
+     
+     @Test
+     public void testGetCarbs() {
+         Ingredient ing = new Ingredient(1, "test");
+         ing.setCarb(30.5);
+         meal.setMainIngredient(ing);
+         meal.setMainIngredientAmount(10);
+         double toTest = meal.getCarbs();
+         assertEquals(305, toTest, delta);
+     }
+     
+     @Test
      public void testGetCalories() {
          Ingredient ingredient = new Ingredient(100000, "test");
          Ingredient ingredient2 = new Ingredient(100000, "test");

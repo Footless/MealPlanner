@@ -5,14 +5,11 @@
  */
 package kari.nutritionplanner.mealplanner;
 
-import java.util.Map;
 import javax.swing.SwingUtilities;
-import kari.nutritionplanner.mealplanner.domain.Ingredient;
 import kari.nutritionplanner.mealplanner.gui.UserInterface;
-import kari.nutritionplanner.mealplanner.servicelayer.CalculateMeal;
-import kari.nutritionplanner.mealplanner.util.ProcessIngredients;
 
 /**
+ * Pääluokka, joka käynnistää graafisen käyttöliittymän.
  *
  * @author kari
  */

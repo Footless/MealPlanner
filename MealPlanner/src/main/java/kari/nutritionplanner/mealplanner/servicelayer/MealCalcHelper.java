@@ -33,8 +33,8 @@ public class MealCalcHelper {
     private int desiredFat;
     private CalculateMeal cm;
 
-    public MealCalcHelper() throws IOException {
-        this.cm = new CalculateMeal();
+    public MealCalcHelper(CalculateMeal cm) throws IOException {
+        this.cm = cm;
         this.meal = new Meal();
     }
 
@@ -45,6 +45,13 @@ public class MealCalcHelper {
     
     public void setMainIngredient(String name) {
         meal.setMainIngredient(cm.getIngredients().get("mains").get(cm.getMainIngId(name)));
+    }
+    
+    public void clear() {
+        this.meal = new Meal();
+        this.desiredCalories = 0;
+        this.desiredFat = 0;
+        this.desiredProtein = 0;
     }
     
     public void setSideIngredient(String name) {

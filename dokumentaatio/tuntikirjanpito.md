@@ -14,4 +14,6 @@ Päivä | Tunnit | Kuvaus
 31.12.2016 | 1h | GUI:n hieromista
 1.1.2017 | 4h | logiikan hieromista
 2.1.2017 | 5h | logiikan ja sen testauksen parantelua
+3.1.2017 | 4h | käyttöliittymän parantelua, logiikan hienosäätöä
+4.1.2017 | 5h | käyttöliittymän parantelua, testejä, dokumentaatiota
 

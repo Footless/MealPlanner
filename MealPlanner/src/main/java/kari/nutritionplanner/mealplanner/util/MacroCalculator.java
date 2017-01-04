@@ -2,6 +2,12 @@ package kari.nutritionplanner.mealplanner.util;
 
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
 
+/**
+ * Apumetodeja makrojen laskuun tarjoava luokka.
+ * 
+ * @author kari
+ */
+
 public class MacroCalculator {
 
     public double calculateAmountForProtein(double protein, Ingredient ing) {
@@ -12,10 +18,12 @@ public class MacroCalculator {
     }
     
     /**
+     * Laskee tarvittavan määrän raaka-ainetta, joka tarvitaan tuottamaan
+     * haluttu määrä rasvaa raaka-aineesta.
      *
-     * @param fat
-     * @param ing
-     * @return
+     * @param fat Haluttu määrä rasvaa.
+     * @param ing Raaka-aine josta rasvan määrä lasketaan.
+     * @return Tarvittavan määrän raaka-ainetta muodossa 1 = 100g.
      */
     public double calculateAmountForFat(double fat, Ingredient ing) {
         if (ing.getFat() > 0) {

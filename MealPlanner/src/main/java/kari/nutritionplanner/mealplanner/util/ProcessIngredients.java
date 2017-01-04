@@ -1,11 +1,18 @@
 package kari.nutritionplanner.mealplanner.util;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
+
+/**
+ * Hakee raaka-aineet tiedostoista SCVReaderiä käyttäen. Raaka-aineet
+ * tallennetaan Map-olioihin, tyypin mukaisesti.
+ * 
+ * @see SCVReader
+ * @author kari
+ */
 
 public class ProcessIngredients {
 

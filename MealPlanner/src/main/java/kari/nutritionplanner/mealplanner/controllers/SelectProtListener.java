@@ -20,21 +20,27 @@ import java.awt.CardLayout;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JPanel;
 import javax.swing.JSlider;
+import kari.nutritionplanner.mealplanner.gui.UserInterface;
 import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
 
 /**
+ * ActionListenerin toteuttava luokka. Ottaa proteiinin arvon talteen ja
+ * vaihtaa näkyviin seuraavan kortin.
  *
  * @author kari
  */
 public class SelectProtListener implements ActionListener {
+    private final UserInterface ui;
     private final MealCalcHelper helper;
     private final JSlider slider;
     private final Container container;
     private final String nextCard;
     private final CardLayout cardL;
 
-    public SelectProtListener(MealCalcHelper helper, JSlider slider, Container container, String nextCard, CardLayout cardL) {
+    public SelectProtListener(UserInterface ui, MealCalcHelper helper, JSlider slider, Container container, String nextCard, CardLayout cardL) {
+        this.ui  = ui;
         this.helper = helper;
         this.slider = slider;
         this.container = container;
@@ -46,6 +52,8 @@ public class SelectProtListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        JPanel card = ui.createFatsCard(container);
+        container.add(card, nextCard);
         helper.setDesiredProtein(slider.getValue());
         cardL.show(container, nextCard);
     }

@@ -20,23 +20,31 @@ import java.awt.CardLayout;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
 import javax.swing.ButtonModel;
 import javax.swing.JPanel;
+import kari.nutritionplanner.mealplanner.gui.UserInterface;
 import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
 
 /**
- *
+ * ActionListenerin toteuttava luokka. Ottaa pääraaka-aineen talteen ja 
+ * vaihtaa seuraavan kortin, joka on proteiini.
+ * 
  * @author kari
  */
 public class SelectMainIngListener implements ActionListener {
+    private final UserInterface ui;
     private final MealCalcHelper helper;
     private final ButtonGroup bg;
     private final Container container;
     private final String nextCard;
     private final CardLayout cardL;
     
-    public SelectMainIngListener(CardLayout cardL, MealCalcHelper helper, ButtonGroup bg, Container container, String nextCard) {
+    public SelectMainIngListener(UserInterface ui, CardLayout cardL, MealCalcHelper helper, ButtonGroup bg, Container container, String nextCard) {
+        this.ui = ui;
         this.helper = helper;
         this.bg = bg;
         this.container = container;
@@ -49,7 +57,14 @@ public class SelectMainIngListener implements ActionListener {
         ButtonModel b = bg.getSelection();
         String name = b.getActionCommand();
         helper.setMainIngredient(name);
-        cardL.show(container, nextCard);
+        try {
+            JPanel card = ui.createCaloriesCard(container);
+            container.add(card, nextCard);
+            cardL.show(container, nextCard);
+        } catch (IOException ex) {
+            Logger.getLogger(SelectMainIngListener.class.getName()).log(Level.SEVERE, null, ex);
+        }
+//        cardL.show(container, nextCard);
     }
     
 }

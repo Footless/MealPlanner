@@ -20,6 +20,7 @@ import java.awt.CardLayout;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import kari.nutritionplanner.mealplanner.gui.UserInterface;
@@ -27,10 +28,13 @@ import kari.nutritionplanner.mealplanner.servicelayer.CalculateMeal;
 import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
 
 /**
- *
+ * ActionListeneri toteuttava luokka. Ottaa rasva-arvon talteen ja suorittaa
+ * aterian laskemisen, jos mahdollista ja näyttää valmiin aterian.
+ * 
  * @author kari
  */
 public class SelectFatListener implements ActionListener {
+
     private final MealCalcHelper helper;
     private final JSlider slider;
     private final Container container;
@@ -48,14 +52,16 @@ public class SelectFatListener implements ActionListener {
         this.ui = ui;
         this.cm = cm;
     }
-    
+
     @Override
     public void actionPerformed(ActionEvent e) {
         helper.setDesiredFat(slider.getValue());
-        cm.calculateAllMeal(helper.getMainIngredientId(), helper.getDesiredCalories(), helper.getDesiredProtein(), helper.getDesiredFat());
-        JPanel card = ui.createReadyMealCard(container);
-        container.add(card, nextCard);
-        cardL.show(container, nextCard);
+        if (cm.calculateAllMeal(helper.getMainIngredientId(), helper.getDesiredCalories(), helper.getDesiredProtein(), helper.getDesiredFat())) {
+            JPanel card = ui.createReadyMealCard(container);
+            container.add(card, nextCard);
+            cardL.show(container, nextCard);
+        } else {
+            JOptionPane.showMessageDialog(container, "Aterian luonti epäonnistui, yritä säätää proteiinin ja/tai rasvan määrää.");
+        }
     }
-    
 }

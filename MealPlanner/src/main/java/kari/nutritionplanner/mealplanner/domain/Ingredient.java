@@ -6,13 +6,15 @@
 package kari.nutritionplanner.mealplanner.domain;
 
 /**
+ * Raaka-ainetta kuvaava luokka. Sisältää raaka-aineen nimen ja id-numeron,
+ * sekä raaka-aineen makrot.
  *
  * @author kari
  */
 public class Ingredient {
 
-    private int id;
-    private String name;
+    private final int id;
+    private final String name;
     private double calories;
     private double protein;
     private double fat;

@@ -9,4 +9,4 @@
 
 ###Toteutusvaiheen eräs luokkakaavio###
 
-![Toteutusvaiheen luokkakaavio](luokkakaavio.png)
+![Toteutusvaiheen luokkakaavio](luokkakaavio2.png)
