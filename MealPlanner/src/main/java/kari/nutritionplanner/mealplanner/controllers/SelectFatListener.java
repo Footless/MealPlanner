@@ -35,22 +35,22 @@ import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
  */
 public class SelectFatListener implements ActionListener {
 
-    private final MealCalcHelper helper;
     private final JSlider slider;
     private final Container container;
     private final String nextCard;
     private final CardLayout cardL;
     private final UserInterface ui;
     private final CalculateMeal cm;
+    private final MealCalcHelper helper;
 
-    public SelectFatListener(CalculateMeal cm, UserInterface ui, MealCalcHelper helper, JSlider slider, Container container, String nextCard, CardLayout cardL) {
-        this.helper = helper;
+    public SelectFatListener(CalculateMeal cm, UserInterface ui, JSlider slider, Container container, String nextCard, CardLayout cardL) {
         this.slider = slider;
         this.container = container;
         this.nextCard = nextCard;
         this.cardL = cardL;
         this.ui = ui;
         this.cm = cm;
+        this.helper = ui.getHelper();
     }
 
     @Override

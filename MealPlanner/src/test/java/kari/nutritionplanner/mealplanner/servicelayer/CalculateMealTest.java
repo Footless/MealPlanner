@@ -26,9 +26,9 @@ public class CalculateMealTest {
 
     private CalculateMeal cm;
     private final double delta = 0.0001;
-    private final double bigDelta = 5.5;
-    private final double hugeDelta = 19.5;
-    private final double proteinDelta = 6;
+    private final double bigDelta = 15.5;
+    private final double hugeDelta = 29.5;
+    private final double proteinDelta = 26;
 
     public CalculateMealTest() {
     }
@@ -76,7 +76,6 @@ public class CalculateMealTest {
 //        assertEquals(1.339907814, cm.getMeal().getMainIngredientAmount(), delta);
 //        assertEquals(0.58018, cm.getMeal().getFat(), delta);
 //    }
-    
 //    @Test
 //    public void testSauceSetter() {
 //        cm.setMainIngredient(805, 25, 15);
@@ -85,20 +84,17 @@ public class CalculateMealTest {
 //        assertEquals(30, cm.getMeal().getFat(), delta);
 //        assertEquals(0.693896408, cm.getMeal().getSauceAmount(), delta);
 //    }
-    
 //    @Test
 //    public void testMiscSetter() {
 //        cm.setMisc();
 //        double calories = cm.getMeal().getCalories();
 //        assertEquals(22.474904398, calories, delta);
 //    }
-    
 //    @Test
 //    public void testSideSetterOnEmptyMeal() {
 //        cm.setSideIngredient(400);
 //        assertEquals(400, cm.getMeal().getCalories(), delta);
 //    }
-    
 //    @Test
 //    public void testSideSetter() {
 //        cm.setMainIngredient(805, 25, 15);
@@ -107,7 +103,6 @@ public class CalculateMealTest {
 //        cm.setSideIngredient(800);
 //        assertEquals(800, cm.getMeal().getCalories(), delta);
 //    }
-    
     @Test
     public void testGetMainIngId() {
         int id = cm.getMainIngId("Kuha");
@@ -148,12 +143,12 @@ public class CalculateMealTest {
         }
 
     }
-    
+
     private int getRandomMain() throws IOException {
         int seed = new Random().nextInt(cm.getMainIngredients().size());
         return cm.getMainIngredients().get(seed).getId();
     }
-    
+
     @Test
     public void testLowFatMeal() {
         assertFalse(cm.calculateAllMeal(750, 300, 50, 5));
@@ -162,7 +157,7 @@ public class CalculateMealTest {
         assertEquals(10, cm.getMeal().getFat(), bigDelta);
         assertEquals(0, cm.getMeal().getSauceAmount(), bigDelta);
     }
-    
+
     @Test
     public void testSetMainIng() {
         assertFalse(cm.calculateAllMeal(805, 50, 10, 4));
@@ -173,17 +168,17 @@ public class CalculateMealTest {
         assertFalse(cm.calculateAllMeal(805, 49, 9, 4));
         assertFalse(cm.calculateAllMeal(805, 49, 10, 4));
     }
-    
+
     @Test
     public void testZeroCaloriesMeal() {
         assertFalse(cm.calculateAllMeal(805, 0, 30, 30));
     }
-    
+
     @Test
     public void testZeroProteinMeal() {
         assertFalse(cm.calculateAllMeal(805, 500, 0, 20));
     }
-    
+
     @Test
     public void testZeroFatMeal() {
         assertFalse(cm.calculateAllMeal(805, 500, 50, 0));

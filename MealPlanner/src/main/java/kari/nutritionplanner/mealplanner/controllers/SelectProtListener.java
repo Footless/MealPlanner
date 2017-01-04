@@ -39,9 +39,9 @@ public class SelectProtListener implements ActionListener {
     private final String nextCard;
     private final CardLayout cardL;
 
-    public SelectProtListener(UserInterface ui, MealCalcHelper helper, JSlider slider, Container container, String nextCard, CardLayout cardL) {
+    public SelectProtListener(UserInterface ui, JSlider slider, Container container, String nextCard, CardLayout cardL) {
         this.ui  = ui;
-        this.helper = helper;
+        this.helper = ui.getHelper();
         this.slider = slider;
         this.container = container;
         this.nextCard = nextCard;

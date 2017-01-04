@@ -43,9 +43,9 @@ public class SelectMainIngListener implements ActionListener {
     private final String nextCard;
     private final CardLayout cardL;
     
-    public SelectMainIngListener(UserInterface ui, CardLayout cardL, MealCalcHelper helper, ButtonGroup bg, Container container, String nextCard) {
+    public SelectMainIngListener(UserInterface ui, CardLayout cardL, ButtonGroup bg, Container container, String nextCard) {
         this.ui = ui;
-        this.helper = helper;
+        this.helper = ui.getHelper();
         this.bg = bg;
         this.container = container;
         this.nextCard = nextCard;

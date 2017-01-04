@@ -33,15 +33,13 @@ import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
  */
 public class SelectCaloriesListener implements ActionListener {
     private final UserInterface ui;
-    private final MealCalcHelper helper;
     private final JSlider slider;
     private final Container container;
     private final String nextCard;
     private final CardLayout cardL;
 
-    public SelectCaloriesListener(UserInterface ui, MealCalcHelper helper, JSlider slider, Container container, String nextCard, CardLayout cardL) {
+    public SelectCaloriesListener(UserInterface ui, JSlider slider, Container container, String nextCard, CardLayout cardL) {
         this.ui = ui;
-        this.helper = helper;
         this.slider = slider;
         this.container = container;
         this.nextCard = nextCard;
@@ -54,7 +52,7 @@ public class SelectCaloriesListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JPanel card = ui.createProteinsCard(container);
         container.add(card, nextCard);
-        helper.setDesiredCalories(slider.getValue());
+        ui.getHelper().setDesiredCalories(slider.getValue());
         cardL.show(container, nextCard);
     }
     

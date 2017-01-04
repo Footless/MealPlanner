@@ -40,24 +40,24 @@ public class MealCalcHelper {
 
     /**
      * Asettaa halutun pääraaka-aineen nimen perusteella.
+     *
      * @param name pääraaka-aineen nimi
      */
-    
     public void setMainIngredient(String name) {
         meal.setMainIngredient(cm.getIngredients().get("mains").get(cm.getMainIngId(name)));
     }
-    
+
     public void clear() {
         this.meal = new Meal();
         this.desiredCalories = 0;
         this.desiredFat = 0;
         this.desiredProtein = 0;
     }
-    
+
     public void setSideIngredient(String name) {
         // TODO: joku näppärä tapa tähän, jossa mahdollisuus myös satunnaiseen, ehkä
     }
-    
+
     public void setSauce(String name) {
         // TODO: tääkin jossain vaiheessa ehkä ajankohtainen
     }
@@ -73,7 +73,7 @@ public class MealCalcHelper {
     public void setDesiredProtein(int desiredProtein) {
         this.desiredProtein = desiredProtein;
     }
-    
+
     public int getMainIngredientId() {
         return this.meal.getMainIngredient().getId();
     }
@@ -89,6 +89,5 @@ public class MealCalcHelper {
     public int getDesiredProtein() {
         return desiredProtein;
     }
-    
-    
+
 }

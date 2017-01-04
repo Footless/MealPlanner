@@ -15,5 +15,5 @@ Päivä | Tunnit | Kuvaus
 1.1.2017 | 4h | logiikan hieromista
 2.1.2017 | 5h | logiikan ja sen testauksen parantelua
 3.1.2017 | 4h | käyttöliittymän parantelua, logiikan hienosäätöä
-4.1.2017 | 5h | käyttöliittymän parantelua, testejä, dokumentaatiota
+4.1.2017 | 6h | käyttöliittymän parantelua, testejä, dokumentaatiota, refaktorointia (GUI ja CalculateMeal
 
