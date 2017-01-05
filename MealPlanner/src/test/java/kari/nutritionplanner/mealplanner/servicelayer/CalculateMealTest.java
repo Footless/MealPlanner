@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package kari.nutritionplanner.mealplanner.servicelayer;
 
 import java.io.IOException;
@@ -10,11 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
-import kari.nutritionplanner.mealplanner.domain.Meal;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -28,17 +20,9 @@ public class CalculateMealTest {
     private final double delta = 0.0001;
     private final double bigDelta = 15.5;
     private final double hugeDelta = 29.5;
-    private final double proteinDelta = 26;
+    private final double proteinDelta = 15.5;
 
     public CalculateMealTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
     }
 
     @Before
@@ -46,13 +30,6 @@ public class CalculateMealTest {
         this.cm = new CalculateMeal();
     }
 
-    @After
-    public void tearDown() {
-    }
-
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
     @Test
     public void testGetIngredientsCreated() {
         Map<String, Map<Integer, Ingredient>> ings = cm.getIngredients();
@@ -123,19 +100,20 @@ public class CalculateMealTest {
 
     @Test
     public void testSetWholeMeal() throws IOException {
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 10; i++) {
             cm = new CalculateMeal();
-            int calories = new Random().nextInt(300) + 400;
-            int protein = calories / 20;
-            int fat = calories / 30;
+            Ingredient ing = cm.getIngredients().get("mains").get(getRandomMain());
+            int calories = new Random().nextInt(400) + 300;
+            double protein = calories / 20;
+            double fat = calories / 30;
             cm.getMeal().setSauceAmount(-5.5);
-            assertTrue(cm.calculateAllMeal(getRandomMain(), calories, protein, fat));
+            assertTrue(cm.calculateAllMeal(ing.getId(), calories, protein, fat));
             assertEquals(calories, cm.getMeal().getCalories(), hugeDelta);
             assertEquals(protein, cm.getMeal().getProtein(), proteinDelta);
             assertEquals(fat, cm.getMeal().getFat(), bigDelta);
             assertEquals("Juurekset, uunissa", cm.getMeal().getMisc().getName());
             assertTrue(cm.getMeal().getSauceAmount() >= 0);
-            if (cm.getMeal().getSideIngredient().getProtein() >= 5) {
+            if (cm.getMeal().getSideIngredient().getProtein() >= 3 || cm.getMeal().getMainIngredient().getProtein() >= 20) {
                 assertEquals(1, cm.getMeal().getMiscAmount(), delta);
             } else {
                 assertEquals(0.5, cm.getMeal().getMiscAmount(), delta);

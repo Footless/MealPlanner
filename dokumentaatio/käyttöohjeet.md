@@ -1,0 +1,4 @@
+##Meal Planner##
+
+###Aterian suunnittelu###
+Aterian suunnittelu alkaa pääraaka-aineen valinnalla. Seuraavaksi valitaan haluttu määrä kilokaloreja, joka aterian pitäisi sisältää. Seuraavaksi vuorossa ovat proteiini ja rasva. Käyttäjän valittua kaikki arvot, ohjelma laskee sopivan aterian arvojen perusteella, pyrkien mahdollisimman lähelle haluttuja arvoja. Ohjelma kuitenkin tarkistaa viimeisenä kalorimäärät, joten kaikki arvot eivät välttämättä aina vastaa haluttuja. Aterian luonti voi epäonnistua, jos on valittu pääraaka-aineelle sopimattomia arvoja, kuten liian alhainen rasvan tai proteiinin määrä. Pääsääntöisesti aterian proteiinin määrä määrittyy pääraaka-aineesta, joten se on ratkaisevassa osassa ateriaa luodessa. Tässä vaiheessa projektia muut raaka-aineet vielä valitaan ohjelman toimesta epäsäännöllisesti. Makrojen valintaa helpottavat slaiderit mukautuvat valitun pääraaka-aineen perusteella, joka osaltaan estää mahdottomien aterioiden luomista.

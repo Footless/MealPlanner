@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
 
@@ -17,10 +18,12 @@ import kari.nutritionplanner.mealplanner.domain.Ingredient;
 public class SCVReader {
 
     private final BufferedReader reader;
+    private final Locale loc;
 
     public SCVReader(String fileName) {
         InputStream in = getClass().getResourceAsStream("/file/" + fileName);
         reader = new BufferedReader(new InputStreamReader(in));
+        loc = new Locale("fi", "FI");
     }
 
     public List<Ingredient> getAllIngredients() throws IOException {
@@ -32,7 +35,7 @@ public class SCVReader {
                 searchIngredient(ingredients, scanner, line);
             }
         } catch (IOException ex) {
-            throw new IOException("joku meni vituiksi: " + ex);
+            throw new IOException("Tiedoston lukeminen epäonnistui: " + ex);
         }
         return ingredients;
     }
@@ -50,7 +53,7 @@ public class SCVReader {
                 }
             }
         } catch (IOException ex) {
-            throw new IOException("joku meni vituiksi: " + ex);
+            throw new IOException("Tiedoston lukeminen epäonnistui: " + ex);
         }
         return false;
     }
@@ -71,6 +74,7 @@ public class SCVReader {
 //    }
     private void searchIngredient(List<Ingredient> ingredients, Scanner scanner, String line) {
         scanner = new Scanner(line);
+        scanner.useLocale(loc);
         scanner.useDelimiter(";");
         int i = 0;
         String id = "";
@@ -90,6 +94,7 @@ public class SCVReader {
     private boolean setMacros(Scanner scanner, String line, Ingredient ing) {
         scanner = new Scanner(line);
         scanner.useDelimiter(";");
+        scanner.useLocale(loc);
         int i = 0;
         while (scanner.hasNext()) {
             String next = scanner.next();

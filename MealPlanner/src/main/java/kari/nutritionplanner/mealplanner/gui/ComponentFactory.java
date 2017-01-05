@@ -47,7 +47,7 @@ import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
  */
 public class ComponentFactory {
 
-    public final Color mainColor = Color.white;
+    private final Color mainColor = Color.white;
 
     public JTextArea createIngText(Ingredient ing, double amount) {
         JTextArea jta = createTextArea(ing + ": " + Math.ceil(amount * 100) + "gr");
@@ -67,7 +67,7 @@ public class ComponentFactory {
     public void createMealText(JPanel card, CalculateMeal cm, MealCalcHelper helper) {
         Meal meal = cm.getMeal();
         JPanel pane = new JPanel();
-        pane.setBackground(Color.cyan);
+//        pane.setBackground(Color.cyan);
         BoxLayout boxL = new BoxLayout(pane, BoxLayout.PAGE_AXIS);
         pane.setLayout(boxL);
         pane.add(Box.createRigidArea(new Dimension(0, 10)));
@@ -109,7 +109,7 @@ public class ComponentFactory {
 
     public JButton createButton(String text) {
         JButton button = new JButton(text);
-        button.setBackground(Color.cyan);
+//        button.setBackground(Color.cyan);
         return button;
     }
 

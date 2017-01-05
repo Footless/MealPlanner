@@ -5,7 +5,13 @@
  */
 package kari.nutritionplanner.mealplanner;
 
+import java.lang.reflect.Field;
+import java.nio.charset.Charset;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import kari.nutritionplanner.mealplanner.gui.UserInterface;
 
 /**
@@ -19,19 +25,20 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-//        ProcessIngredients pi = new ProcessIngredients();
-//        Map<String, Map<Integer, Ingredient>> ings = pi.getIngredients();
-//        for (String s : ings.keySet()) {
-//            for (Integer i : ings.get(s).keySet()) {
-//                System.out.println(ings.get(s).get(i));
-//            }
-//            System.out.println("------");
-//        }
-//        CalculateMeal cm = new CalculateMeal();
-//        if (cm.calculateAllMeal(805, 500, 40, 15)) {
-//            System.out.println("success");
-//        }
-//        System.out.println(cm.getMeal());
+        System.setProperty("file.encoding", "UTF-8");
+        Field charset;
+        try {
+            charset = Charset.class.getDeclaredField("defaultCharset");
+            charset.setAccessible(true);
+            charset.set(null, null);
+        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException | SecurityException ex) {
+            throw new ExceptionInInitializerError(ex);
+        } 
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException | UnsupportedLookAndFeelException | InstantiationException | IllegalAccessException ex) {
+            throw new ExceptionInInitializerError(ex);
+        }
         UserInterface ui = new UserInterface();
         SwingUtilities.invokeLater(ui);
     }

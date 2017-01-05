@@ -23,6 +23,11 @@ public class CalculateMeal {
     private final Map<String, Map<Integer, Ingredient>> ingredients;
     private final MacroCalculator mc = new MacroCalculator();
 
+    /**
+     * Konstruktori, ei mitään ihmeellistä. Voi heittää poikkeuksen.
+     *
+     * @throws IOException
+     */
     public CalculateMeal() throws IOException {
         this.ingredientProcessor = new ProcessIngredients();
         this.ingredients = ingredientProcessor.getIngredients();
@@ -31,8 +36,8 @@ public class CalculateMeal {
 
     /**
      * Palauttaa Map-olion, jossa sisällä eri Mapeissa kaikki raaka-aineet.
-     * Raaka-aineet koodattu int-arvoilla seuraavasti: 1 = pääraaka-aine 2 =
-     * kastike 3 = lisuke, esim. lämmin lisäke tai salaatti 4 = varsinainen
+     * Raaka-aineet koodattu merkkijonoilla seuraavasti: "mains" = pääraaka-aine "sauces" =
+     * kastike "sidesAndMisc" = lisuke, esim. lämmin lisäke tai salaatti "sides" = varsinainen
      * lisäke, esim. peruna tai pasta
      *
      * @return Map, jossa jossa sisällä neljä eri Map-oliota, joissa kaikki
@@ -60,8 +65,8 @@ public class CalculateMeal {
             return false;
         }
         randomSide();
-        setMisc();
         if (setMainIngredient(id, protein, fat)) {
+            setMisc();
             setSauce(fat);
             setSideIngredientAmount(calories);
             MealTweaker mw = new MealTweaker(meal, calories, protein, fat);
@@ -100,7 +105,7 @@ public class CalculateMeal {
     private void setMisc() {
         Ingredient misc = ingredients.get("sidesAndMisc").get(33182);
         meal.setMisc(misc);
-        if (meal.getSideIngredient().getProtein() >= 5) {
+        if (meal.getSideIngredient().getProtein() >= 3 || meal.getMainIngredient().getProtein() >= 20) {
             meal.setMiscAmount(1);
         } else {
             meal.setMiscAmount(0.5);

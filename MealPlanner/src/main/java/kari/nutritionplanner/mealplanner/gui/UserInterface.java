@@ -15,25 +15,19 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JSlider;
 import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
-import kari.nutritionplanner.mealplanner.domain.Meal;
 import kari.nutritionplanner.mealplanner.servicelayer.CalculateMeal;
 import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
 
@@ -111,7 +105,7 @@ public class UserInterface implements Runnable {
         helper = new MealCalcHelper(mealCalculator);
         
         JPanel card = new JPanel(new BorderLayout());
-        card.setBackground(Color.black);
+//        card.setBackground(Color.black);
         JTextArea instructions = compFactory.createTextArea("Valitse listasta haluamasi raaka-aine");
         card.add(instructions, BorderLayout.NORTH);
         ButtonGroup mainsButtonGroup = compFactory.createMainsButtons(card, mealCalculator);
@@ -122,7 +116,7 @@ public class UserInterface implements Runnable {
 
     public JPanel createCaloriesCard(Container container) throws IOException {
         JPanel card = new JPanel(new BorderLayout());
-        card.setBackground(Color.black);
+//        card.setBackground(Color.black);
         JTextArea caloriesInstructions = compFactory.createTextArea("Valitse haluamasi määrä kaloreita:");
         Ingredient ing = mealCalculator.getIngredients().get("mains").get(helper.getMainIngredientId());
         double mul = getMultiplier(ing);
@@ -137,7 +131,7 @@ public class UserInterface implements Runnable {
 
     public JPanel createProteinsCard(Container container) {
         JPanel card = new JPanel(new BorderLayout());
-        card.setBackground(Color.black);
+//        card.setBackground(Color.black);
         JTextArea proteinInstructions = compFactory.createTextArea("Valitse haluamasi proteiinin määrä:");
         Ingredient ing = mealCalculator.getIngredients().get("mains").get(helper.getMainIngredientId());
         double mul = getMultiplier(ing);
@@ -152,7 +146,7 @@ public class UserInterface implements Runnable {
 
     public JPanel createFatsCard(Container container) {
         JPanel card = new JPanel(new BorderLayout());
-        card.setBackground(Color.black);
+//        card.setBackground(Color.black);
         JTextArea fatInstructions = compFactory.createTextArea("Valitse haluamasi rasvan määrä:");
         Ingredient ing = mealCalculator.getIngredients().get("mains").get(helper.getMainIngredientId());
         double mul = getMultiplier(ing);
@@ -167,7 +161,7 @@ public class UserInterface implements Runnable {
     
     public JPanel createReadyMealCard(Container container) {
         JPanel card = new JPanel(new BorderLayout());
-        card.setBackground(Color.black);
+//        card.setBackground(Color.black);
         JTextArea title = compFactory.createTextArea("Tässä ateriasi:");
         compFactory.createMealText(card, mealCalculator, helper);
         JPanel buttons = new JPanel(new GridLayout(2, 1));
