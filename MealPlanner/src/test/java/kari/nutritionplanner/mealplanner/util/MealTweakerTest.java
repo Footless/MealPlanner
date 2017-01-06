@@ -46,7 +46,7 @@ public class MealTweakerTest {
         this.cm = new CalculateMeal();
         this.helper = new MealCalcHelper(cm);
         meal = new Meal();
-        meal.setMainIngredient(cm.getIngredients().get("mains").get(helper.getMainIngId("kuha")));
+        meal.setMainIngredient(cm.getIngredients().get("mains").get(helper.getIdForMainIng("kuha")));
         meal.setSideIngredient(cm.getIngredients().get("sides").get(204));
         meal.setSauce(cm.getIngredients().get("sauces").get(5009));
         meal.setSauce(cm.getIngredients().get("sidesAndMisc").get(33182));

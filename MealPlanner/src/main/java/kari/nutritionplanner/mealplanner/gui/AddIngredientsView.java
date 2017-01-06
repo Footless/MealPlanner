@@ -19,6 +19,7 @@ package kari.nutritionplanner.mealplanner.gui;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -43,7 +44,7 @@ public class AddIngredientsView {
         this.compFactory = compFactory;
     }
 
-    public JPanel createSearchIngCard(JPanel cards) {
+    public JPanel createSearchIngCard(JPanel cards) throws IOException {
         JPanel card = new JPanel(new BorderLayout());
         JLabel searchIngs = compFactory.createLabel("Hae raaka-aineita");
         card.add(searchIngs, BorderLayout.NORTH);
@@ -52,26 +53,27 @@ public class AddIngredientsView {
 
         createFieldAndButton(searchFieldComp);
 
-        JButton addIng = compFactory.createButton("Lisää pääraaka-aineisiin");
-        searchFieldComp.add(addIng, BorderLayout.SOUTH);
+        compFactory.createAddIngButtons(searchFieldComp);
 
         card.add(searchFieldComp, BorderLayout.CENTER);
 
-        ActionListener al = new SelectCardListener(cardL, card, "jotain");
+        ActionListener al = new SelectCardListener(cardL, cards, "start");
         compFactory.addNextAndBackButtons(cards, card, "start", al);
 
         return card;
     }
 
-    private void createFieldAndButton(JPanel searchFieldComp) {
+    private void createFieldAndButton(JPanel searchFieldComp) throws IOException {
         JPanel searchFieldAndButton = new JPanel();
         BoxLayout boxL = new BoxLayout(searchFieldAndButton, BoxLayout.LINE_AXIS);
         searchFieldAndButton.setLayout(boxL);
         JTextField searchField = compFactory.createSearchField();
-        searchFieldAndButton.add(searchField);
+        
         JButton searchButton = compFactory.createButton("Hae");
-        ActionListener SearchIngListener = new SearchIngListener(searchFieldComp, searchField, searchButton);
+        ActionListener SearchIngListener = new SearchIngListener(searchFieldComp, searchField);
         searchButton.addActionListener(SearchIngListener);
+        searchField.addActionListener(SearchIngListener);
+        searchFieldAndButton.add(searchField);
         searchFieldAndButton.add(searchButton);
         searchFieldComp.add(searchFieldAndButton, BorderLayout.NORTH);
     }

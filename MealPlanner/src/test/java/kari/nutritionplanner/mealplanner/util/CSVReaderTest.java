@@ -17,16 +17,16 @@ import static org.junit.Assert.*;
  *
  * @author kari
  */
-public class SCVReaderTest {
-    SCVReader reader;
+public class CSVReaderTest {
+    CSVReader reader;
     private final double delta = 0.001;
     
-    public SCVReaderTest() {
+    public CSVReaderTest() {
     }
     
     @Before
     public void setUp() throws FileNotFoundException {
-        reader = new SCVReader("main_ingredients.csv");
+        reader = new CSVReader("main_ingredients.csv");
     }
 
      @Test
@@ -36,7 +36,7 @@ public class SCVReaderTest {
      
      @Test
      public void testSearchMacros() throws FileNotFoundException, IOException {
-         reader = new SCVReader("component_value.csv");
+         reader = new CSVReader("component_value.csv");
          Ingredient ing = new Ingredient(8062, "test");
          reader.searchMacros(ing);
          assertEquals(79.660611855, ing.getCalories(), delta);
@@ -54,14 +54,14 @@ public class SCVReaderTest {
      
      @Test
      public void testSearchMacrosInvalidIng() throws FileNotFoundException, IOException {
-         reader = new SCVReader("component_value.csv");
+         reader = new CSVReader("component_value.csv");
          Ingredient ing = new Ingredient(56033, "test");
          assertFalse(reader.searchMacros(ing));
      }
      
      @Test
      public void testSearchMacrosNullIng() throws FileNotFoundException, IOException {
-         reader = new SCVReader("component_value.csv");
+         reader = new CSVReader("component_value.csv");
          Ingredient ing = null;
          assertFalse(reader.searchMacros(ing));
      }

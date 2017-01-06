@@ -35,8 +35,8 @@ public class MealCalcHelper {
     private int desiredCalories;
     private int desiredProtein;
     private int desiredFat;
-    private CalculateMeal cm;
-    private ProcessIngredients ingredientProcessor;
+    private final CalculateMeal cm;
+    private final ProcessIngredients ingredientProcessor;
 
     public MealCalcHelper(CalculateMeal cm) throws IOException {
         this.cm = cm;
@@ -50,7 +50,7 @@ public class MealCalcHelper {
      * @param name pääraaka-aineen nimi
      */
     public void setMainIngredient(String name) {
-        meal.setMainIngredient(cm.getIngredients().get("mains").get(getMainIngId(name)));
+        meal.setMainIngredient(cm.getIngredients().get("mains").get(getIdForMainIng(name)));
     }
 
     public void clear() {
@@ -104,7 +104,7 @@ public class MealCalcHelper {
      * @return haetun raaka-aineen id
      * @see Ingredient
      */
-    public int getMainIngId(String name) {
+    public int getIdForMainIng(String name) {
         Map<Integer, Ingredient> mains = cm.getIngredients().get("mains");
         for (Integer i : mains.keySet()) {
             if (mains.get(i).getName().toLowerCase().contains(name.toLowerCase())) {

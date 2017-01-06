@@ -68,13 +68,13 @@ public class UserInterface implements Runnable {
         helper = new MealCalcHelper(mealCalculator);
         compFactory = new ComponentFactory(cardL, helper);
         JPanel cards = new JPanel(cardL);
-        
+
         JPanel startCard = createStartCard(cards);
         cards.add(startCard, "start");
-        
+
         CalcMealView calcMealView = new CalcMealView(cardL, mealCalculator, helper, compFactory);
         createMealCards(cards, calcMealView);
-        
+
         AddIngredientsView addIngsView = new AddIngredientsView(cardL, compFactory);
         createAddIngCards(cards, addIngsView);
 
@@ -106,8 +106,8 @@ public class UserInterface implements Runnable {
         JPanel mainIngredientCard = calcMealView.createMainIngredientCard(cards);
         cards.add(mainIngredientCard, "askMainIngredient");
     }
-    
-    private void createAddIngCards(JPanel cards, AddIngredientsView addIngsView) {
+
+    private void createAddIngCards(JPanel cards, AddIngredientsView addIngsView) throws IOException {
         JPanel searchIngCard = addIngsView.createSearchIngCard(cards);
         cards.add(searchIngCard, "addIngredient");
     }

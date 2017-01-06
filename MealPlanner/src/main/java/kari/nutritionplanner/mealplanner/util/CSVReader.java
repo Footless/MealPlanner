@@ -15,12 +15,12 @@ import kari.nutritionplanner.mealplanner.domain.Ingredient;
  * tiedoston nimen.
  * @author kari
  */
-public class SCVReader {
+public class CSVReader {
 
     private final BufferedReader reader;
     private final Locale loc;
 
-    public SCVReader(String fileName) {
+    public CSVReader(String fileName) {
         InputStream in = getClass().getResourceAsStream("/file/" + fileName);
         reader = new BufferedReader(new InputStreamReader(in));
         loc = new Locale("fi", "FI");
@@ -32,7 +32,7 @@ public class SCVReader {
         List<Ingredient> ingredients = new ArrayList<>();
         try {
             while ((line = reader.readLine()) != null) {
-                searchIngredient(ingredients, scanner, line);
+                addIngredient(ingredients, scanner, line);
             }
         } catch (IOException ex) {
             throw new IOException("Tiedoston lukeminen epäonnistui: " + ex);
@@ -46,7 +46,7 @@ public class SCVReader {
         List<Ingredient> ings = new ArrayList<>();
         try {
             while ((line = reader.readLine()) != null) {
-                Ingredient ing = searchForIngredient(scanner, s, line);
+                Ingredient ing = searchForIngredientByName(scanner, s, line);
                 if (ing != null) {
                     ings.add(ing);
                 }
@@ -75,7 +75,7 @@ public class SCVReader {
         return false;
     }
     
-    private void searchIngredient(List<Ingredient> ingredients, Scanner scanner, String line) {
+    private void addIngredient(List<Ingredient> ingredients, Scanner scanner, String line) {
         scanner = new Scanner(line);
         scanner.useLocale(loc);
         scanner.useDelimiter(";");
@@ -94,7 +94,7 @@ public class SCVReader {
         }
     }
     
-    private Ingredient searchForIngredient(Scanner scanner, String s, String line) {
+    private Ingredient searchForIngredientByName(Scanner scanner, String s, String line) {
         scanner = new Scanner(line);
                 scanner.useDelimiter(";");
                 int i = 0;
@@ -103,7 +103,6 @@ public class SCVReader {
                     String next = scanner.next();
                     if (i == 0 && next.length() < 6 && next.length() > 0) {
                         id = next;
-                        System.out.println(id);
                     }
                     if (i == 1 && next.toLowerCase().contains(s.toLowerCase()) && id.length() > 0) {
                         return new Ingredient(Integer.parseInt(id), next);

@@ -84,13 +84,13 @@ public class CalculateMealTest {
 //    }
     @Test
     public void testGetMainIngId() {
-        int id = helper.getMainIngId("Kuha");
+        int id = helper.getIdForMainIng("Kuha");
         assertEquals(805, id);
-        id = helper.getMainIngId("Tofu, soijavalmiste, soijapapujuusto");
+        id = helper.getIdForMainIng("Tofu, soijavalmiste, soijapapujuusto");
         assertEquals(33501, id);
-        id = helper.getMainIngId("Nyhtökaura, nude");
+        id = helper.getIdForMainIng("Nyhtökaura, nude");
         assertEquals(34307, id);
-        id = helper.getMainIngId("testi");
+        id = helper.getIdForMainIng("testi");
         assertEquals(0, id);
     }
 

@@ -10,7 +10,7 @@ import kari.nutritionplanner.mealplanner.domain.Ingredient;
  * Hakee raaka-aineet tiedostoista SCVReaderiä käyttäen. Raaka-aineet
  * tallennetaan Map-olioihin, tyypin mukaisesti.
  * 
- * @see SCVReader
+ * @see CSVReader
  * @author kari
  */
 
@@ -30,7 +30,7 @@ public class ProcessIngredients {
     }
 
     private void addMainIngredients() throws IOException {
-        SCVReader lfnr = new SCVReader("main_ingredients.csv");
+        CSVReader lfnr = new CSVReader("main_ingredients.csv");
         List<Ingredient> ingredients = lfnr.getAllIngredients();
 
         for (Ingredient ingredient : ingredients) {
@@ -41,7 +41,7 @@ public class ProcessIngredients {
     }
 
     private void addSideIngredients() throws IOException {
-        SCVReader lfnr = new SCVReader("side_ingredients.csv");
+        CSVReader lfnr = new CSVReader("side_ingredients.csv");
         List<Ingredient> ingredients = lfnr.getAllIngredients();
 
         for (Ingredient ingredient : ingredients) {
@@ -52,7 +52,7 @@ public class ProcessIngredients {
     }
 
     private void addSauces() throws IOException {
-        SCVReader lfnr = new SCVReader("sauces.csv");
+        CSVReader lfnr = new CSVReader("sauces.csv");
         List<Ingredient> ingredients = lfnr.getAllIngredients();
 
         for (Ingredient ingredient : ingredients) {
@@ -63,7 +63,7 @@ public class ProcessIngredients {
     }
 
     private void addSidesAndStuffs() throws IOException {
-        SCVReader lfnr = new SCVReader("sidesAndStuff.csv");
+        CSVReader lfnr = new CSVReader("sidesAndStuff.csv");
         List<Ingredient> ingredients = lfnr.getAllIngredients();
 
         for (Ingredient ingredient : ingredients) {
@@ -74,7 +74,7 @@ public class ProcessIngredients {
     }
 
     private boolean addIngredient(Ingredient ing) throws IOException {
-        SCVReader fMacroR = new SCVReader("component_value_stub.csv");
+        CSVReader fMacroR = new CSVReader("component_value_stub.csv");
         if (fMacroR.searchMacros(ing)) {
             return true;
         }
@@ -90,7 +90,7 @@ public class ProcessIngredients {
     }
 
     public List<Ingredient> getMainIngredients() throws IOException {
-        SCVReader lfnr = new SCVReader("main_ingredients.csv");
+        CSVReader lfnr = new CSVReader("main_ingredients.csv");
         List<Ingredient> mains = lfnr.getAllIngredients();
         return mains;
     }

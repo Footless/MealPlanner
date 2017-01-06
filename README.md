@@ -1,4 +1,4 @@
-#Tietojenkäsittelytieteiden ohjelmoinnin harjoitustyö#
+#Tietojenkäsittelytieteiden ohjelmoinnin harjoitustyö: Meal Planner#
 
 ***
 

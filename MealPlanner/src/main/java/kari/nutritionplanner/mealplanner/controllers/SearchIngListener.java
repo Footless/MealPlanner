@@ -17,27 +17,22 @@
 package kari.nutritionplanner.mealplanner.controllers;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
 import kari.nutritionplanner.mealplanner.gui.ComponentFactory;
-import kari.nutritionplanner.mealplanner.util.SCVReader;
+import kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelper;
+import kari.nutritionplanner.mealplanner.util.CSVReader;
 
 /**
  *
@@ -45,30 +40,37 @@ import kari.nutritionplanner.mealplanner.util.SCVReader;
  */
 public class SearchIngListener implements ActionListener {
 
-    private JTextField searchField;
-    private JButton searchButton;
+    private final JTextField searchField;
     private JList searchResults;
-    private SCVReader reader;
     private final ComponentFactory compFactory;
-    private JPanel searchFieldComp;
+    private final JPanel searchFieldComp;
+    private IngredientSearchHelper helper;
 
-    public SearchIngListener(JPanel searchFieldComp, JTextField searchField, JButton searchButton) {
+    public SearchIngListener(JPanel searchFieldComp, JTextField searchField) throws IOException {
         this.searchFieldComp = searchFieldComp;
         this.searchField = searchField;
-        this.searchButton = searchButton;
         this.compFactory = new ComponentFactory();
+        
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        this.reader = new SCVReader("food_utf.csv");
+        
         String searchTerm = searchField.getText();
         if (searchFieldComp.getComponentCount() > 2) {
             searchFieldComp.remove(2);
+            try {
+                compFactory.enableIngButtons(searchFieldComp);
+            } catch (IOException ex) {
+                Logger.getLogger(SearchIngListener.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            searchFieldComp.validate();
+            searchFieldComp.repaint();
         }
         searchField.setText("");
         try {
-            List<Ingredient> ings = reader.search(searchTerm);
+            this.helper = new IngredientSearchHelper();
+            List<Ingredient> ings = helper.search(searchTerm);
             if (ings.isEmpty()) {
                 JOptionPane.showMessageDialog(searchField, "Raaka-aineita ei löytynyt");
             } else {
@@ -80,8 +82,8 @@ public class SearchIngListener implements ActionListener {
                 JScrollPane scrollResults = new JScrollPane(searchResults);
                 scrollResults.getVerticalScrollBar().setUnitIncrement(10);
                 scrollResults.getHorizontalScrollBar().setUnitIncrement(10);
-//                searchResults.setAutoscrolls(true);
                 searchFieldComp.add(scrollResults, BorderLayout.CENTER);
+                compFactory.enableIngButtons(searchFieldComp);
                 searchFieldComp.validate();
                 searchFieldComp.repaint();
             }

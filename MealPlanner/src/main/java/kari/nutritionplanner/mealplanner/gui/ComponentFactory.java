@@ -19,19 +19,15 @@ package kari.nutritionplanner.mealplanner.gui;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Insets;
-import java.awt.TextArea;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.List;
-import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -44,6 +40,7 @@ import javax.swing.JSlider;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import kari.nutritionplanner.mealplanner.controllers.AddToIngsListener;
 import kari.nutritionplanner.mealplanner.controllers.SelectCardListener;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
 import kari.nutritionplanner.mealplanner.domain.Meal;
@@ -138,7 +135,7 @@ public class ComponentFactory {
         textArea.setFont(f);
         return textArea;
     }
-    
+
     public JLabel createLabel(String text) {
         JLabel label = new JLabel(text);
         label.setFont(f);
@@ -206,10 +203,43 @@ public class ComponentFactory {
         list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         list.setLayoutOrientation(JList.VERTICAL);
         list.setVisibleRowCount(-1);
-        Font f = new Font("Arial", 1, 15);
-        list.setFont(f);
+        Font f2 = new Font("Arial", 1, 15);
+        list.setFont(f2);
         list.setCursor(new Cursor(0));
         list.setBackground(mainColor);
         return list;
+    }
+
+    void createAddIngButtons(JPanel searchFieldComp) throws IOException {
+        JList list = null;
+        JPanel panel = new JPanel(new GridLayout(1, 3));
+        JButton addToMains = createButton("Lisää pääraaka-aineisiin");
+        addToMains.setActionCommand("main");
+        JButton addToSides = createButton("Lisää lisäkkeisiin");
+        addToSides.setActionCommand("side");
+        JButton addToSauces = createButton("Lisää kastikkeisiin");
+        addToSauces.setActionCommand("sauce");
+        panel.add(addToMains);
+        panel.add(addToSides);
+        panel.add(addToSauces);
+        searchFieldComp.add(panel, BorderLayout.SOUTH);
+        enableIngButtons(searchFieldComp);
+        panel.validate();
+        panel.repaint();
+    }
+
+    public void enableIngButtons(JPanel searchFieldComp) throws IOException {
+        JPanel panel = (JPanel) searchFieldComp.getComponent(1);
+        Component[] buttons = panel.getComponents();
+        ActionListener btnListener = new AddToIngsListener(searchFieldComp);
+        for (Component button1 : buttons) {
+            JButton button = (JButton) button1;
+            if (searchFieldComp.getComponentCount() > 2) {
+                button.setEnabled(true);
+                button.addActionListener(btnListener);
+            } else {
+                button.setEnabled(false);
+            }
+        }
     }
 }
