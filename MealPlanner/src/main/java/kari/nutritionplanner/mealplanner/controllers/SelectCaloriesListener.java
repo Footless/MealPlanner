@@ -19,10 +19,9 @@ package kari.nutritionplanner.mealplanner.controllers;
 import java.awt.CardLayout;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
-import kari.nutritionplanner.mealplanner.gui.UserInterface;
+import kari.nutritionplanner.mealplanner.gui.CalcMealView;
 import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
 
 /**
@@ -31,28 +30,27 @@ import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
  * 
  * @author kari
  */
-public class SelectCaloriesListener implements ActionListener {
-    private final UserInterface ui;
+public class SelectCaloriesListener extends GetMealListener {
     private final JSlider slider;
     private final Container container;
     private final String nextCard;
-    private final CardLayout cardL;
+    private final MealCalcHelper helper;
 
-    public SelectCaloriesListener(UserInterface ui, JSlider slider, Container container, String nextCard, CardLayout cardL) {
-        this.ui = ui;
+    public SelectCaloriesListener(CalcMealView view, CardLayout cardL, JSlider slider, Container container, String nextCard) {
+        super(view, cardL);
         this.slider = slider;
         this.container = container;
         this.nextCard = nextCard;
-        this.cardL = cardL;
+        this.helper = view.getHelper();
     }
     
     
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        JPanel card = ui.createProteinsCard(container);
+        JPanel card = view.createProteinsCard(container);
         container.add(card, nextCard);
-        ui.getHelper().setDesiredCalories(slider.getValue());
+        helper.setDesiredCalories(slider.getValue());
         cardL.show(container, nextCard);
     }
     

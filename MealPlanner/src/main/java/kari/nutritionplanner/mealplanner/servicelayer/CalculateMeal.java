@@ -36,9 +36,9 @@ public class CalculateMeal {
 
     /**
      * Palauttaa Map-olion, jossa sisällä eri Mapeissa kaikki raaka-aineet.
-     * Raaka-aineet koodattu merkkijonoilla seuraavasti: "mains" = pääraaka-aine "sauces" =
-     * kastike "sidesAndMisc" = lisuke, esim. lämmin lisäke tai salaatti "sides" = varsinainen
-     * lisäke, esim. peruna tai pasta
+     * Raaka-aineet koodattu merkkijonoilla seuraavasti: "mains" = pääraaka-aine
+     * "sauces" = kastike "sidesAndMisc" = lisuke, esim. lämmin lisäke tai
+     * salaatti "sides" = varsinainen lisäke, esim. peruna tai pasta
      *
      * @return Map, jossa jossa sisällä neljä eri Map-oliota, joissa kaikki
      * raaka-aineet aterian rakennusta varten.
@@ -141,35 +141,4 @@ public class CalculateMeal {
     public Meal getMeal() {
         return meal;
     }
-
-    /**
-     * Käyttöliittymälle tarjottu metodi, joka palauttaa pääraaka-aineen
-     * id-numeron nimen perusteella.
-     *
-     * @param name haettavan raaka-aineen nimi
-     * @return haetun raaka-aineen id
-     * @see Ingredient
-     */
-    public int getMainIngId(String name) {
-        Map<Integer, Ingredient> mains = ingredients.get("mains");
-        for (Integer i : mains.keySet()) {
-            if (mains.get(i).getName().toLowerCase().contains(name.toLowerCase())) {
-                return i;
-            }
-        }
-        return 0;
-    }
-
-    /**
-     * Käyttöliittymälle tarjottu metodi, joka palauttaa listan kaikista
-     * valittavissa olevista pääraaka-aineista.
-     *
-     * @return listan pääraaka-aineista, jotka ovat käyttäjän valittavissa.
-     * @throws IOException
-     * @see Ingredient
-     */
-    public List<Ingredient> getMainIngredients() throws IOException {
-        return ingredientProcessor.getMainIngredients();
-    }
-
 }

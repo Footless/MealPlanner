@@ -9,10 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -22,31 +19,16 @@ import static org.junit.Assert.*;
  */
 public class SCVReaderTest {
     SCVReader reader;
-    double delta = 0.001;
+    private final double delta = 0.001;
     
     public SCVReaderTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
     }
     
     @Before
     public void setUp() throws FileNotFoundException {
         reader = new SCVReader("main_ingredients.csv");
     }
-    
-    @After
-    public void tearDown() {
-    }
 
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
      @Test
      public void testNewReader() {
          assertTrue(reader != null);

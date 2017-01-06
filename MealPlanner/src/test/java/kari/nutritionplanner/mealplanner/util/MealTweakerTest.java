@@ -19,10 +19,8 @@ package kari.nutritionplanner.mealplanner.util;
 import java.io.IOException;
 import kari.nutritionplanner.mealplanner.domain.Meal;
 import kari.nutritionplanner.mealplanner.servicelayer.CalculateMeal;
-import org.junit.After;
-import org.junit.AfterClass;
+import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -34,6 +32,7 @@ public class MealTweakerTest {
 
     private MealTweaker mt;
     private CalculateMeal cm;
+    private MealCalcHelper helper;
     private final double delta = 0.0001;
     private final double caloriesDelta = 15.5;
     private final double proteinAndFatDelta = 5.5;
@@ -42,19 +41,12 @@ public class MealTweakerTest {
     public MealTweakerTest() {
     }
 
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
     @Before
     public void setUp() throws IOException {
         this.cm = new CalculateMeal();
+        this.helper = new MealCalcHelper(cm);
         meal = new Meal();
-        meal.setMainIngredient(cm.getIngredients().get("mains").get(cm.getMainIngId("kuha")));
+        meal.setMainIngredient(cm.getIngredients().get("mains").get(helper.getMainIngId("kuha")));
         meal.setSideIngredient(cm.getIngredients().get("sides").get(204));
         meal.setSauce(cm.getIngredients().get("sauces").get(5009));
         meal.setSauce(cm.getIngredients().get("sidesAndMisc").get(33182));
@@ -65,13 +57,6 @@ public class MealTweakerTest {
         mt = new MealTweaker(meal, 500, 30, 5);
     }
 
-    @After
-    public void tearDown() {
-    }
-
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
     @Test
     public void testConstructor() {
         assertTrue(this.mt != null);

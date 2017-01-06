@@ -22,6 +22,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+import kari.nutritionplanner.mealplanner.gui.CalcMealView;
 import kari.nutritionplanner.mealplanner.gui.UserInterface;
 import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
 
@@ -31,28 +32,25 @@ import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
  *
  * @author kari
  */
-public class SelectProtListener implements ActionListener {
-    private final UserInterface ui;
+public class SelectProtListener extends GetMealListener {
     private final MealCalcHelper helper;
     private final JSlider slider;
     private final Container container;
     private final String nextCard;
-    private final CardLayout cardL;
 
-    public SelectProtListener(UserInterface ui, JSlider slider, Container container, String nextCard, CardLayout cardL) {
-        this.ui  = ui;
-        this.helper = ui.getHelper();
+    public SelectProtListener(CalcMealView view, CardLayout cardL, JSlider slider, Container container, String nextCard) {
+        super(view, cardL);
+        this.helper = view.getHelper();
         this.slider = slider;
         this.container = container;
         this.nextCard = nextCard;
-        this.cardL = cardL;
     }
     
     
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        JPanel card = ui.createFatsCard(container);
+        JPanel card = super.view.createFatsCard(container);
         container.add(card, nextCard);
         helper.setDesiredProtein(slider.getValue());
         cardL.show(container, nextCard);

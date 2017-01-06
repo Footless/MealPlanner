@@ -5,10 +5,7 @@
  */
 package kari.nutritionplanner.mealplanner.domain;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -18,28 +15,15 @@ import static org.junit.Assert.*;
  */
 public class MealTest {
     private Meal meal;
-    private double delta = 0.0001;
+    private final double delta = 0.0001;
     
     public MealTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
     }
     
     @Before
     public void setUp() {
         meal = new Meal();
     }
-    
-    @After
-    public void tearDown() {
-    }
-
     
      @Test
      public void testGetProteinWhenEmpty() {

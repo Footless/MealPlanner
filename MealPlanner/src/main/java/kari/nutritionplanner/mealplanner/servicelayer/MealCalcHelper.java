@@ -17,7 +17,11 @@
 package kari.nutritionplanner.mealplanner.servicelayer;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+import kari.nutritionplanner.mealplanner.domain.Ingredient;
 import kari.nutritionplanner.mealplanner.domain.Meal;
+import kari.nutritionplanner.mealplanner.util.ProcessIngredients;
 
 /**
  * Apuluokka GUI:lle, jossa säilötään saatuja arvoja, kunnes ne saadaan
@@ -32,10 +36,12 @@ public class MealCalcHelper {
     private int desiredProtein;
     private int desiredFat;
     private CalculateMeal cm;
+    private ProcessIngredients ingredientProcessor;
 
     public MealCalcHelper(CalculateMeal cm) throws IOException {
         this.cm = cm;
         this.meal = new Meal();
+        this.ingredientProcessor = new ProcessIngredients();
     }
 
     /**
@@ -44,7 +50,7 @@ public class MealCalcHelper {
      * @param name pääraaka-aineen nimi
      */
     public void setMainIngredient(String name) {
-        meal.setMainIngredient(cm.getIngredients().get("mains").get(cm.getMainIngId(name)));
+        meal.setMainIngredient(cm.getIngredients().get("mains").get(getMainIngId(name)));
     }
 
     public void clear() {
@@ -88,6 +94,36 @@ public class MealCalcHelper {
 
     public int getDesiredProtein() {
         return desiredProtein;
+    }
+
+    /**
+     * Käyttöliittymälle tarjottu metodi, joka palauttaa pääraaka-aineen
+     * id-numeron nimen perusteella.
+     *
+     * @param name haettavan raaka-aineen nimi
+     * @return haetun raaka-aineen id
+     * @see Ingredient
+     */
+    public int getMainIngId(String name) {
+        Map<Integer, Ingredient> mains = cm.getIngredients().get("mains");
+        for (Integer i : mains.keySet()) {
+            if (mains.get(i).getName().toLowerCase().contains(name.toLowerCase())) {
+                return i;
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * Käyttöliittymälle tarjottu metodi, joka palauttaa listan kaikista
+     * valittavissa olevista pääraaka-aineista.
+     *
+     * @return listan pääraaka-aineista, jotka ovat käyttäjän valittavissa.
+     * @throws IOException
+     * @see Ingredient
+     */
+    public List<Ingredient> getMainIngredients() throws IOException {
+        return ingredientProcessor.getMainIngredients();
     }
 
 }

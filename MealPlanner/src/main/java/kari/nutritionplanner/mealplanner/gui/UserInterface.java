@@ -33,7 +33,7 @@ import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
 
 /**
  * Graafinen käyttöliittymä Meal Plannerille.
- * 
+ *
  * @author kari
  */
 public class UserInterface implements Runnable {
@@ -41,8 +41,8 @@ public class UserInterface implements Runnable {
     private JFrame frame;
     private CardLayout cardL;
     private CalculateMeal mealCalculator;
-    private final ComponentFactory compFactory = new ComponentFactory();
     private MealCalcHelper helper;
+    private ComponentFactory compFactory;
 
     @Override
     public void run() {
@@ -64,24 +64,35 @@ public class UserInterface implements Runnable {
     }
 
     private void createComponents(Container contentPane) throws IOException {
+        mealCalculator = new CalculateMeal();
+        helper = new MealCalcHelper(mealCalculator);
+        compFactory = new ComponentFactory(cardL, helper);
         JPanel cards = new JPanel(cardL);
+        
         JPanel startCard = createStartCard(cards);
         cards.add(startCard, "start");
-        createMealCards(cards);
+        
+        CalcMealView calcMealView = new CalcMealView(cardL, mealCalculator, helper, compFactory);
+        createMealCards(cards, calcMealView);
+        
+        AddIngredientsView addIngsView = new AddIngredientsView(cardL, compFactory);
+        createAddIngCards(cards, addIngsView);
 
         contentPane.add(cards);
     }
 
     private JPanel createStartCard(Container container) {
         JPanel startCard = new JPanel();
-        startCard.setBackground(Color.black);
+        startCard.setBackground(Color.DARK_GRAY);
         startCard.setLayout(new GridLayout(3, 1, 2, 2));
 
         JButton getMeal = compFactory.createButton("Laske ateria");
-        SelectCardListener snml = new SelectCardListener(this, cardL, container, "askMainIngredient");
+        SelectCardListener snml = new SelectCardListener(cardL, container, "askMainIngredient");
         getMeal.addActionListener(snml);
 
         JButton addIngredients = compFactory.createButton("Lisää uusia raaka-aineita");
+        SelectCardListener addIngListener = new SelectCardListener(cardL, container, "addIngredient");
+        addIngredients.addActionListener(addIngListener);
 
         JButton browseIngredients = compFactory.createButton("Selaa raaka-aineita");
 
@@ -91,113 +102,18 @@ public class UserInterface implements Runnable {
         return startCard;
     }
 
-    private void createMealCards(JPanel cards) throws IOException {
-        JPanel mainIngredientCard = createMainIngredientCard(cards);
+    private void createMealCards(JPanel cards, CalcMealView calcMealView) throws IOException {
+        JPanel mainIngredientCard = calcMealView.createMainIngredientCard(cards);
         cards.add(mainIngredientCard, "askMainIngredient");
+    }
+    
+    private void createAddIngCards(JPanel cards, AddIngredientsView addIngsView) {
+        JPanel searchIngCard = addIngsView.createSearchIngCard(cards);
+        cards.add(searchIngCard, "addIngredient");
     }
 
     public JFrame getFrame() {
         return frame;
-    }
-
-    private JPanel createMainIngredientCard(JPanel cards) throws IOException {
-        mealCalculator = new CalculateMeal();
-        helper = new MealCalcHelper(mealCalculator);
-        
-        JPanel card = new JPanel(new BorderLayout());
-//        card.setBackground(Color.black);
-        JTextArea instructions = compFactory.createTextArea("Valitse listasta haluamasi raaka-aine");
-        card.add(instructions, BorderLayout.NORTH);
-        ButtonGroup mainsButtonGroup = compFactory.createMainsButtons(card, mealCalculator);
-        ActionListener sml = new SelectMainIngListener(this, cardL, mainsButtonGroup, cards, "askCalories");
-        addNextAndBackButtons(cards, card, "start", sml);
-        return card;
-    }
-
-    public JPanel createCaloriesCard(Container container) throws IOException {
-        JPanel card = new JPanel(new BorderLayout());
-//        card.setBackground(Color.black);
-        JTextArea caloriesInstructions = compFactory.createTextArea("Valitse haluamasi määrä kaloreita:");
-        Ingredient ing = mealCalculator.getIngredients().get("mains").get(helper.getMainIngredientId());
-        double mul = getMultiplier(ing);
-        int min = (int) Math.ceil(ing.getCalories() * mul);
-        JSlider calorieSlider = compFactory.createSlider(min, 800, 800 / 2);
-        card.add(caloriesInstructions, BorderLayout.NORTH);
-        card.add(calorieSlider, BorderLayout.CENTER);
-        ActionListener scl = new SelectCaloriesListener(this, calorieSlider, container, "askProtein", cardL);
-        addNextAndBackButtons(container, card, "askMainIngredient", scl);
-        return card;
-    }
-
-    public JPanel createProteinsCard(Container container) {
-        JPanel card = new JPanel(new BorderLayout());
-//        card.setBackground(Color.black);
-        JTextArea proteinInstructions = compFactory.createTextArea("Valitse haluamasi proteiinin määrä:");
-        Ingredient ing = mealCalculator.getIngredients().get("mains").get(helper.getMainIngredientId());
-        double mul = getMultiplier(ing);
-        int min = (int) Math.ceil(ing.getProtein() * mul);
-        JSlider proteinSlider = compFactory.createSlider(min, min * 5, min * 5 / 2);
-        card.add(proteinInstructions, BorderLayout.NORTH);
-        card.add(proteinSlider, BorderLayout.CENTER);
-        ActionListener spl = new SelectProtListener(this, proteinSlider, container, "askFat", cardL);
-        addNextAndBackButtons(container, card, "askCalories", spl);
-        return card;
-    }
-
-    public JPanel createFatsCard(Container container) {
-        JPanel card = new JPanel(new BorderLayout());
-//        card.setBackground(Color.black);
-        JTextArea fatInstructions = compFactory.createTextArea("Valitse haluamasi rasvan määrä:");
-        Ingredient ing = mealCalculator.getIngredients().get("mains").get(helper.getMainIngredientId());
-        double mul = getMultiplier(ing);
-        int min = (int) Math.ceil(ing.getFat() * mul);
-        JSlider fatSlider = compFactory.createSlider(min, 40, 40 / 2);
-        card.add(fatInstructions, BorderLayout.NORTH);
-        card.add(fatSlider, BorderLayout.CENTER);
-        ActionListener sfl = new SelectFatListener(mealCalculator, this, fatSlider, container, "readyMeal", cardL);
-        addNextAndBackButtons(container, card, "askProtein", sfl);
-        return card;
-    }
-    
-    public JPanel createReadyMealCard(Container container) {
-        JPanel card = new JPanel(new BorderLayout());
-//        card.setBackground(Color.black);
-        JTextArea title = compFactory.createTextArea("Tässä ateriasi:");
-        compFactory.createMealText(card, mealCalculator, helper);
-        JPanel buttons = new JPanel(new GridLayout(2, 1));
-        JButton backToStart = compFactory.createButton("Valmis");
-        backToStart.setActionCommand("clear");
-        JButton back = compFactory.createButton("Takaisin");
-        ActionListener start = new SelectCardListener(this, cardL, container, "start");
-        ActionListener prevCardL = new SelectCardListener(this, cardL, container, "askFat");
-        back.addActionListener(prevCardL);
-        backToStart.addActionListener(start);
-        buttons.add(backToStart);
-        buttons.add(back);
-        card.add(buttons, BorderLayout.SOUTH);
-        card.add(title, BorderLayout.NORTH);
-        return card;
-    }
-
-    private void addNextAndBackButtons(Container container, JPanel card, String prevCard, ActionListener al) {
-        JPanel buttons = new JPanel(new GridLayout(2, 1));
-        JButton next = compFactory.createButton("Seuraava");
-        JButton back = compFactory.createButton("Takaisin");
-        SelectCardListener prevCardL = new SelectCardListener(this, cardL, container, prevCard);
-        back.addActionListener(prevCardL);
-        ActionListener nextCardL = al;
-        next.addActionListener(nextCardL);
-        buttons.add(next);
-        buttons.add(back);
-        card.add(buttons, BorderLayout.SOUTH);
-    }
-
-    private double getMultiplier(Ingredient ing) {
-        if (ing.getProtein() > 23) {
-            return 0.5;
-        } else {
-            return 1;
-        }
     }
 
     public MealCalcHelper getHelper() {

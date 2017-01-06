@@ -17,10 +17,7 @@
 package kari.nutritionplanner.mealplanner.servicelayer;
 
 import java.io.IOException;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -35,27 +32,12 @@ public class MealCalcHelperTest {
     public MealCalcHelperTest() {
     }
 
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
     @Before
     public void setUp() throws IOException {
         this.cm = new CalculateMeal();
         this.helper = new MealCalcHelper(cm);
     }
 
-    @After
-    public void tearDown() {
-    }
-
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
     @Test
     public void testDesiredSetters() {
         helper.setDesiredCalories(10);

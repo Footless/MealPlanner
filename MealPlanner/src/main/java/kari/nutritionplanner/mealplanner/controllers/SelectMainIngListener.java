@@ -19,14 +19,13 @@ package kari.nutritionplanner.mealplanner.controllers;
 import java.awt.CardLayout;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
 import javax.swing.ButtonModel;
 import javax.swing.JPanel;
-import kari.nutritionplanner.mealplanner.gui.UserInterface;
+import kari.nutritionplanner.mealplanner.gui.CalcMealView;
 import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
 
 /**
@@ -35,21 +34,18 @@ import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
  * 
  * @author kari
  */
-public class SelectMainIngListener implements ActionListener {
-    private final UserInterface ui;
+public class SelectMainIngListener extends GetMealListener {
     private final MealCalcHelper helper;
     private final ButtonGroup bg;
     private final Container container;
     private final String nextCard;
-    private final CardLayout cardL;
     
-    public SelectMainIngListener(UserInterface ui, CardLayout cardL, ButtonGroup bg, Container container, String nextCard) {
-        this.ui = ui;
-        this.helper = ui.getHelper();
+    public SelectMainIngListener(CalcMealView view, CardLayout cardL, ButtonGroup bg, Container container, String nextCard) {
+        super(view, cardL);
+        this.helper = view.getHelper();
         this.bg = bg;
         this.container = container;
         this.nextCard = nextCard;
-        this.cardL = cardL;
     }
 
     @Override
@@ -58,13 +54,12 @@ public class SelectMainIngListener implements ActionListener {
         String name = b.getActionCommand();
         helper.setMainIngredient(name);
         try {
-            JPanel card = ui.createCaloriesCard(container);
+            JPanel card = view.createCaloriesCard(container);
             container.add(card, nextCard);
             cardL.show(container, nextCard);
         } catch (IOException ex) {
             Logger.getLogger(SelectMainIngListener.class.getName()).log(Level.SEVERE, null, ex);
         }
-//        cardL.show(container, nextCard);
     }
     
 }

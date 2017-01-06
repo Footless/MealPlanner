@@ -23,6 +23,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+import kari.nutritionplanner.mealplanner.gui.CalcMealView;
 import kari.nutritionplanner.mealplanner.gui.UserInterface;
 import kari.nutritionplanner.mealplanner.servicelayer.CalculateMeal;
 import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
@@ -33,31 +34,28 @@ import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
  * 
  * @author kari
  */
-public class SelectFatListener implements ActionListener {
+public class SelectFatListener extends GetMealListener {
 
     private final JSlider slider;
     private final Container container;
     private final String nextCard;
-    private final CardLayout cardL;
-    private final UserInterface ui;
     private final CalculateMeal cm;
     private final MealCalcHelper helper;
 
-    public SelectFatListener(CalculateMeal cm, UserInterface ui, JSlider slider, Container container, String nextCard, CardLayout cardL) {
+    public SelectFatListener(CalcMealView view, CardLayout cardL, CalculateMeal cm, JSlider slider, Container container, String nextCard) {
+        super(view, cardL);
         this.slider = slider;
         this.container = container;
         this.nextCard = nextCard;
-        this.cardL = cardL;
-        this.ui = ui;
         this.cm = cm;
-        this.helper = ui.getHelper();
+        this.helper = view.getHelper();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         helper.setDesiredFat(slider.getValue());
         if (cm.calculateAllMeal(helper.getMainIngredientId(), helper.getDesiredCalories(), helper.getDesiredProtein(), helper.getDesiredFat())) {
-            JPanel card = ui.createReadyMealCard(container);
+            JPanel card = view.createReadyMealCard(container);
             container.add(card, nextCard);
             cardL.show(container, nextCard);
         } else {

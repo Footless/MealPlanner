@@ -17,6 +17,7 @@ import static org.junit.Assert.*;
 public class CalculateMealTest {
 
     private CalculateMeal cm;
+    private MealCalcHelper helper;
     private final double delta = 0.0001;
     private final double bigDelta = 15.5;
     private final double hugeDelta = 29.5;
@@ -28,6 +29,7 @@ public class CalculateMealTest {
     @Before
     public void setUp() throws IOException {
         this.cm = new CalculateMeal();
+        this.helper = new MealCalcHelper(cm);
     }
 
     @Test
@@ -82,19 +84,19 @@ public class CalculateMealTest {
 //    }
     @Test
     public void testGetMainIngId() {
-        int id = cm.getMainIngId("Kuha");
+        int id = helper.getMainIngId("Kuha");
         assertEquals(805, id);
-        id = cm.getMainIngId("Tofu, soijavalmiste, soijapapujuusto");
+        id = helper.getMainIngId("Tofu, soijavalmiste, soijapapujuusto");
         assertEquals(33501, id);
-        id = cm.getMainIngId("Nyhtökaura, nude");
+        id = helper.getMainIngId("Nyhtökaura, nude");
         assertEquals(34307, id);
-        id = cm.getMainIngId("testi");
+        id = helper.getMainIngId("testi");
         assertEquals(0, id);
     }
 
     @Test
     public void testGetMaingIngs() throws IOException {
-        List<Ingredient> ings = cm.getMainIngredients();
+        List<Ingredient> ings = helper.getMainIngredients();
         assertEquals(5, ings.size());
     }
 
@@ -123,8 +125,8 @@ public class CalculateMealTest {
     }
 
     private int getRandomMain() throws IOException {
-        int seed = new Random().nextInt(cm.getMainIngredients().size());
-        return cm.getMainIngredients().get(seed).getId();
+        int seed = new Random().nextInt(helper.getMainIngredients().size());
+        return helper.getMainIngredients().get(seed).getId();
     }
 
     @Test

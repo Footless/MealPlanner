@@ -6,10 +6,7 @@
 package kari.nutritionplanner.mealplanner.util;
 
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -19,7 +16,7 @@ import static org.junit.Assert.*;
  */
 public class MacroCalculatorTest {
     MacroCalculator mc;
-    private double delta = 0.0001;
+    private final double delta = 0.0001;
     
     public MacroCalculatorTest() {
     }
@@ -27,10 +24,6 @@ public class MacroCalculatorTest {
     @Before
     public void setUp() {
          mc = new MacroCalculator();
-    }
-    
-    @After
-    public void tearDown() {
     }
     
     @Test

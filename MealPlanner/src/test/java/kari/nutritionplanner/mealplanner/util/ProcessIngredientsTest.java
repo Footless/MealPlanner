@@ -6,13 +6,9 @@
 package kari.nutritionplanner.mealplanner.util;
 
 import java.io.IOException;
-import kari.nutritionplanner.mealplanner.util.ProcessIngredients;
 import java.util.Map;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -21,32 +17,17 @@ import static org.junit.Assert.*;
  * @author kari
  */
 public class ProcessIngredientsTest {
-    private double delta = 0.0001;
+    private final double delta = 0.0001;
     private ProcessIngredients pi;
     
     public ProcessIngredientsTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
     }
     
     @Before
     public void setUp() throws IOException {
         this.pi = new ProcessIngredients();
     }
-    
-    @After
-    public void tearDown() {
-    }
 
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
      @Test
      public void testGetIngredients() {
          Map<String, Map<Integer, Ingredient>> ingredients = pi.getIngredients();

@@ -39,6 +39,23 @@ public class SCVReader {
         }
         return ingredients;
     }
+    
+    public List<Ingredient> search(String s) throws IOException {
+        String line = null;
+        Scanner scanner = null;
+        List<Ingredient> ings = new ArrayList<>();
+        try {
+            while ((line = reader.readLine()) != null) {
+                Ingredient ing = searchForIngredient(scanner, s, line);
+                if (ing != null) {
+                    ings.add(ing);
+                }
+            }
+        } catch (IOException ex) {
+            throw new IOException("Tiedoston lukeminen epäonnistui: " + ex);
+        }
+        return ings;
+    }
 
     public boolean searchMacros(Ingredient ing) throws IOException {
         if (ing == null) {
@@ -57,21 +74,7 @@ public class SCVReader {
         }
         return false;
     }
-
-//    public Ingredient search(String s) {
-//        String line = null;
-//        Scanner scanner = null;
-//        Ingredient returnIng = null;
-//        try {
-//            while ((line = reader.readLine()) != null) {
-//                returnIng = searchIngredient(scanner, s, line);
-//                
-//            }
-//        } catch (IOException ex) {
-//            Logger.getLogger(SCVReader.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        return null;
-//    }
+    
     private void searchIngredient(List<Ingredient> ingredients, Scanner scanner, String line) {
         scanner = new Scanner(line);
         scanner.useLocale(loc);
@@ -80,7 +83,7 @@ public class SCVReader {
         String id = "";
         while (scanner.hasNext()) {
             String next = scanner.next();
-            if (i == 0) {
+            if (i == 0 && next.length() < 6) {
                 id = next;
             }
             if (i == 1) {
@@ -89,6 +92,25 @@ public class SCVReader {
             }
             i++;
         }
+    }
+    
+    private Ingredient searchForIngredient(Scanner scanner, String s, String line) {
+        scanner = new Scanner(line);
+                scanner.useDelimiter(";");
+                int i = 0;
+                String id = "";
+                while (scanner.hasNext()) {
+                    String next = scanner.next();
+                    if (i == 0 && next.length() < 6 && next.length() > 0) {
+                        id = next;
+                        System.out.println(id);
+                    }
+                    if (i == 1 && next.toLowerCase().contains(s.toLowerCase()) && id.length() > 0) {
+                        return new Ingredient(Integer.parseInt(id), next);
+                    }
+                    i++;
+                }
+                return null;
     }
 
     private boolean setMacros(Scanner scanner, String line, Ingredient ing) {
@@ -117,23 +139,4 @@ public class SCVReader {
         }
         return false;
     }
-
-//    private Ingredient searchIngredient(Scanner scanner, String s, String line) {
-//        scanner = new Scanner(line);
-//                scanner.useDelimiter(";");
-//                int i = 0;
-//                while (scanner.hasNext()) {
-//                    String id = "";
-//                    String next = scanner.next();
-//                    if (i == 0) {
-//                        id = next;
-//                    }
-//                    if (i == 1 && next.toLowerCase().contains(s)) {
-//                        return new Ingredient(Integer.parseInt(id), next);
-//                    }
-//                    i++;
-//                }
-//                i = 0;
-//                return null;
-//    }
 }

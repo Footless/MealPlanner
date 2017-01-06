@@ -18,13 +18,11 @@ import kari.nutritionplanner.mealplanner.gui.UserInterface;
  * @author kari
  */
 public class SelectCardListener implements ActionListener {
-    private final UserInterface ui;
     private final CardLayout cards;
     private final Container container;
     private final String card;
     
-    public SelectCardListener(UserInterface ui, CardLayout cards, Container container, String card) {
-        this.ui = ui;
+    public SelectCardListener(CardLayout cards, Container container, String card) {
         this.cards = cards;
         this.container = container;
         this.card = card;
@@ -32,9 +30,6 @@ public class SelectCardListener implements ActionListener {
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand() != null && e.getActionCommand().contains("clear")) {
-            ui.getHelper().clear();
-        }
         cards.show(container, card);
     }
     
