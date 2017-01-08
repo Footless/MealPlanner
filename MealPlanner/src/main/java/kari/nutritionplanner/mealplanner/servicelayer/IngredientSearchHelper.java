@@ -31,20 +31,48 @@ public class IngredientSearchHelper {
     private final CSVReader reader;
     private final ProcessIngredients ingredientProcessor;
     
+    /**
+     * Konstruktori luo Readerin, joka lukee tiedostoa food_utf.csv
+     * joka sisältää kaikkien Finelin tietokannan elintarvikkeiden nimet ja id:t.
+     * 
+     * @throws IOException 
+     */
     public IngredientSearchHelper() throws IOException {
         this.reader = new CSVReader("food_utf.csv");
         this.ingredientProcessor = new ProcessIngredients();
     }
     
+    /**
+     * Konstruktori antaa mahdollisuuden luoda readerin myös muille tiedostoille tarpeen 
+     * tullen. Tuskin tulee ja tämä poistetaan ennen pitkää.
+     * 
+     * @param fileName halutun tiedoston nimi
+     * @throws IOException 
+     */
     public IngredientSearchHelper(String fileName) throws IOException {
         this.reader = new CSVReader(fileName);
         this.ingredientProcessor = new ProcessIngredients();
     }
     
+    /**
+     * Hakee raaka-aineita readerin määrittelemästä tiedostosta annetun hakutermin
+     * perusteella.
+     * 
+     * @param s hakutermi, jonka käyttäjä on syöttänyt käyttöliittymässä
+     * @return listan hakua vastaavista raaka-aineista
+     * @throws IOException 
+     */
     public List<Ingredient> search(String s) throws IOException {
         return reader.search(s);
     }
     
+    /**
+     * Lisää makrot parametrina annettuun raaka-aineeseen.
+     * 
+     * @param ing raaka-aine Ingredient-oliona
+     * @return palauttaa true tai false, riippuen onnistuiko makrojen lisääminen
+     * @throws IOException 
+     */
     public boolean addMacros(Ingredient ing) throws IOException {
         return ingredientProcessor.addMacrosToIngredient(ing);
     }

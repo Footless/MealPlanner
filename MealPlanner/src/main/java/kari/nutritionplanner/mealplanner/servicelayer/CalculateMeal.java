@@ -96,7 +96,7 @@ public class CalculateMeal {
         }
     }
 
-    public boolean setSideIngredient(int sideId) {
+    private boolean setSideIngredient(int sideId) {
         if (sideId == 99999) {
             randomSide();
             return true;

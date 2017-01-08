@@ -43,7 +43,7 @@ public class AddIngredientsView {
         this.compFactory = compFactory;
     }
 
-    public JPanel createSearchIngCard(JPanel cards) throws IOException {
+    protected JPanel createSearchIngCard(JPanel cards) throws IOException {
         JPanel card = new JPanel(new BorderLayout());
         JLabel searchIngs = compFactory.createLabel("Hae raaka-aineita");
         card.add(searchIngs, BorderLayout.NORTH);
