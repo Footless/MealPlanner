@@ -38,16 +38,22 @@ public class AddIngredientsView {
     private final CardLayout cardL;
     private final ComponentFactory compFactory;
 
-    public AddIngredientsView(CardLayout cardL, ComponentFactory compFactory) {
+    /**
+     * Konstuktori. Saa parametrinä käyttöliittymän käyttämän CardLayout-olion.
+     *
+     * @param cardL CardLayout-olio, jota käyttöliittymä käyttää näkymien vaihtamiseen
+     * @throws IOException saattaa heitellä poikkeuksen ComponentFactoryn takia.
+     */
+    public AddIngredientsView(CardLayout cardL) throws IOException {
         this.cardL = cardL;
-        this.compFactory = compFactory;
+        this.compFactory = new ComponentFactory();
     }
 
     protected JPanel createSearchIngCard(JPanel cards) throws IOException {
         JPanel card = new JPanel(new BorderLayout());
         JLabel searchIngs = compFactory.createLabel("Hae raaka-aineita");
         card.add(searchIngs, BorderLayout.NORTH);
-        
+
         JPanel searchFieldComp = new JPanel(new BorderLayout());
 
         createFieldAndButton(searchFieldComp);
@@ -67,7 +73,7 @@ public class AddIngredientsView {
         BoxLayout boxL = new BoxLayout(searchFieldAndButton, BoxLayout.LINE_AXIS);
         searchFieldAndButton.setLayout(boxL);
         JTextField searchField = compFactory.createSearchField();
-        
+
         JButton searchButton = compFactory.createButton("Hae");
         ActionListener searchIngListener = new SearchIngListener(searchFieldComp, searchField);
         searchButton.addActionListener(searchIngListener);

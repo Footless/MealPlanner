@@ -38,7 +38,8 @@ import kari.nutritionplanner.mealplanner.servicelayer.CalculateMeal;
 import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
 
 /**
- * Luokka aterian laskemiselle, sisältää kaikki osat varsinaista aterian laskemista.
+ * Luokka aterian laskemiselle, sisältää kaikki osat varsinaista aterian
+ * laskemista.
  *
  * @author kari
  */
@@ -49,6 +50,17 @@ public class CalcMealView {
     private final MealCalcHelper helper;
     private final ComponentFactory compFactory;
 
+    /**
+     * Konstruktori. Saa parametreinä käyttöliittymän käyttämän
+     * CardLayout-olion, CalculateMeal-olion, MealCalcHelper-olion sekä
+     * ComponentFactory-olion.
+     *
+     * @param cardL CardLayout-olio jota koko käyttöliittymä käyttää näkymien
+     * vaihtamiseen
+     * @param mealCalculator MealCalculator-olio
+     * @param helper MealCalcHelper-olio auttamaan ja säilömään
+     * @param compFactory ComponentFactory tekemään komponentteja
+     */
     public CalcMealView(CardLayout cardL, CalculateMeal mealCalculator, MealCalcHelper helper, ComponentFactory compFactory) {
         this.cardL = cardL;
         this.mealCalculator = mealCalculator;
@@ -56,7 +68,15 @@ public class CalcMealView {
         this.compFactory = compFactory;
     }
 
-    protected JPanel createMainIngredientCard(Container container) throws IOException {
+    /**
+     * Luo näkymän, jossa valitaan pääraaka-aine.
+     *
+     * @param container Kaikki "kortit" sisältävä JPanel
+     * @return palauttaa valmiin näkymän
+     * @throws IOException saattaa heitellä poikkeuksen ComponentFactoryn
+     * nappien luonnista.
+     */
+    public JPanel createMainIngredientCard(Container container) throws IOException {
         JPanel card = new JPanel(new BorderLayout());
         JLabel instructions = compFactory.createLabel("Valitse listasta haluamasi raaka-aine");
         card.add(instructions, BorderLayout.NORTH);
@@ -66,6 +86,14 @@ public class CalcMealView {
         return card;
     }
 
+    /**
+     * Luo näkymän jossa valitaan lisäke.
+     *
+     * @param container Kaikki "kortit" sisältävä JPanel
+     * @return palauttaa valmiin näkymän
+     * @throws IOException IOException saattaa heitellä poikkeuksen
+     * ComponentFactoryn nappien luonnista.
+     */
     public JPanel createSideIngredienCard(Container container) throws IOException {
         JPanel card = new JPanel(new BorderLayout());
         JLabel instructions = compFactory.createLabel("Valitse listasta haluamasi raaka-aine");
@@ -76,7 +104,13 @@ public class CalcMealView {
         return card;
     }
 
-    public JPanel createCaloriesCard(Container container) throws IOException {
+    /**
+     * Luo näkymän jossa valitaan halutut kalorit.
+     *
+     * @param container Kaikki "kortit" sisältävä JPanel
+     * @return palauttaa valmiin näkymän
+     */
+    public JPanel createCaloriesCard(Container container) {
         JPanel card = new JPanel(new BorderLayout());
         JLabel caloriesInstructions = compFactory.createLabel("Valitse haluamasi määrä kaloreita:");
         Ingredient ing = mealCalculator.getIngredients().get("mains").get(helper.getMainIngredientId());
@@ -90,6 +124,12 @@ public class CalcMealView {
         return card;
     }
 
+    /**
+     * Luo näkymän jossa valitaan haluttu proteiinin määrä.
+     *
+     * @param container Kaikki "kortit" sisältävä JPanel
+     * @return palauttaa valmiin näkymän
+     */
     public JPanel createProteinsCard(Container container) {
         JPanel card = new JPanel(new BorderLayout());
         JLabel proteinInstructions = compFactory.createLabel("Valitse haluamasi proteiinin määrä:");
@@ -104,6 +144,12 @@ public class CalcMealView {
         return card;
     }
 
+    /**
+     * Luo näkymän jossa valitaan haluttu rasvan määrä.
+     *
+     * @param container Kaikki "kortit" sisältävä JPanel
+     * @return palauttaa valmiin näkymän
+     */
     public JPanel createFatsCard(Container container) {
         JPanel card = new JPanel(new BorderLayout());
         JLabel fatInstructions = compFactory.createLabel("Valitse haluamasi rasvan määrä:");
@@ -118,6 +164,12 @@ public class CalcMealView {
         return card;
     }
 
+    /**
+     * Luo näkymän jossa näytetään luotu ateria sekä sen sisältämät makrot.
+     *
+     * @param container Kaikki "kortit" sisältävä JPanel
+     * @return palauttaa valmiin näkymän
+     */
     public JPanel createReadyMealCard(Container container) {
         JPanel card = new JPanel(new BorderLayout());
         JLabel title = compFactory.createLabel("Tässä ateriasi:");
@@ -145,6 +197,12 @@ public class CalcMealView {
         }
     }
 
+    /**
+     * Helppo tapa tarjota helper ActionListenerien käyttöön, jokainen saa
+     * kuitenkin viitteen tähän luokkaan.
+     *
+     * @return MealCalculateHelper-olio
+     */
     public MealCalcHelper getHelper() {
         return this.helper;
     }

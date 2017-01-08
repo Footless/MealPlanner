@@ -66,7 +66,7 @@ public class UserInterface implements Runnable {
         CalcMealView calcMealView = new CalcMealView(cardL, mealCalculator, helper, compFactory);
         createMealCards(cards, calcMealView);
 
-        AddIngredientsView addIngsView = new AddIngredientsView(cardL, compFactory);
+        AddIngredientsView addIngsView = new AddIngredientsView(cardL);
         createAddIngCards(cards, addIngsView);
 
         contentPane.add(cards);
@@ -86,6 +86,7 @@ public class UserInterface implements Runnable {
         addIngredients.addActionListener(addIngListener);
 
         JButton browseIngredients = compFactory.createButton("Selaa raaka-aineita");
+        browseIngredients.setEnabled(false);
 
         startCard.add(getMeal);
         startCard.add(addIngredients);

@@ -74,7 +74,7 @@
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>          <a href="../../../../kari/nutritionplanner/mealplanner/gui/CalcMealView.html">CalcMealView</a> calcMealView = <strong class="jxr_keyword">new</strong> <a href="../../../../kari/nutritionplanner/mealplanner/gui/CalcMealView.html">CalcMealView</a>(cardL, mealCalculator, helper, compFactory);
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>          createMealCards(cards, calcMealView);
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>  
-<a class="jxr_linenumber" name="L69" href="#L69">69</a>          <a href="../../../../kari/nutritionplanner/mealplanner/gui/AddIngredientsView.html">AddIngredientsView</a> addIngsView = <strong class="jxr_keyword">new</strong> <a href="../../../../kari/nutritionplanner/mealplanner/gui/AddIngredientsView.html">AddIngredientsView</a>(cardL, compFactory);
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>          <a href="../../../../kari/nutritionplanner/mealplanner/gui/AddIngredientsView.html">AddIngredientsView</a> addIngsView = <strong class="jxr_keyword">new</strong> <a href="../../../../kari/nutritionplanner/mealplanner/gui/AddIngredientsView.html">AddIngredientsView</a>(cardL);
 <a class="jxr_linenumber" name="L70" href="#L70">70</a>          createAddIngCards(cards, addIngsView);
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>  
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>          contentPane.add(cards);
@@ -94,27 +94,28 @@
 <a class="jxr_linenumber" name="L86" href="#L86">86</a>          addIngredients.addActionListener(addIngListener);
 <a class="jxr_linenumber" name="L87" href="#L87">87</a>  
 <a class="jxr_linenumber" name="L88" href="#L88">88</a>          JButton browseIngredients = compFactory.createButton(<span class="jxr_string">"Selaa raaka-aineita"</span>);
-<a class="jxr_linenumber" name="L89" href="#L89">89</a>  
-<a class="jxr_linenumber" name="L90" href="#L90">90</a>          startCard.add(getMeal);
-<a class="jxr_linenumber" name="L91" href="#L91">91</a>          startCard.add(addIngredients);
-<a class="jxr_linenumber" name="L92" href="#L92">92</a>          startCard.add(browseIngredients);
-<a class="jxr_linenumber" name="L93" href="#L93">93</a>          <strong class="jxr_keyword">return</strong> startCard;
-<a class="jxr_linenumber" name="L94" href="#L94">94</a>      }
-<a class="jxr_linenumber" name="L95" href="#L95">95</a>  
-<a class="jxr_linenumber" name="L96" href="#L96">96</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> createMealCards(JPanel cards, <a href="../../../../kari/nutritionplanner/mealplanner/gui/CalcMealView.html">CalcMealView</a> calcMealView) <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L97" href="#L97">97</a>          JPanel mainIngredientCard = calcMealView.createMainIngredientCard(cards);
-<a class="jxr_linenumber" name="L98" href="#L98">98</a>          cards.add(mainIngredientCard, <span class="jxr_string">"askMainIngredient"</span>);
-<a class="jxr_linenumber" name="L99" href="#L99">99</a>      }
-<a class="jxr_linenumber" name="L100" href="#L100">100</a> 
-<a class="jxr_linenumber" name="L101" href="#L101">101</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> createAddIngCards(JPanel cards, <a href="../../../../kari/nutritionplanner/mealplanner/gui/AddIngredientsView.html">AddIngredientsView</a> addIngsView) <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L102" href="#L102">102</a>         JPanel searchIngCard = addIngsView.createSearchIngCard(cards);
-<a class="jxr_linenumber" name="L103" href="#L103">103</a>         cards.add(searchIngCard, <span class="jxr_string">"addIngredient"</span>);
-<a class="jxr_linenumber" name="L104" href="#L104">104</a>     }
-<a class="jxr_linenumber" name="L105" href="#L105">105</a> 
-<a class="jxr_linenumber" name="L106" href="#L106">106</a>     <strong class="jxr_keyword">public</strong> <a href="../../../../kari/nutritionplanner/mealplanner/servicelayer/MealCalcHelper.html">MealCalcHelper</a> getHelper() {
-<a class="jxr_linenumber" name="L107" href="#L107">107</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>.helper;
-<a class="jxr_linenumber" name="L108" href="#L108">108</a>     }
-<a class="jxr_linenumber" name="L109" href="#L109">109</a> }
+<a class="jxr_linenumber" name="L89" href="#L89">89</a>          browseIngredients.setEnabled(false);
+<a class="jxr_linenumber" name="L90" href="#L90">90</a>  
+<a class="jxr_linenumber" name="L91" href="#L91">91</a>          startCard.add(getMeal);
+<a class="jxr_linenumber" name="L92" href="#L92">92</a>          startCard.add(addIngredients);
+<a class="jxr_linenumber" name="L93" href="#L93">93</a>          startCard.add(browseIngredients);
+<a class="jxr_linenumber" name="L94" href="#L94">94</a>          <strong class="jxr_keyword">return</strong> startCard;
+<a class="jxr_linenumber" name="L95" href="#L95">95</a>      }
+<a class="jxr_linenumber" name="L96" href="#L96">96</a>  
+<a class="jxr_linenumber" name="L97" href="#L97">97</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> createMealCards(JPanel cards, <a href="../../../../kari/nutritionplanner/mealplanner/gui/CalcMealView.html">CalcMealView</a> calcMealView) <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L98" href="#L98">98</a>          JPanel mainIngredientCard = calcMealView.createMainIngredientCard(cards);
+<a class="jxr_linenumber" name="L99" href="#L99">99</a>          cards.add(mainIngredientCard, <span class="jxr_string">"askMainIngredient"</span>);
+<a class="jxr_linenumber" name="L100" href="#L100">100</a>     }
+<a class="jxr_linenumber" name="L101" href="#L101">101</a> 
+<a class="jxr_linenumber" name="L102" href="#L102">102</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> createAddIngCards(JPanel cards, <a href="../../../../kari/nutritionplanner/mealplanner/gui/AddIngredientsView.html">AddIngredientsView</a> addIngsView) <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L103" href="#L103">103</a>         JPanel searchIngCard = addIngsView.createSearchIngCard(cards);
+<a class="jxr_linenumber" name="L104" href="#L104">104</a>         cards.add(searchIngCard, <span class="jxr_string">"addIngredient"</span>);
+<a class="jxr_linenumber" name="L105" href="#L105">105</a>     }
+<a class="jxr_linenumber" name="L106" href="#L106">106</a> 
+<a class="jxr_linenumber" name="L107" href="#L107">107</a>     <strong class="jxr_keyword">public</strong> <a href="../../../../kari/nutritionplanner/mealplanner/servicelayer/MealCalcHelper.html">MealCalcHelper</a> getHelper() {
+<a class="jxr_linenumber" name="L108" href="#L108">108</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>.helper;
+<a class="jxr_linenumber" name="L109" href="#L109">109</a>     }
+<a class="jxr_linenumber" name="L110" href="#L110">110</a> }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2017. All rights reserved.</div>

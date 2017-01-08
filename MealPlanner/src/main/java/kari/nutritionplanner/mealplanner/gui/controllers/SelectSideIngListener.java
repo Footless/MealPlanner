@@ -55,13 +55,9 @@ public class SelectSideIngListener extends GetMealListener {
         String name = b.getActionCommand();
         System.out.println(name);
         helper.setSideIngredient(name);
-        try {
-            JPanel card = view.createCaloriesCard(container);
-            container.add(card, nextCard);
-            cardL.show(container, nextCard);
-        } catch (IOException ex) {
-            Logger.getLogger(SelectMainIngListener.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        JPanel card = view.createCaloriesCard(container);
+        container.add(card, nextCard);
+        cardL.show(container, nextCard);
     }
 
 }
