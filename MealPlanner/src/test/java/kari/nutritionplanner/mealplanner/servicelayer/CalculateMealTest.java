@@ -109,7 +109,7 @@ public class CalculateMealTest {
             double protein = calories / 20;
             double fat = calories / 30;
             cm.getMeal().setSauceAmount(-5.5);
-            assertTrue(cm.calculateAllMeal(ing.getId(), calories, protein, fat));
+            assertTrue(cm.calculateAllMeal(ing.getId(), 99999, calories, protein, fat));
             assertEquals(calories, cm.getMeal().getCalories(), hugeDelta);
             assertEquals(protein, cm.getMeal().getProtein(), proteinDelta);
             assertEquals(fat, cm.getMeal().getFat(), bigDelta);
@@ -131,42 +131,42 @@ public class CalculateMealTest {
 
     @Test
     public void testLowFatMeal() {
-        assertFalse(cm.calculateAllMeal(750, 300, 50, 5));
-        assertFalse(cm.calculateAllMeal(750, 300, 10, 5));
-        assertTrue(cm.calculateAllMeal(805, 500, 50, 10));
+        assertFalse(cm.calculateAllMeal(750, 99999, 300, 50, 5));
+        assertFalse(cm.calculateAllMeal(750, 99999, 300, 10, 5));
+        assertTrue(cm.calculateAllMeal(805, 99999, 500, 50, 10));
         assertEquals(10, cm.getMeal().getFat(), bigDelta);
         assertEquals(0, cm.getMeal().getSauceAmount(), bigDelta);
     }
 
     @Test
     public void testSetMainIng() {
-        assertFalse(cm.calculateAllMeal(805, 50, 10, 4));
-        assertFalse(cm.calculateAllMeal(805, 50, 9, 5));
-        assertFalse(cm.calculateAllMeal(805, 50, 9, 4));
-        assertTrue(cm.calculateAllMeal(805, 50, 10, 5));
-        assertFalse(cm.calculateAllMeal(805, 49, 10, 5));
-        assertFalse(cm.calculateAllMeal(805, 49, 9, 4));
-        assertFalse(cm.calculateAllMeal(805, 49, 10, 4));
+        assertFalse(cm.calculateAllMeal(805, 99999, 50, 10, 4));
+        assertFalse(cm.calculateAllMeal(805, 99999, 50, 9, 5));
+        assertFalse(cm.calculateAllMeal(805, 99999, 50, 9, 4));
+        assertTrue(cm.calculateAllMeal(805, 99999, 50, 10, 5));
+        assertFalse(cm.calculateAllMeal(805, 99999, 49, 10, 5));
+        assertFalse(cm.calculateAllMeal(805, 99999, 49, 9, 4));
+        assertFalse(cm.calculateAllMeal(805, 99999, 49, 10, 4));
     }
 
     @Test
     public void testZeroCaloriesMeal() {
-        assertFalse(cm.calculateAllMeal(805, 0, 30, 30));
+        assertFalse(cm.calculateAllMeal(805, 99999, 0, 30, 30));
     }
 
     @Test
     public void testZeroProteinMeal() {
-        assertFalse(cm.calculateAllMeal(805, 500, 0, 20));
+        assertFalse(cm.calculateAllMeal(805, 99999, 500, 0, 20));
     }
 
     @Test
     public void testZeroFatMeal() {
-        assertFalse(cm.calculateAllMeal(805, 500, 50, 0));
+        assertFalse(cm.calculateAllMeal(805, 99999, 500, 50, 0));
     }
 
     @Test
     public void testSetWholeMealFalse() {
-        assertFalse(cm.calculateAllMeal(805, 1000, 30, 0));
+        assertFalse(cm.calculateAllMeal(805, 99999, 1000, 30, 0));
     }
 
     @Test
@@ -174,7 +174,7 @@ public class CalculateMealTest {
         int calories = new Random().nextInt(300) + 400;
         int protein = calories / 20;
         int fat = calories / 30;
-        assertTrue(cm.calculateAllMeal(805, calories, protein, fat));
+        assertTrue(cm.calculateAllMeal(805, 99999, calories, protein, fat));
         assertEquals(fat, cm.getMeal().getFat(), bigDelta);
     }
 
@@ -183,7 +183,7 @@ public class CalculateMealTest {
         int calories = new Random().nextInt(300) + 400;
         int protein = calories / 15;
         int fat = calories / 30;
-        assertTrue(cm.calculateAllMeal(805, calories, protein, fat));
+        assertTrue(cm.calculateAllMeal(805, 99999, calories, protein, fat));
         assertEquals(protein, cm.getMeal().getProtein(), proteinDelta);
     }
 
@@ -192,7 +192,7 @@ public class CalculateMealTest {
         int calories = new Random().nextInt(300) + 400;
         int protein = calories / 20;
         int fat = calories / 30;
-        assertTrue(cm.calculateAllMeal(805, calories, protein, fat));
+        assertTrue(cm.calculateAllMeal(805, 99999, calories, protein, fat));
         assertEquals(calories, cm.getMeal().getCalories(), hugeDelta);
     }
 
