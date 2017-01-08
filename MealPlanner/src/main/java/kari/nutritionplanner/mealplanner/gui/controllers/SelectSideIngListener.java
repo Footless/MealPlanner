@@ -29,6 +29,9 @@ import kari.nutritionplanner.mealplanner.gui.CalcMealView;
 import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
 
 /**
+ * ActionListener joka on vastuussa lisäkkeen lisäämisestä ateriaan. Hakee
+ * buttongroupista valitun raaka-aineen ja lisää sen MealCalcHelperiin talteen
+ * ja tekee sekä näyttää seuraavan kortin.
  *
  * @author kari
  */

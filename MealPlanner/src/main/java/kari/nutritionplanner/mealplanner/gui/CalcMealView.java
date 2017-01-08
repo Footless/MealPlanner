@@ -27,7 +27,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
-import javax.swing.JTextArea;
 import kari.nutritionplanner.mealplanner.gui.controllers.SelectSideIngListener;
 import kari.nutritionplanner.mealplanner.gui.controllers.SelectCaloriesListener;
 import kari.nutritionplanner.mealplanner.gui.controllers.SelectCardListener;
@@ -39,6 +38,7 @@ import kari.nutritionplanner.mealplanner.servicelayer.CalculateMeal;
 import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
 
 /**
+ * Luokka aterian laskemiselle, sisältää kaikki osat varsinaista aterian laskemista.
  *
  * @author kari
  */

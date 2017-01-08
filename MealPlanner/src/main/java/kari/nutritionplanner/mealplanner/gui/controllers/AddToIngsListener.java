@@ -25,6 +25,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 /**
+ * ActionListener, joka käsittelee uuden raaka-aineen lisäämistä valittavissa oleviin raaka-aineisiin.
+ * 8.1.2017 yhä keskeneräinen.
  *
  * @author kari
  */

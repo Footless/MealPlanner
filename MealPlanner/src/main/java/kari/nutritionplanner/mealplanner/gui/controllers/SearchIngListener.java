@@ -33,6 +33,8 @@ import kari.nutritionplanner.mealplanner.gui.ComponentFactory;
 import kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelper;
 
 /**
+ * ActionListener joka suorittaa hakusanan perusteella haun kaikista Finelin
+ * tietokannan raaka-aineista, ja tulostaa JListina hakusanan sisältävät raaka-aineet.
  *
  * @author kari
  */

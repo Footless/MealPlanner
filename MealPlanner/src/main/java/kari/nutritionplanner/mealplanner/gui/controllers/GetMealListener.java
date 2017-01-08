@@ -21,6 +21,7 @@ import java.awt.event.ActionListener;
 import kari.nutritionplanner.mealplanner.gui.CalcMealView;
 
 /**
+ * Abstrakti luokka kaikille aterian lisäämiseen liittyville ActionListenereille.
  *
  * @author kari
  */

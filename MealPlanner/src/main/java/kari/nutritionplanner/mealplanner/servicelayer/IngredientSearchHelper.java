@@ -23,6 +23,7 @@ import kari.nutritionplanner.mealplanner.util.CSVReader;
 import kari.nutritionplanner.mealplanner.util.ProcessIngredients;
 
 /**
+ * Apuluokka raaka-aineiden etsimiseen.
  *
  * @author kari
  */
