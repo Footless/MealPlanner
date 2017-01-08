@@ -43,7 +43,9 @@ public class MealCalcHelper {
      * käyttää.
      *
      * @param cm CalculateMeal-olio (UserInterfacesta)
-     * @throws IOException
+     * @throws IOException heittää poikkeuksen, jos ProcessIngredientsin luonti
+     * epäonnistuu
+     * @see ProcessIngredients
      */
     public MealCalcHelper(CalculateMeal cm) throws IOException {
         this.cm = cm;
@@ -75,7 +77,7 @@ public class MealCalcHelper {
      * asettaa dummy-Ingredientin id:llä 99999, jotta CalculateMeal osaa
      * myöhemmässä vaiheessa arpoa satunnaisen raaka-aineen lisäkkeeksi.
      *
-     * @param name
+     * @param name raaka-aineen nimi
      */
     public void setSideIngredient(String name) {
         if (!name.contains("misc")) {
@@ -104,7 +106,7 @@ public class MealCalcHelper {
     }
 
     /**
-     * Asettaa käyttäjän syöttämän halutun proteiinimäärän muistiin
+     * Asettaa käyttäjän syöttämän halutun proteiinimäärän muistiin.
      *
      * @param desiredProtein haluttu proteiinin määrä liukulukuna
      */

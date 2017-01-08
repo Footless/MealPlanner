@@ -38,7 +38,7 @@ public class CSVReader {
      * löytyvät.
      *
      * @return List-olio, jossa kaikki kohdetiedoston raaka-aineet
-     * @throws IOException
+     * @throws IOException heittelee poikkeusta jos tiedoston luku ei onnistu
      */
     public List<Ingredient> getAllIngredients() throws IOException {
         String line = null;
@@ -55,13 +55,15 @@ public class CSVReader {
     }
 
     /**
-     * 
-     * 
+     * Hakee raaka-aineita konstruktorissa määritetystä tiedostosta annetun
+     * hakutermin perusteella. Palauttaa listan hakutermiin täsmäävistä
+     * raaka-aineista.
+     *
      * @param s hakutermi
      * @return lista kaikista raaka-aineista, joihin hakutermi täsmää
-     * @throws IOException
+     * @throws IOException heittää poikkeuksen, jos tiedoston luku ei
+     * onnistukaan
      */
-
     public List<Ingredient> search(String s) throws IOException {
         String line = null;
         Scanner scanner = null;
@@ -79,6 +81,15 @@ public class CSVReader {
         return ings;
     }
 
+    /**
+     * Etsii makroja konstruktorin määrittelemästä tiedostosta. Palauttaa true
+     * tai false sen mukaan, onnistuiko makrojen lisääminen raaka-aineeseen, eli
+     * löytyikö raaka-ainetta tiedostosta.
+     *
+     * @param ing Ingredient-olio, jolle makrot halutaan lisätä
+     * @return true tai false onnistumisen mukaan
+     * @throws IOException heittelee jotain, jos lukeminen ei onnistu
+     */
     public boolean searchMacros(Ingredient ing) throws IOException {
         if (ing == null) {
             return false;

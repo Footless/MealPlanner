@@ -32,6 +32,14 @@ public class MealTweaker {
     private final double fat;
     private final MacroCalculator mc;
 
+    /**
+     * Konstuktori saa Meal-olion jota pitäisi säätää, sekä tavoitemakrot.
+     *
+     * @param meal Meal-olio, jolle säädöt pitäisi tehdä
+     * @param calories haluttu määrä kaloreja
+     * @param protein haluttu määrä proteiinin
+     * @param fat haluttu määrä rasvaa
+     */
     public MealTweaker(Meal meal, double calories, double protein, double fat) {
         this.meal = meal;
         this.calories = calories;
@@ -40,6 +48,11 @@ public class MealTweaker {
         this.mc = new MacroCalculator();
     }
 
+    /**
+     * Tekee kaikki taiat. Pyörittelee makroja ja säätää niitä, lopuksi
+     * pyöristää määrät järkevään muotoon.
+     *
+     */
     public void tweakMeal() {
         evenUpIngredients(calories, protein, fat);
         roundUpIngredients();
@@ -138,6 +151,10 @@ public class MealTweaker {
                 && (meal.getFat() <= fat + 1 && meal.getFat() >= fat - 1);
     }
 
+    /**
+     * Pyöristää aterian raaka-aineiden määrät kahden desimaalin tarkkuuteen.
+     * Esim. 1.23 on 123 grammaa.
+     */
     public void roundUpIngredients() {
         double main = (Math.ceil(meal.getMainIngredientAmount() * 100)) / 100;
         double side = Math.ceil(meal.getSideIngredientAmount() * 100) / 100;
