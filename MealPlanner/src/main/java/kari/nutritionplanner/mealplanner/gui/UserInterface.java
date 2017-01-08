@@ -5,29 +5,19 @@
  */
 package kari.nutritionplanner.mealplanner.gui;
 
-import kari.nutritionplanner.mealplanner.controllers.SelectCardListener;
-import kari.nutritionplanner.mealplanner.controllers.SelectCaloriesListener;
-import kari.nutritionplanner.mealplanner.controllers.SelectProtListener;
-import kari.nutritionplanner.mealplanner.controllers.SelectMainIngListener;
-import kari.nutritionplanner.mealplanner.controllers.SelectFatListener;
-import java.awt.BorderLayout;
+import kari.nutritionplanner.mealplanner.gui.controllers.SelectCardListener;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JSlider;
-import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
-import kari.nutritionplanner.mealplanner.domain.Ingredient;
 import kari.nutritionplanner.mealplanner.servicelayer.CalculateMeal;
 import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
 
@@ -110,10 +100,6 @@ public class UserInterface implements Runnable {
     private void createAddIngCards(JPanel cards, AddIngredientsView addIngsView) throws IOException {
         JPanel searchIngCard = addIngsView.createSearchIngCard(cards);
         cards.add(searchIngCard, "addIngredient");
-    }
-
-    public JFrame getFrame() {
-        return frame;
     }
 
     public MealCalcHelper getHelper() {

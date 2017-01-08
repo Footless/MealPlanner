@@ -62,13 +62,12 @@ public class CalculateMeal {
      * @see Ingredient
      */
     public boolean calculateAllMeal(int mainId, int sideId, double calories, double protein, double fat) {
+        
         if (protein < 10 || fat < 5 || calories < 50) {
             return false;
         }
-        if (sideId == 99999) {
-            randomSide();
-        } else {
-            meal.setSideIngredient(ingredients.get("sides").get(sideId));
+        if (!setSideIngredient(sideId)) {
+            return false;
         }
         if (setMainIngredient(mainId, protein, fat)) {
             setMisc();
@@ -97,10 +96,12 @@ public class CalculateMeal {
         }
     }
 
-    public boolean setSideIngredient(int id) {
-        if (ingredients.get("sides").containsKey(id)) {
-            Ingredient side = ingredients.get("sides").get(id);
-            meal.setSideIngredient(side);
+    public boolean setSideIngredient(int sideId) {
+        if (sideId == 99999) {
+            randomSide();
+            return true;
+        } else if (ingredients.get("sides").containsKey(sideId)) {
+            meal.setSideIngredient(ingredients.get("sides").get(sideId));
             return true;
         }
         return false;
@@ -110,9 +111,8 @@ public class CalculateMeal {
         double fatAmountInMeal = meal.getFat();
         if (fatAmountInMeal < fat) {
             Ingredient sauce = ingredients.get("sauces").get(5009);
-            double sauceAmount = mc.calculateAmountForFat((fat - fatAmountInMeal), sauce);
             meal.setSauce(sauce);
-            meal.setSauceAmount(sauceAmount);
+            meal.setSauceAmount(mc.calculateAmountForFat((fat - fatAmountInMeal), sauce));
         }
     }
 

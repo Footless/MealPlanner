@@ -14,52 +14,50 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package kari.nutritionplanner.mealplanner.controllers;
+package kari.nutritionplanner.mealplanner.gui.controllers;
 
 import java.awt.CardLayout;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.ButtonGroup;
-import javax.swing.ButtonModel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 import kari.nutritionplanner.mealplanner.gui.CalcMealView;
+import kari.nutritionplanner.mealplanner.servicelayer.CalculateMeal;
 import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
 
 /**
- * ActionListenerin toteuttava luokka. Ottaa pääraaka-aineen talteen ja 
- * vaihtaa seuraavan kortin, joka on proteiini.
+ * ActionListeneri toteuttava luokka. Ottaa rasva-arvon talteen ja suorittaa
+ * aterian laskemisen, jos mahdollista ja näyttää valmiin aterian.
  * 
  * @author kari
  */
-public class SelectMainIngListener extends GetMealListener {
-    private final MealCalcHelper helper;
-    private final ButtonGroup bg;
+public class SelectFatListener extends GetMealListener {
+
+    private final JSlider slider;
     private final Container container;
     private final String nextCard;
-    
-    public SelectMainIngListener(CalcMealView view, CardLayout cardL, ButtonGroup bg, Container container, String nextCard) {
+    private final CalculateMeal cm;
+    private final MealCalcHelper helper;
+
+    public SelectFatListener(CalcMealView view, CardLayout cardL, CalculateMeal cm, JSlider slider, Container container, String nextCard) {
         super(view, cardL);
-        this.helper = view.getHelper();
-        this.bg = bg;
+        this.slider = slider;
         this.container = container;
         this.nextCard = nextCard;
+        this.cm = cm;
+        this.helper = view.getHelper();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ButtonModel b = bg.getSelection();
-        String name = b.getActionCommand();
-        helper.setMainIngredient(name);
-        try {
-            JPanel card = view.createSideIngredienCard(container);
+        helper.setDesiredFat(slider.getValue());
+        if (cm.calculateAllMeal(helper.getMainIngredientId(), helper.getSideIngredientId(), helper.getDesiredCalories(), helper.getDesiredProtein(), helper.getDesiredFat())) {
+            JPanel card = view.createReadyMealCard(container);
             container.add(card, nextCard);
             cardL.show(container, nextCard);
-        } catch (IOException ex) {
-            Logger.getLogger(SelectMainIngListener.class.getName()).log(Level.SEVERE, null, ex);
+        } else {
+            JOptionPane.showMessageDialog(container, "Aterian luonti epäonnistui, yritä säätää proteiinin ja/tai rasvan määrää.");
         }
     }
-    
 }

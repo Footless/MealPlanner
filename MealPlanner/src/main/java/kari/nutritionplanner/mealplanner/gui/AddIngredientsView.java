@@ -24,10 +24,9 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import kari.nutritionplanner.mealplanner.controllers.SelectCardListener;
-import kari.nutritionplanner.mealplanner.controllers.SearchIngListener;
+import kari.nutritionplanner.mealplanner.gui.controllers.SelectCardListener;
+import kari.nutritionplanner.mealplanner.gui.controllers.SearchIngListener;
 
 /**
  * Uusien ruoka-aineiden lisäämiselle oma luokkansa, osa GUI:ta.
@@ -70,9 +69,9 @@ public class AddIngredientsView {
         JTextField searchField = compFactory.createSearchField();
         
         JButton searchButton = compFactory.createButton("Hae");
-        ActionListener SearchIngListener = new SearchIngListener(searchFieldComp, searchField);
-        searchButton.addActionListener(SearchIngListener);
-        searchField.addActionListener(SearchIngListener);
+        ActionListener searchIngListener = new SearchIngListener(searchFieldComp, searchField);
+        searchButton.addActionListener(searchIngListener);
+        searchField.addActionListener(searchIngListener);
         searchFieldAndButton.add(searchField);
         searchFieldAndButton.add(searchButton);
         searchFieldComp.add(searchFieldAndButton, BorderLayout.NORTH);

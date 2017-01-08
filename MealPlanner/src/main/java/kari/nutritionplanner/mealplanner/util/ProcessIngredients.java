@@ -1,6 +1,7 @@
 package kari.nutritionplanner.mealplanner.util;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -85,15 +86,20 @@ public class ProcessIngredients {
         addSidesAndStuffs();
     }
 
-    public List<Ingredient> getMainIngredients() throws IOException {
-        CSVReader lfnr = new CSVReader("main_ingredients.csv");
-        List<Ingredient> mains = lfnr.getAllIngredients();
-        return mains;
+    public List<Ingredient> getMainIngredients() {
+        List<Ingredient> mains = new ArrayList<>();
+        mainIgredients.values().stream().forEach((ing) -> {
+            mains.add(ing);
+        });
+        return  mains;
     }
     
-    public List<Ingredient> getSideIngredients() throws IOException {
-        CSVReader reader = new CSVReader("side_ingredients.csv");
-        return reader.getAllIngredients();
+    public List<Ingredient> getSideIngredients() {
+        List<Ingredient> sides = new ArrayList<>();
+        sideIgredients.values().stream().forEach((ing) -> {
+            sides.add(ing);
+        });
+        return sides;
     }
 
     public Map<String, Map<Integer, Ingredient>> getIngredients() {

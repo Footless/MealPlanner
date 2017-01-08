@@ -14,44 +14,52 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package kari.nutritionplanner.mealplanner.controllers;
+package kari.nutritionplanner.mealplanner.gui.controllers;
 
 import java.awt.CardLayout;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ButtonGroup;
+import javax.swing.ButtonModel;
 import javax.swing.JPanel;
-import javax.swing.JSlider;
 import kari.nutritionplanner.mealplanner.gui.CalcMealView;
 import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
 
 /**
- * ActionListenerin toteuttava luokka. Vaihtaa kaloritkortista proteiinikorttiin
- * ja tallentaa arvon samalla.
+ * ActionListenerin toteuttava luokka. Ottaa pääraaka-aineen talteen ja 
+ * vaihtaa seuraavan kortin, joka on proteiini.
  * 
  * @author kari
  */
-public class SelectCaloriesListener extends GetMealListener {
-    private final JSlider slider;
+public class SelectMainIngListener extends GetMealListener {
+    private final MealCalcHelper helper;
+    private final ButtonGroup bg;
     private final Container container;
     private final String nextCard;
-    private final MealCalcHelper helper;
-
-    public SelectCaloriesListener(CalcMealView view, CardLayout cardL, JSlider slider, Container container, String nextCard) {
+    
+    public SelectMainIngListener(CalcMealView view, CardLayout cardL, ButtonGroup bg, Container container, String nextCard) {
         super(view, cardL);
-        this.slider = slider;
+        this.helper = view.getHelper();
+        this.bg = bg;
         this.container = container;
         this.nextCard = nextCard;
-        this.helper = view.getHelper();
     }
-    
-    
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        JPanel card = view.createProteinsCard(container);
-        container.add(card, nextCard);
-        helper.setDesiredCalories(slider.getValue());
-        cardL.show(container, nextCard);
+        ButtonModel b = bg.getSelection();
+        String name = b.getActionCommand();
+        helper.setMainIngredient(name);
+        try {
+            JPanel card = view.createSideIngredienCard(container);
+            container.add(card, nextCard);
+            cardL.show(container, nextCard);
+        } catch (IOException ex) {
+            Logger.getLogger(SelectMainIngListener.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }

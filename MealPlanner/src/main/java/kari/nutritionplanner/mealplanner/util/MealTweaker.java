@@ -19,9 +19,9 @@ package kari.nutritionplanner.mealplanner.util;
 import kari.nutritionplanner.mealplanner.domain.Meal;
 
 /**
- * CalculateMealin apuluokka, joka pyörittelee luodun aterian raaka-aineita sekä lopuksi
- * pyöristää arvot järkevään muotoon.
- * 
+ * CalculateMealin apuluokka, joka pyörittelee luodun aterian raaka-aineita sekä
+ * lopuksi pyöristää arvot järkevään muotoon.
+ *
  * @author kari
  */
 public class MealTweaker {
@@ -47,12 +47,12 @@ public class MealTweaker {
 
     private void proteinSubber(double protein) {
 //        if (protein < meal.getProtein()) {
-            double proteinToSub = protein - meal.getProtein();
-            if (meal.getSideIngredient().getProtein() > 3) {
-                subFromBoth(proteinToSub);
-            } else {
-                subFromMain(proteinToSub);
-            }
+        double proteinToSub = protein - meal.getProtein();
+        if (meal.getSideIngredient().getProtein() > 3) {
+            subFromBoth(proteinToSub);
+        } else {
+            subFromMain(proteinToSub);
+        }
 //        }
     }
 
@@ -113,11 +113,11 @@ public class MealTweaker {
 
     private void fatSubber(double fat) {
 //        if (fat < meal.getFat() && meal.getSauceAmount() > 0) {
-            double fatToSub = fat - meal.getFat();
-            meal.setSauceAmount(meal.getSauceAmount() + mc.calculateAmountForFat(fatToSub, meal.getSauce()));
-            if (meal.getSauceAmount() < 0.1) {
-                meal.setSauceAmount(0);
-            }
+        double fatToSub = fat - meal.getFat();
+        meal.setSauceAmount(meal.getSauceAmount() + mc.calculateAmountForFat(fatToSub, meal.getSauce()));
+        if (meal.getSauceAmount() < 0.1) {
+            meal.setSauceAmount(0);
+        }
 //        }
     }
 

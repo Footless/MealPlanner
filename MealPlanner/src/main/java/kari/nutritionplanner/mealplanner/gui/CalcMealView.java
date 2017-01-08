@@ -28,12 +28,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextArea;
-import kari.nutritionplanner.mealplanner.controllers.AskSideIngListener;
-import kari.nutritionplanner.mealplanner.controllers.SelectCaloriesListener;
-import kari.nutritionplanner.mealplanner.controllers.SelectCardListener;
-import kari.nutritionplanner.mealplanner.controllers.SelectFatListener;
-import kari.nutritionplanner.mealplanner.controllers.SelectMainIngListener;
-import kari.nutritionplanner.mealplanner.controllers.SelectProtListener;
+import kari.nutritionplanner.mealplanner.gui.controllers.SelectSideIngListener;
+import kari.nutritionplanner.mealplanner.gui.controllers.SelectCaloriesListener;
+import kari.nutritionplanner.mealplanner.gui.controllers.SelectCardListener;
+import kari.nutritionplanner.mealplanner.gui.controllers.SelectFatListener;
+import kari.nutritionplanner.mealplanner.gui.controllers.SelectMainIngListener;
+import kari.nutritionplanner.mealplanner.gui.controllers.SelectProtListener;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
 import kari.nutritionplanner.mealplanner.servicelayer.CalculateMeal;
 import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
@@ -71,7 +71,7 @@ public class CalcMealView {
         JLabel instructions = compFactory.createLabel("Valitse listasta haluamasi raaka-aine");
         card.add(instructions, BorderLayout.NORTH);
         ButtonGroup sideButtonsGroup = compFactory.createIngButtons(card, mealCalculator, "side");
-        ActionListener al = new AskSideIngListener(this, cardL, sideButtonsGroup, container, "askCalories");
+        ActionListener al = new SelectSideIngListener(this, cardL, sideButtonsGroup, container, "askCalories");
         compFactory.addNextAndBackButtons(container, card, "askMainIngredient", al);
         return card;
     }

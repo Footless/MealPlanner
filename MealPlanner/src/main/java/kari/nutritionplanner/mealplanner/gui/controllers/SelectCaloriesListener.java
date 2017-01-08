@@ -14,45 +14,43 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package kari.nutritionplanner.mealplanner.controllers;
+package kari.nutritionplanner.mealplanner.gui.controllers;
 
 import java.awt.CardLayout;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import kari.nutritionplanner.mealplanner.gui.CalcMealView;
-import kari.nutritionplanner.mealplanner.gui.UserInterface;
 import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
 
 /**
- * ActionListenerin toteuttava luokka. Ottaa proteiinin arvon talteen ja
- * vaihtaa näkyviin seuraavan kortin.
- *
+ * ActionListenerin toteuttava luokka. Vaihtaa kaloritkortista proteiinikorttiin
+ * ja tallentaa arvon samalla.
+ * 
  * @author kari
  */
-public class SelectProtListener extends GetMealListener {
-    private final MealCalcHelper helper;
+public class SelectCaloriesListener extends GetMealListener {
     private final JSlider slider;
     private final Container container;
     private final String nextCard;
+    private final MealCalcHelper helper;
 
-    public SelectProtListener(CalcMealView view, CardLayout cardL, JSlider slider, Container container, String nextCard) {
+    public SelectCaloriesListener(CalcMealView view, CardLayout cardL, JSlider slider, Container container, String nextCard) {
         super(view, cardL);
-        this.helper = view.getHelper();
         this.slider = slider;
         this.container = container;
         this.nextCard = nextCard;
+        this.helper = view.getHelper();
     }
     
     
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        JPanel card = super.view.createFatsCard(container);
+        JPanel card = view.createProteinsCard(container);
         container.add(card, nextCard);
-        helper.setDesiredProtein(slider.getValue());
+        helper.setDesiredCalories(slider.getValue());
         cardL.show(container, nextCard);
     }
     

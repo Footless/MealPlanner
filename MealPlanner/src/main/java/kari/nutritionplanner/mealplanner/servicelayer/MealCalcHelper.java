@@ -68,10 +68,6 @@ public class MealCalcHelper {
         }
     }
 
-    public void setSauce(String name) {
-        // TODO: tääkin jossain vaiheessa ehkä ajankohtainen
-    }
-
     public void setDesiredCalories(int desiredCalories) {
         this.desiredCalories = desiredCalories;
     }
@@ -137,10 +133,9 @@ public class MealCalcHelper {
      * valittavissa olevista pääraaka-aineista.
      *
      * @return listan pääraaka-aineista, jotka ovat käyttäjän valittavissa.
-     * @throws IOException
      * @see Ingredient
      */
-    public List<Ingredient> getMainIngredients() throws IOException {
+    public List<Ingredient> getMainIngredients() {
         return ingredientProcessor.getMainIngredients();
     }
 
@@ -152,7 +147,7 @@ public class MealCalcHelper {
         return cm.getIngredients().get("sides");
     }
     
-    public List<Ingredient> getSideIngredients() throws IOException {
+    public List<Ingredient> getSideIngredients() {
         return ingredientProcessor.getSideIngredients();
     }
 }

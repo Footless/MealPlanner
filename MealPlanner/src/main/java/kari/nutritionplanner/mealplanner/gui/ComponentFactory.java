@@ -45,8 +45,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
-import kari.nutritionplanner.mealplanner.controllers.AddToIngsListener;
-import kari.nutritionplanner.mealplanner.controllers.SelectCardListener;
+import kari.nutritionplanner.mealplanner.gui.controllers.AddToIngsListener;
+import kari.nutritionplanner.mealplanner.gui.controllers.SelectCardListener;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
 import kari.nutritionplanner.mealplanner.domain.Meal;
 import kari.nutritionplanner.mealplanner.servicelayer.CalculateMeal;
@@ -128,7 +128,7 @@ public class ComponentFactory {
         pane.add(misc);
     }
 
-    public void createMealText(JPanel card, CalculateMeal cm, MealCalcHelper helper) {
+    protected void createMealText(JPanel card, CalculateMeal cm, MealCalcHelper helper) {
         JPanel pane = new JPanel();
         BoxLayout boxL = new BoxLayout(pane, BoxLayout.PAGE_AXIS);
         pane.setLayout(boxL);
@@ -140,24 +140,24 @@ public class ComponentFactory {
         card.add(pane, BorderLayout.CENTER);
     }
 
-    public JTextArea createTextArea(String text) {
+    protected JTextArea createTextArea(String text) {
         JTextArea textArea = new JTextArea(text);
         textArea.setFont(f);
         return textArea;
     }
 
-    public JLabel createLabel(String text) {
+    protected JLabel createLabel(String text) {
         JLabel label = new JLabel(text);
         label.setFont(f);
         return label;
     }
 
-    public JButton createButton(String text) {
+    protected JButton createButton(String text) {
         JButton button = new JButton(text);
         return button;
     }
 
-    public JSlider createSlider(int min, int max, int set) {
+    protected JSlider createSlider(int min, int max, int set) {
         JSlider slider = new JSlider(JSlider.HORIZONTAL, min, max, set);
         slider.setMinorTickSpacing(min);
         slider.setMajorTickSpacing(max / 4);
@@ -168,7 +168,7 @@ public class ComponentFactory {
         return slider;
     }
 
-    public ButtonGroup createIngButtons(JPanel card, CalculateMeal mealCalculator, String select) throws IOException {
+    protected ButtonGroup createIngButtons(JPanel card, CalculateMeal mealCalculator, String select) throws IOException {
         List<Ingredient> ings;
         if (select.contains("main")) {
             ings = helper.getMainIngredients();
@@ -204,7 +204,7 @@ public class ComponentFactory {
         return buttons;
     }
 
-    public void addNextAndBackButtons(Container container, JPanel card, String prevCard, ActionListener al) {
+    protected void addNextAndBackButtons(Container container, JPanel card, String prevCard, ActionListener al) {
         JPanel buttons = new JPanel(new GridLayout(2, 1));
         JButton next = createButton("Seuraava");
         JButton back = createButton("Takaisin");
@@ -217,7 +217,7 @@ public class ComponentFactory {
         card.add(buttons, BorderLayout.SOUTH);
     }
 
-    public JTextField createSearchField() {
+    protected JTextField createSearchField() {
         JTextField field = new JTextField("");
         field.setActionCommand("search");
         field.setRequestFocusEnabled(true);
@@ -259,7 +259,7 @@ public class ComponentFactory {
         }
     }
 
-    public void createAddIngButtons(JPanel searchFieldComp) {
+    protected void createAddIngButtons(JPanel searchFieldComp) {
         JPanel panel = new JPanel(new GridLayout(1, 3));
         JButton addToMains = createButton("Lisää pääraaka-aineisiin");
         addToMains.setActionCommand("main");
@@ -277,7 +277,7 @@ public class ComponentFactory {
         panel.repaint();
     }
 
-    public void enableIngButtons(JPanel searchFieldComp, boolean value) throws IOException {
+    protected void enableIngButtons(JPanel searchFieldComp, boolean value) throws IOException {
         JPanel panel = (JPanel) searchFieldComp.getComponent(1);
         Component[] buttons = panel.getComponents();
         for (Component button1 : buttons) {
@@ -300,7 +300,7 @@ public class ComponentFactory {
         component.setToolTipText("Ravintoarvot per 100g: \n"
                 + "Kalorit: " + Math.ceil(ing.getCalories()) + "kcal \n"
                 + "Proteiini: " + Math.ceil(ing.getProtein()) + "g \n"
-                + "Rasva: " + Math.ceil(ing.getFat()) + "g\n"
+                + "Rasva: " + Math.ceil(ing.getFat()) + "g \n"
                 + "Hiilihydraatit: " + Math.ceil(ing.getCarb()) + "g \n"
                 + "Kuidut: " + Math.ceil(ing.getFiber()) + "g");
     }

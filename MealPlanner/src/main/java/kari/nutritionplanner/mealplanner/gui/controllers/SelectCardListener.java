@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kari.nutritionplanner.mealplanner.controllers;
+package kari.nutritionplanner.mealplanner.gui.controllers;
 
 import java.awt.CardLayout;
 import java.awt.Container;

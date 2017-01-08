@@ -18,5 +18,7 @@ Päivä | Tunnit | Kuvaus
 4.1.2017 | 6h | käyttöliittymän parantelua, testejä, dokumentaatiota, refaktorointia (GUI ja CalculateMeal
 5.1.2017 | 1h | melkein vapaapäivä, logiikan hieromista ja refaktoroinnin suunnittelua
 6.1.2017 | 6h | GUI:n laajennusta ja siistimistä, refaktorointia
+7.1.2017 | 3h | logiikan säätelyä, GUI:n siistimistä
+8.1.2017 | 5h | lisäkkeen valinta käyttäjälle, dokumentointia
 
 

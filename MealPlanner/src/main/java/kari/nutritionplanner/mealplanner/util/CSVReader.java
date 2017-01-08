@@ -13,6 +13,7 @@ import kari.nutritionplanner.mealplanner.domain.Ingredient;
 /**
  * SCV-tiedostojen lukemiseen tarkoitettu luokka. Konstruktori saa parametrinä
  * tiedoston nimen.
+ *
  * @author kari
  */
 public class CSVReader {
@@ -39,7 +40,7 @@ public class CSVReader {
         }
         return ingredients;
     }
-    
+
     public List<Ingredient> search(String s) throws IOException {
         String line = null;
         Scanner scanner = null;
@@ -74,7 +75,7 @@ public class CSVReader {
         }
         return false;
     }
-    
+
     private void addIngredient(List<Ingredient> ingredients, Scanner scanner, String line) {
         scanner = new Scanner(line);
         scanner.useLocale(loc);
@@ -93,23 +94,23 @@ public class CSVReader {
             i++;
         }
     }
-    
+
     private Ingredient searchForIngredientByName(Scanner scanner, String s, String line) {
         scanner = new Scanner(line);
-                scanner.useDelimiter(";");
-                int i = 0;
-                String id = "";
-                while (scanner.hasNext()) {
-                    String next = scanner.next();
-                    if (i == 0 && next.length() < 6 && next.length() > 0) {
-                        id = next;
-                    }
-                    if (i == 1 && next.toLowerCase().contains(s.toLowerCase()) && id.length() > 0) {
-                        return new Ingredient(Integer.parseInt(id), next);
-                    }
-                    i++;
-                }
-                return null;
+        scanner.useDelimiter(";");
+        int i = 0;
+        String id = "";
+        while (scanner.hasNext()) {
+            String next = scanner.next();
+            if (i == 0 && next.length() < 6 && next.length() > 0) {
+                id = next;
+            }
+            if (i == 1 && next.toLowerCase().contains(s.toLowerCase()) && id.length() > 0) {
+                return new Ingredient(Integer.parseInt(id), next);
+            }
+            i++;
+        }
+        return null;
     }
 
     private boolean setMacros(Scanner scanner, String line, Ingredient ing) {
