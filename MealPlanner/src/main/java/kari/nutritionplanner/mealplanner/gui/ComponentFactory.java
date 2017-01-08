@@ -73,7 +73,8 @@ public class ComponentFactory {
      *
      * @param cardL CardLayout, jonka päällä käyttöliittymä pyörii
      * @param helper MealCalcHelper, auttaa käyttöliittymää aterian laskemisessa
-     * @throws IOException
+     * @throws IOException IngredientSearchHelper saattaa heittää poikkeuksen
+     * tännepäin
      */
     public ComponentFactory(CardLayout cardL, MealCalcHelper helper) throws IOException {
         this.cardL = cardL;
@@ -85,7 +86,8 @@ public class ComponentFactory {
      * Konstruktori ilman parametrejä. Suurin osa komponenteista voidaan
      * muodostaa ilman CardLayouttia ja helperiä.
      *
-     * @throws IOException
+     * @throws IOException IngredientSearchHelper saattaa heittää poikkeuksen
+     * tännepäin
      */
     public ComponentFactory() throws IOException {
         this.cardL = null;
@@ -244,11 +246,10 @@ public class ComponentFactory {
      *
      * @param ings raaka-aineet tauluna
      * @param searchFieldComp JPanel jonne valmis JList tökätään
-     * @return
-     * @throws IOException
+     * @return palauttaa JListin, jossa halutut raaka-aineet
      * @see enableIngButtons
      */
-    public JList createSearchIngList(String[] ings, JPanel searchFieldComp) throws IOException {
+    public JList createSearchIngList(String[] ings, JPanel searchFieldComp) {
         JList list = new JList(ings);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setLayoutOrientation(JList.VERTICAL);
@@ -259,14 +260,10 @@ public class ComponentFactory {
         list.setBackground(mainColor);
         list.addListSelectionListener((ListSelectionEvent e) -> {
             if (e.getValueIsAdjusting() == false) {
-                try {
-                    if (list.getSelectedIndex() == -1) {
-                        enableIngButtons(searchFieldComp, false);
-                    } else {
-                        enableIngButtons(searchFieldComp, true);
-                    }
-                } catch (IOException ex) {
-                    Logger.getLogger(ComponentFactory.class.getName()).log(Level.SEVERE, null, ex);
+                if (list.getSelectedIndex() == -1) {
+                    enableIngButtons(searchFieldComp, false);
+                } else {
+                    enableIngButtons(searchFieldComp, true);
                 }
             }
         });
@@ -275,11 +272,11 @@ public class ComponentFactory {
 
     /**
      * Tekee ActionListenerit raaka-ainehaun nappuloille.
-     * 
+     *
      * @param searchFieldComp JPanel jossa nappulat sijaitsevat.
-     * @throws IOException
+     * @throws IOException AddToIngsListener saattaa heittää poikkeuksen tähän
+     * suuntaan
      */
-
     public void createActionListenersForButtons(JPanel searchFieldComp) throws IOException {
         JPanel panel = (JPanel) searchFieldComp.getComponent(1);
         Component[] buttons = panel.getComponents();
@@ -308,7 +305,7 @@ public class ComponentFactory {
         panel.repaint();
     }
 
-    protected void enableIngButtons(JPanel searchFieldComp, boolean value) throws IOException {
+    protected void enableIngButtons(JPanel searchFieldComp, boolean value) {
         JPanel panel = (JPanel) searchFieldComp.getComponent(1);
         Component[] buttons = panel.getComponents();
         for (Component button1 : buttons) {

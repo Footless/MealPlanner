@@ -36,7 +36,7 @@ public class IngredientSearchHelper {
      * Konstruktori luo Readerin, joka lukee tiedostoa food_utf.csv joka
      * sisältää kaikkien Finelin tietokannan elintarvikkeiden nimet ja id:t.
      *
-     * @throws IOException
+     * @throws IOException heittää poikkeuksen jos ProcessIngredients heittää semmoisen
      */
     public IngredientSearchHelper() throws IOException {
         this.reader = new CSVReader("food_utf.csv");
@@ -48,7 +48,7 @@ public class IngredientSearchHelper {
      * tarpeen tullen. Tuskin tulee ja tämä poistetaan ennen pitkää.
      *
      * @param fileName halutun tiedoston nimi
-     * @throws IOException
+     * @throws IOException heittää poikkeuksen jos ProcessIngredients heittää semmoisen
      */
     public IngredientSearchHelper(String fileName) throws IOException {
         this.reader = new CSVReader(fileName);
@@ -61,7 +61,7 @@ public class IngredientSearchHelper {
      *
      * @param s hakutermi, jonka käyttäjä on syöttänyt käyttöliittymässä
      * @return listan hakua vastaavista raaka-aineista
-     * @throws IOException
+     * @throws IOException heittää poikkeuksen jos tiedoston luku epäonnistuu
      */
     public List<Ingredient> search(String s) throws IOException {
         return reader.search(s);
@@ -72,7 +72,7 @@ public class IngredientSearchHelper {
      *
      * @param ing raaka-aine Ingredient-oliona
      * @return palauttaa true tai false, riippuen onnistuiko makrojen lisääminen
-     * @throws IOException
+     * @throws IOException heittää poikkeuksen jos ProcessIngredients heittää semmoisen
      */
     public boolean addMacros(Ingredient ing) throws IOException {
         return ingredientProcessor.addMacrosToIngredient(ing);

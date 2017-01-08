@@ -23,9 +23,12 @@ public class CalculateMeal {
     private final MacroCalculator mc = new MacroCalculator();
 
     /**
-     * Konstruktori, ei mitään ihmeellistä. Voi heittää poikkeuksen.
+     * Konstruktori, ei mitään ihmeellistä. Luo ProcessIngredients-olion ja
+     * hakee sen metodilla raaka-aineet. Luo uuden tyhjän Meal-olion virheitä ja
+     * nulleja estämään.
      *
-     * @throws IOException
+     * @throws IOException heittää poikkeuksen jos ProcessIngredients heittää
+     * semmoisen
      */
     public CalculateMeal() throws IOException {
         this.ingredientProcessor = new ProcessIngredients();
