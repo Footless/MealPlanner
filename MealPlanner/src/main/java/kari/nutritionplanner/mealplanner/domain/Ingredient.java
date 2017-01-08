@@ -6,8 +6,8 @@
 package kari.nutritionplanner.mealplanner.domain;
 
 /**
- * Raaka-ainetta kuvaava luokka. Sisältää raaka-aineen nimen ja id-numeron,
- * sekä raaka-aineen makrot.
+ * Raaka-ainetta kuvaava luokka. Sisältää raaka-aineen nimen ja id-numeron, sekä
+ * raaka-aineen makrot.
  *
  * @author kari
  */

@@ -67,12 +67,26 @@ public class ComponentFactory {
     private final IngredientSearchHelper searchHelper;
     private final Font f = new Font("Arial", 1, 18);
 
+    /**
+     * Konstuktori saa sekä CardLayoutin että MealCalcHelperin parametreinä,
+     * jotta se pystyy paremmin toimimaan CalcMealView:n kanssa.
+     *
+     * @param cardL CardLayout, jonka päällä käyttöliittymä pyörii
+     * @param helper MealCalcHelper, auttaa käyttöliittymää aterian laskemisessa
+     * @throws IOException
+     */
     public ComponentFactory(CardLayout cardL, MealCalcHelper helper) throws IOException {
         this.cardL = cardL;
         this.helper = helper;
         this.searchHelper = new IngredientSearchHelper();
     }
 
+    /**
+     * Konstruktori ilman parametrejä. Suurin osa komponenteista voidaan
+     * muodostaa ilman CardLayouttia ja helperiä.
+     *
+     * @throws IOException
+     */
     public ComponentFactory() throws IOException {
         this.cardL = null;
         this.helper = null;
@@ -224,6 +238,16 @@ public class ComponentFactory {
         return field;
     }
 
+    /**
+     * Käytetään luomaan JList annetuista raaka-aineista. Sisältää myös
+     * ListSelecionListenerin luonnin.
+     *
+     * @param ings raaka-aineet tauluna
+     * @param searchFieldComp JPanel jonne valmis JList tökätään
+     * @return
+     * @throws IOException
+     * @see enableIngButtons
+     */
     public JList createSearchIngList(String[] ings, JPanel searchFieldComp) throws IOException {
         JList list = new JList(ings);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -248,6 +272,13 @@ public class ComponentFactory {
         });
         return list;
     }
+
+    /**
+     * Tekee ActionListenerit raaka-ainehaun nappuloille.
+     * 
+     * @param searchFieldComp JPanel jossa nappulat sijaitsevat.
+     * @throws IOException
+     */
 
     public void createActionListenersForButtons(JPanel searchFieldComp) throws IOException {
         JPanel panel = (JPanel) searchFieldComp.getComponent(1);

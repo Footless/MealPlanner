@@ -22,7 +22,8 @@ import kari.nutritionplanner.mealplanner.servicelayer.CalculateMeal;
 import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
 
 /**
- * Graafinen käyttöliittymä Meal Plannerille.
+ * Graafinen käyttöliittymä Meal Plannerille. Luo aloituskortin sekä CalcMealView'n ja AddIngsView'n
+ * joissa varsinainen työ tapahtuu.
  *
  * @author kari
  */

@@ -7,8 +7,6 @@ package kari.nutritionplanner.mealplanner;
 
 import java.lang.reflect.Field;
 import java.nio.charset.Charset;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -33,7 +31,7 @@ public class Main {
             charset.set(null, null);
         } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException | SecurityException ex) {
             throw new ExceptionInInitializerError(ex);
-        } 
+        }
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException | UnsupportedLookAndFeelException | InstantiationException | IllegalAccessException ex) {

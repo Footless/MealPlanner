@@ -11,14 +11,20 @@ import java.util.Map;
 /**
  * Ateria-luokka. Sisältää kaikki raaka-aineet sekä metodit aterian sisällön
  * käsittelyyn.
- * 
+ *
  * @author kari
  */
 public class Meal {
 
     private final Map<Integer, Ingredient> ingredients;
     private final Map<Integer, Double> amounts;
-    
+
+    /**
+     * Konstruktori luo HashMapit ja niihin tyhjät arvot virheitä estämään.
+     * Mappien sisällä int on avain, jossa 1=pääraaka-aine, 2= kastike, 3=lisuke
+     * ja 4=varsinainen lisäke
+     *
+     */
     public Meal() {
         this.ingredients = new HashMap<>();
         this.amounts = new HashMap<>();
@@ -64,6 +70,11 @@ public class Meal {
         this.amounts.replace(3, miscAmount);
     }
 
+    /**
+     * Laskee yhteen aterian sisältämän proteiinin.
+     *
+     * @return aterian sisältämän proteiinin määrän liukulukuna.
+     */
     public double getProtein() {
         double protein = 0;
         for (Integer i : ingredients.keySet()) {
@@ -72,6 +83,11 @@ public class Meal {
         return protein;
     }
 
+    /**
+     * Laskee yhteen aterian sisältämän rasvan.
+     *
+     * @return aterian sisältämän rasvan määrän liukulukuna.
+     */
     public double getFat() {
         double fat = 0;
         for (Integer i : ingredients.keySet()) {
@@ -80,6 +96,11 @@ public class Meal {
         return fat;
     }
 
+    /**
+     * Laskee yhteen aterian kalorit.
+     *
+     * @return aterian sisältämät kalorit liukulukuna.
+     */
     public double getCalories() {
         double calories = 0;
         for (Integer i : ingredients.keySet()) {
@@ -88,6 +109,11 @@ public class Meal {
         return calories;
     }
 
+    /**
+     * Laskee yhteen aterian hiilihydraatit.
+     *
+     * @return aterian sisältämät hiilihydraatit liukulukuna.
+     */
     public double getCarbs() {
         double carbs = 0;
         for (Integer i : ingredients.keySet()) {
@@ -96,6 +122,11 @@ public class Meal {
         return carbs;
     }
 
+    /**
+     * Laskee yhteen aterian ravintokuidut.
+     *
+     * @return aterian sisältämät ravintokuidut liukulukuna.
+     */
     public double getFiber() {
         double fibers = 0;
         for (Integer i : ingredients.keySet()) {
@@ -107,7 +138,7 @@ public class Meal {
     public Ingredient getSideIngredient() {
         return ingredients.get(4);
     }
-    
+
     public Ingredient getMisc() {
         return ingredients.get(3);
     }
@@ -135,20 +166,4 @@ public class Meal {
     public double getSideIngredientAmount() {   //kerrotaan sadalla tulostusvaiheessa
         return amounts.get(4);
     }
-
-//    @Override
-//    public String toString() {
-//        return "\nAinekset:\n"
-//                + ingredients.get(1).getName() + ": " + getMainIngredientAmount() * 100 + "gr\n"
-//                + ingredients.get(4).getName() + ": " + getSideIngredientAmount() * 100 + "gr\n"
-//                + ingredients.get(2).getName() + ": " + getSauceAmount() * 100 + "gr\n"
-//                + ingredients.get(3).getName() + ": " + getMiscAmount() * 100 + "gr\n\n"
-//                + "Ravintoarvot: \n"
-//                + "Kilokalorit: " + Math.ceil(getCalories()) + "kcal\n"
-//                + "Proteiini: " + Math.ceil(getProtein()) + "gr\n"
-//                + "Rasva: " + Math.ceil(getFat()) + "gr\n"
-//                + "Hiilihydraatit: " + Math.ceil(getCarbs()) + "gr\n"
-//                + "Kuidut: " + Math.ceil(getFiber()) + "gr\n";
-//    }
-
 }

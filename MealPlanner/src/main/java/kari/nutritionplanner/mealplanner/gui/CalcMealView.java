@@ -56,7 +56,7 @@ public class CalcMealView {
         this.compFactory = compFactory;
     }
 
-    public JPanel createMainIngredientCard(Container container) throws IOException {
+    protected JPanel createMainIngredientCard(Container container) throws IOException {
         JPanel card = new JPanel(new BorderLayout());
         JLabel instructions = compFactory.createLabel("Valitse listasta haluamasi raaka-aine");
         card.add(instructions, BorderLayout.NORTH);
