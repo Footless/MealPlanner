@@ -81,6 +81,12 @@ public class ComponentFactory {
         this.helper = helper;
         this.searchHelper = new IngredientSearchHelper();
     }
+    
+    public ComponentFactory(CardLayout cardL) throws IOException {
+        this.cardL = cardL;
+        this.helper = new MealCalcHelper(new CalculateMeal());
+        this.searchHelper = new IngredientSearchHelper();
+    }
 
     /**
      * Konstruktori ilman parametrejä. Suurin osa komponenteista voidaan
@@ -91,7 +97,7 @@ public class ComponentFactory {
      */
     public ComponentFactory() throws IOException {
         this.cardL = null;
-        this.helper = null;
+        this.helper = new MealCalcHelper(new CalculateMeal());
         this.searchHelper = new IngredientSearchHelper();
     }
 

@@ -9,7 +9,6 @@ import java.awt.CardLayout;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import kari.nutritionplanner.mealplanner.gui.UserInterface;
 
 /**
  * ActionListenerin toteuttava luokka graafista käyttöliittymää varten. Vaihtaa

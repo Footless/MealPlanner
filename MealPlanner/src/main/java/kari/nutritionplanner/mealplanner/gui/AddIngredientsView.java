@@ -46,7 +46,7 @@ public class AddIngredientsView {
      */
     public AddIngredientsView(CardLayout cardL) throws IOException {
         this.cardL = cardL;
-        this.compFactory = new ComponentFactory();
+        this.compFactory = new ComponentFactory(cardL);
     }
 
     protected JPanel createSearchIngCard(JPanel cards) throws IOException {
