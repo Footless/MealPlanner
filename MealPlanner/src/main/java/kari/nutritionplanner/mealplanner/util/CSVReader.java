@@ -21,12 +21,25 @@ public class CSVReader {
     private final BufferedReader reader;
     private final Locale loc;
 
+    /**
+     * Konstruktori, joka saa parametrinä tiedoston nimen. Luo sen perusteella
+     * BufferedReaderin ja myös Localen.
+     *
+     * @param fileName tiedoston nimi
+     */
     public CSVReader(String fileName) {
         InputStream in = getClass().getResourceAsStream("/file/" + fileName);
         reader = new BufferedReader(new InputStreamReader(in));
         loc = new Locale("fi", "FI");
     }
 
+    /**
+     * Palauttaa listan kaikista raaka-aineista, jotka kyseisestä tiedostosta
+     * löytyvät.
+     *
+     * @return List-olio, jossa kaikki kohdetiedoston raaka-aineet
+     * @throws IOException
+     */
     public List<Ingredient> getAllIngredients() throws IOException {
         String line = null;
         Scanner scanner = null;
@@ -40,6 +53,14 @@ public class CSVReader {
         }
         return ingredients;
     }
+
+    /**
+     * 
+     * 
+     * @param s hakutermi
+     * @return lista kaikista raaka-aineista, joihin hakutermi täsmää
+     * @throws IOException
+     */
 
     public List<Ingredient> search(String s) throws IOException {
         String line = null;

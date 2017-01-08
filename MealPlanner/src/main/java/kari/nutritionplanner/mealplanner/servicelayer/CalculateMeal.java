@@ -2,7 +2,6 @@ package kari.nutritionplanner.mealplanner.servicelayer;
 
 import java.io.IOException;
 import kari.nutritionplanner.mealplanner.util.ProcessIngredients;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
@@ -62,7 +61,7 @@ public class CalculateMeal {
      * @see Ingredient
      */
     public boolean calculateAllMeal(int mainId, int sideId, double calories, double protein, double fat) {
-        
+
         if (protein < 10 || fat < 5 || calories < 50) {
             return false;
         }

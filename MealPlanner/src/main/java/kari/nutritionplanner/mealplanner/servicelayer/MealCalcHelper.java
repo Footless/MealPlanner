@@ -38,6 +38,13 @@ public class MealCalcHelper {
     private final CalculateMeal cm;
     private final ProcessIngredients ingredientProcessor;
 
+    /**
+     * Konstruktori saa parametrinä CalculateMeal-olion, jonka metodeja se voi
+     * käyttää.
+     *
+     * @param cm CalculateMeal-olio (UserInterfacesta)
+     * @throws IOException
+     */
     public MealCalcHelper(CalculateMeal cm) throws IOException {
         this.cm = cm;
         this.meal = new Meal();
@@ -53,6 +60,9 @@ public class MealCalcHelper {
         meal.setMainIngredient(cm.getIngredients().get("mains").get(getIdForMainIng(name)));
     }
 
+    /**
+     * Tyhjentää kaikki arvot. Käytetään aterian laskemisen lopuksi.
+     */
     public void clear() {
         this.meal = new Meal();
         this.desiredCalories = 0;
@@ -60,6 +70,13 @@ public class MealCalcHelper {
         this.desiredProtein = 0;
     }
 
+    /**
+     * Asettaa halutun lisäkkeen annetun nimen perusteella. Jos nimi on "misc"
+     * asettaa dummy-Ingredientin id:llä 99999, jotta CalculateMeal osaa
+     * myöhemmässä vaiheessa arpoa satunnaisen raaka-aineen lisäkkeeksi.
+     *
+     * @param name
+     */
     public void setSideIngredient(String name) {
         if (!name.contains("misc")) {
             meal.setSideIngredient(cm.getIngredients().get("sides").get(getIdForSideIng(name)));
@@ -68,14 +85,29 @@ public class MealCalcHelper {
         }
     }
 
+    /**
+     * Asettaa käyttäjän syöttämät tavoitekalorit muistiin.
+     *
+     * @param desiredCalories halutut kalorit liukulukuna
+     */
     public void setDesiredCalories(int desiredCalories) {
         this.desiredCalories = desiredCalories;
     }
 
+    /**
+     * Asettaa käyttäjän syöttämän halutun rasvamäärän muistiin.
+     *
+     * @param desiredFat haluttu rasvan määrä liukulukuna
+     */
     public void setDesiredFat(int desiredFat) {
         this.desiredFat = desiredFat;
     }
 
+    /**
+     * Asettaa käyttäjän syöttämän halutun proteiinimäärän muistiin
+     *
+     * @param desiredProtein haluttu proteiinin määrä liukulukuna
+     */
     public void setDesiredProtein(int desiredProtein) {
         this.desiredProtein = desiredProtein;
     }
@@ -83,7 +115,7 @@ public class MealCalcHelper {
     public int getMainIngredientId() {
         return this.meal.getMainIngredient().getId();
     }
-    
+
     public int getSideIngredientId() {
         return this.meal.getSideIngredient().getId();
     }
@@ -117,7 +149,13 @@ public class MealCalcHelper {
         }
         return 0;
     }
-    
+
+    /**
+     * Palauttaa id-numeron annetulle raaka-aineelle.
+     *
+     * @param name raaka-aineen nimi
+     * @return raaka-aineen id-numero
+     */
     public int getIdForSideIng(String name) {
         Map<Integer, Ingredient> sides = cm.getIngredients().get("sides");
         for (Integer i : sides.keySet()) {
@@ -139,14 +177,29 @@ public class MealCalcHelper {
         return ingredientProcessor.getMainIngredients();
     }
 
+    /**
+     * Palauttaa Mapin kaikista saatavilla olevista pääraaka-aineista.
+     *
+     * @return Map-olio, jossa kaikki saatavilla olevat pääraaka-aineet.
+     */
     public Map<Integer, Ingredient> getMainIngredientsAsMap() {
         return cm.getIngredients().get("mains");
     }
-    
+
+    /**
+     * Palauttaa Mapin kaikista saatavilla olevista lisäkkeistä.
+     *
+     * @return Map-olio, jossa kaikki saatavilla olevat lisäkkeet.
+     */
     public Map<Integer, Ingredient> getSideIngredientsAsMap() {
         return cm.getIngredients().get("sides");
     }
-    
+
+    /**
+     * Palauttaa saatavilla olevat lisäkkeet listana.
+     *
+     * @return List-olio jossa kaikki saatavilla olevat lisäkkeet.
+     */
     public List<Ingredient> getSideIngredients() {
         return ingredientProcessor.getSideIngredients();
     }
