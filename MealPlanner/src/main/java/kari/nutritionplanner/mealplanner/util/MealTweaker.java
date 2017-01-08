@@ -46,19 +46,19 @@ public class MealTweaker {
     }
 
     private void proteinSubber(double protein) {
-        if (protein < meal.getProtein()) {
+//        if (protein < meal.getProtein()) {
             double proteinToSub = protein - meal.getProtein();
             if (meal.getSideIngredient().getProtein() > 3) {
                 subFromBoth(proteinToSub);
             } else {
                 subFromMain(proteinToSub);
             }
-        }
+//        }
     }
 
     private void subFromMain(double proteinToSub) {
         double mainAmount = mc.calculateAmountForProtein(proteinToSub, meal.getMainIngredient());
-        if (meal.getMainIngredientAmount() + mainAmount > 0.8) {
+        if (meal.getMainIngredientAmount() + mainAmount > 0.5) {
             meal.setMainIngredientAmount(meal.getMainIngredientAmount() + mainAmount);
         } else if (meal.getMainIngredient().getProtein() > 23) {
             meal.setMainIngredientAmount(0.5);
@@ -76,32 +76,38 @@ public class MealTweaker {
         } else {
             subFromMain(proteinToSub);
         }
+        if (meal.getMainIngredientAmount() < 0.5) {
+            meal.setMainIngredientAmount(0.5);
+        }
     }
 
     private void caloriesTweaker(double calories) {
-        double caloriesToAdd = calories - meal.getCalories();
-        double caloriesToAddSide = mc.calculateAmountForCalories((caloriesToAdd / 8) * 6, meal.getSideIngredient());
-        double caloriesToAddMain = mc.calculateAmountForCalories((caloriesToAdd / 8) * 2, meal.getMainIngredient());
-        double caloriesToAddTotalSide = mc.calculateAmountForCalories(caloriesToAdd, meal.getSideIngredient());
-        double caloriesToAddTotalMain = mc.calculateAmountForCalories(caloriesToAdd, meal.getMainIngredient());
-//        double caloriesToAddsauce = (caloriesToAdd / 8);
-//        meal.setSauceAmount(meal.getSauceAmount() + mc.calculateAmountForCalories(caloriesToAddsauce, meal.getSauce()));
-        if (meal.getSideIngredientAmount() + caloriesToAddSide >= 0 && meal.getMainIngredientAmount() + caloriesToAddMain >= 0.8) {
-            meal.setSideIngredientAmount(meal.getSideIngredientAmount() + caloriesToAddSide);
-            meal.setMainIngredientAmount(meal.getMainIngredientAmount() + caloriesToAddMain);
-        } else if (meal.getSideIngredientAmount() + caloriesToAddTotalSide >= 0) {
-            meal.setSideIngredientAmount(meal.getSideIngredientAmount() + caloriesToAddTotalSide);
-        } else if (meal.getMainIngredientAmount() + caloriesToAddTotalMain >= 0.8) {
-            meal.setMainIngredientAmount(meal.getMainIngredientAmount() + caloriesToAddTotalMain);
+        double caloriesToTweak = calories - meal.getCalories();
+        double caloriesToTweakSide = mc.calculateAmountForCalories((caloriesToTweak / 8) * 4, meal.getSideIngredient());
+        double caloriesToTweakMain = mc.calculateAmountForCalories((caloriesToTweak / 8) * 1, meal.getMainIngredient());
+        double caloriesToTweakSauce = mc.calculateAmountForCalories((caloriesToTweak / 8) * 3, meal.getSauce());
+        double caloriesToAddTweakSide = mc.calculateAmountForCalories(caloriesToTweak, meal.getSideIngredient());
+        double caloriesToTweakTotalMain = mc.calculateAmountForCalories(caloriesToTweak, meal.getMainIngredient());
+        if (meal.getSideIngredientAmount() + caloriesToTweakSide >= 0 && meal.getMainIngredientAmount() + caloriesToTweakMain >= 0.8) {
+            meal.setSideIngredientAmount(meal.getSideIngredientAmount() + caloriesToTweakSide);
+            meal.setMainIngredientAmount(meal.getMainIngredientAmount() + caloriesToTweakMain);
+            meal.setSauceAmount(meal.getSauceAmount() + caloriesToTweakSauce);
+        } else if (meal.getSideIngredientAmount() + caloriesToAddTweakSide >= 0) {
+            meal.setSideIngredientAmount(meal.getSideIngredientAmount() + caloriesToAddTweakSide);
+        } else if (meal.getMainIngredientAmount() + caloriesToTweakTotalMain >= 0.8) {
+            meal.setMainIngredientAmount(meal.getMainIngredientAmount() + caloriesToTweakTotalMain);
         } else {
-            meal.setSideIngredientAmount(meal.getSideIngredientAmount() + caloriesToAddSide);
-            meal.setMainIngredientAmount(meal.getMainIngredientAmount() + caloriesToAddMain);
+            meal.setSideIngredientAmount(meal.getSideIngredientAmount() + caloriesToTweakSide);
+            meal.setMainIngredientAmount(meal.getMainIngredientAmount() + caloriesToTweakMain);
         }
         if (meal.getSideIngredientAmount() < 0) {
             meal.setSideIngredientAmount(0);
         }
-        if (meal.getMainIngredientAmount() < 0) {
+        if (meal.getMainIngredientAmount() < 0.5) {
             meal.setMainIngredientAmount(0.5);
+        }
+        if (meal.getSauceAmount() < 0) {
+            meal.setSauceAmount(0);
         }
     }
 
@@ -116,7 +122,7 @@ public class MealTweaker {
     }
 
     private void evenUpIngredients(double calories, double protein, double fat) {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 20; i++) {
             if (allOk(calories, protein, fat)) {
                 break;
             }

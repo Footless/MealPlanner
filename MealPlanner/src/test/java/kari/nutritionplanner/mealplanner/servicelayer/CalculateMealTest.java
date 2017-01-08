@@ -19,9 +19,9 @@ public class CalculateMealTest {
     private CalculateMeal cm;
     private MealCalcHelper helper;
     private final double delta = 0.0001;
-    private final double bigDelta = 15.5;
-    private final double hugeDelta = 29.5;
-    private final double proteinDelta = 15.5;
+    private final double bigDelta = 14.5;
+    private final double hugeDelta = 14.5;
+    private final double proteinDelta = 16.5;
 
     public CalculateMealTest() {
     }
@@ -102,7 +102,7 @@ public class CalculateMealTest {
 
     @Test
     public void testSetWholeMeal() throws IOException {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 100; i++) {
             cm = new CalculateMeal();
             Ingredient ing = cm.getIngredients().get("mains").get(getRandomMain());
             int calories = new Random().nextInt(400) + 300;

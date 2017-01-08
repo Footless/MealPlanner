@@ -19,12 +19,10 @@ package kari.nutritionplanner.mealplanner.controllers;
 import java.awt.CardLayout;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import kari.nutritionplanner.mealplanner.gui.CalcMealView;
-import kari.nutritionplanner.mealplanner.gui.UserInterface;
 import kari.nutritionplanner.mealplanner.servicelayer.CalculateMeal;
 import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
 
@@ -54,7 +52,7 @@ public class SelectFatListener extends GetMealListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         helper.setDesiredFat(slider.getValue());
-        if (cm.calculateAllMeal(helper.getMainIngredientId(), helper.getDesiredCalories(), helper.getDesiredProtein(), helper.getDesiredFat())) {
+        if (cm.calculateAllMeal(helper.getMainIngredientId(), helper.getSideIngredientId(), helper.getDesiredCalories(), helper.getDesiredProtein(), helper.getDesiredFat())) {
             JPanel card = view.createReadyMealCard(container);
             container.add(card, nextCard);
             cardL.show(container, nextCard);

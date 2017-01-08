@@ -24,6 +24,11 @@ public class Ingredient {
     public Ingredient(int id, String name) {
         this.id = id;
         this.name = name;
+        this.calories = 0;
+        this.carb = 0;
+        this.fat = 0;
+        this.fiber = 0;
+        this.protein = 0;
     }
 
     public int getId() {

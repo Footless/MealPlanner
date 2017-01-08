@@ -29,37 +29,36 @@ import kari.nutritionplanner.mealplanner.gui.CalcMealView;
 import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
 
 /**
- * ActionListenerin toteuttava luokka. Ottaa pääraaka-aineen talteen ja 
- * vaihtaa seuraavan kortin, joka on proteiini.
- * 
+ *
  * @author kari
  */
-public class SelectMainIngListener extends GetMealListener {
+public class AskSideIngListener extends GetMealListener {
     private final MealCalcHelper helper;
     private final ButtonGroup bg;
     private final Container container;
     private final String nextCard;
-    
-    public SelectMainIngListener(CalcMealView view, CardLayout cardL, ButtonGroup bg, Container container, String nextCard) {
+
+    public AskSideIngListener(CalcMealView view, CardLayout cardL, ButtonGroup bg, Container container, String nextCard) {
         super(view, cardL);
         this.helper = view.getHelper();
         this.bg = bg;
-        this.container = container;
         this.nextCard = nextCard;
+        this.container = container;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         ButtonModel b = bg.getSelection();
         String name = b.getActionCommand();
-        helper.setMainIngredient(name);
+        System.out.println(name);
+        helper.setSideIngredient(name);
         try {
-            JPanel card = view.createSideIngredienCard(container);
+            JPanel card = view.createCaloriesCard(container);
             container.add(card, nextCard);
             cardL.show(container, nextCard);
         } catch (IOException ex) {
             Logger.getLogger(SelectMainIngListener.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
 }

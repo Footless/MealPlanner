@@ -27,11 +27,15 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -40,11 +44,13 @@ import javax.swing.JSlider;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
 import kari.nutritionplanner.mealplanner.controllers.AddToIngsListener;
 import kari.nutritionplanner.mealplanner.controllers.SelectCardListener;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
 import kari.nutritionplanner.mealplanner.domain.Meal;
 import kari.nutritionplanner.mealplanner.servicelayer.CalculateMeal;
+import kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelper;
 import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
 
 /**
@@ -58,16 +64,19 @@ public class ComponentFactory {
     private final Color mainColor = Color.white;
     private final CardLayout cardL;
     private final MealCalcHelper helper;
+    private final IngredientSearchHelper searchHelper;
     private final Font f = new Font("Arial", 1, 18);
 
-    public ComponentFactory(CardLayout cardL, MealCalcHelper helper) {
+    public ComponentFactory(CardLayout cardL, MealCalcHelper helper) throws IOException {
         this.cardL = cardL;
         this.helper = helper;
+        this.searchHelper = new IngredientSearchHelper();
     }
 
-    public ComponentFactory() {
+    public ComponentFactory() throws IOException {
         this.cardL = null;
         this.helper = null;
+        this.searchHelper = new IngredientSearchHelper();
     }
 
     private JTextArea createIngText(Ingredient ing, double amount) {
@@ -87,7 +96,8 @@ public class ComponentFactory {
 
     private void createAllMacros(CalculateMeal cm, JPanel pane) {
         Meal meal = cm.getMeal();
-        JTextArea subTitle = createTextArea("Ravintosisältö (suluissa halutut makrot)");
+        JLabel subTitle = createLabel("Ravintosisältö (suluissa halutut makrot)");
+        subTitle.setBackground(mainColor);
         pane.add(subTitle);
         JTextArea calories = createMacroText("Kalorit", meal.getCalories(), helper.getDesiredCalories(), "kcal");
         pane.add(calories);
@@ -103,7 +113,7 @@ public class ComponentFactory {
 
     private void createAllIngs(CalculateMeal cm, JPanel pane) {
         Meal meal = cm.getMeal();
-        JTextArea title = createTextArea("Komponentit ja määrät:");
+        JLabel title = createLabel("Komponentit ja määrät:");
         pane.add(title);
         pane.add(Box.createRigidArea(new Dimension(0, 5)));
         JTextArea main = createIngText(meal.getMainIngredient(), meal.getMainIngredientAmount());
@@ -144,7 +154,6 @@ public class ComponentFactory {
 
     public JButton createButton(String text) {
         JButton button = new JButton(text);
-//        button.setBackground(Color.cyan);
         return button;
     }
 
@@ -159,22 +168,39 @@ public class ComponentFactory {
         return slider;
     }
 
-    public ButtonGroup createMainsButtons(JPanel card, CalculateMeal mealCalculator) throws IOException {
-        List<Ingredient> mains = helper.getMainIngredients();
-        JPanel mainButtons = new JPanel(new GridLayout(mains.size(), 1));
-        mainButtons.setAutoscrolls(true);
-        ButtonGroup buttons = new ButtonGroup();
-        for (Ingredient main : mains) {
-            JRadioButton button = new JRadioButton(main.getName());
-            button.setBackground(mainColor);
-            button.setActionCommand(main.getName());
-            button.setSelected(true);
-            buttons.add(button);
-            mainButtons.add(button);
-
+    public ButtonGroup createIngButtons(JPanel card, CalculateMeal mealCalculator, String select) throws IOException {
+        List<Ingredient> ings;
+        if (select.contains("main")) {
+            ings = helper.getMainIngredients();
+        } else if (select.contains("side")) {
+            ings = helper.getSideIngredients();
+        } else {
+            ings = new ArrayList<>();
         }
-        mainButtons.setBackground(mainColor);
-        card.add(mainButtons, BorderLayout.CENTER);
+        JPanel ingButtons = new JPanel(new GridLayout(ings.size() + 1, 1));
+        ingButtons.setAutoscrolls(true);
+        ButtonGroup buttons = new ButtonGroup();
+        if (select.contains("side")) {
+            JRadioButton randomButton = new JRadioButton("Satunnainen lisäke");
+            randomButton.setActionCommand("misc");
+            randomButton.setSelected(true);
+            buttons.add(randomButton);
+            ingButtons.add(randomButton);
+        }
+        for (Ingredient ing : ings) {
+            JRadioButton button = new JRadioButton(ing.getName());
+            button.setBackground(mainColor);
+            button.setName(ing.getName());
+            button.setActionCommand(ing.getName());
+            addToolTipForButton(button, select);
+            if (select.contains("main")) {
+                button.setSelected(true);
+            }
+            buttons.add(button);
+            ingButtons.add(button);
+        }
+        ingButtons.setBackground(mainColor);
+        card.add(ingButtons, BorderLayout.CENTER);
         return buttons;
     }
 
@@ -198,48 +224,84 @@ public class ComponentFactory {
         return field;
     }
 
-    public JList createSearchIngList(String[] ings) {
+    public JList createSearchIngList(String[] ings, JPanel searchFieldComp) throws IOException {
         JList list = new JList(ings);
-        list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setLayoutOrientation(JList.VERTICAL);
         list.setVisibleRowCount(-1);
         Font f2 = new Font("Arial", 1, 15);
         list.setFont(f2);
         list.setCursor(new Cursor(0));
         list.setBackground(mainColor);
+        list.addListSelectionListener((ListSelectionEvent e) -> {
+            if (e.getValueIsAdjusting() == false) {
+                try {
+                    if (list.getSelectedIndex() == -1) {
+                        enableIngButtons(searchFieldComp, false);
+                    } else {
+                        enableIngButtons(searchFieldComp, true);
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(ComponentFactory.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
         return list;
     }
 
-    void createAddIngButtons(JPanel searchFieldComp) throws IOException {
-        JList list = null;
+    public void createActionListenersForButtons(JPanel searchFieldComp) throws IOException {
+        JPanel panel = (JPanel) searchFieldComp.getComponent(1);
+        Component[] buttons = panel.getComponents();
+        ActionListener btnListener = new AddToIngsListener(searchFieldComp);
+        for (Component button : buttons) {
+            JButton jbutton = (JButton) button;
+            jbutton.addActionListener(btnListener);
+        }
+    }
+
+    public void createAddIngButtons(JPanel searchFieldComp) {
         JPanel panel = new JPanel(new GridLayout(1, 3));
         JButton addToMains = createButton("Lisää pääraaka-aineisiin");
         addToMains.setActionCommand("main");
         JButton addToSides = createButton("Lisää lisäkkeisiin");
         addToSides.setActionCommand("side");
         JButton addToSauces = createButton("Lisää kastikkeisiin");
-        addToSauces.setActionCommand("sauce");
+        addToMains.setEnabled(false);
+        addToSides.setEnabled(false);
+        addToSauces.setEnabled(false);
         panel.add(addToMains);
         panel.add(addToSides);
         panel.add(addToSauces);
         searchFieldComp.add(panel, BorderLayout.SOUTH);
-        enableIngButtons(searchFieldComp);
         panel.validate();
         panel.repaint();
     }
 
-    public void enableIngButtons(JPanel searchFieldComp) throws IOException {
+    public void enableIngButtons(JPanel searchFieldComp, boolean value) throws IOException {
         JPanel panel = (JPanel) searchFieldComp.getComponent(1);
         Component[] buttons = panel.getComponents();
-        ActionListener btnListener = new AddToIngsListener(searchFieldComp);
         for (Component button1 : buttons) {
             JButton button = (JButton) button1;
-            if (searchFieldComp.getComponentCount() > 2) {
-                button.setEnabled(true);
-                button.addActionListener(btnListener);
-            } else {
-                button.setEnabled(false);
-            }
+            button.setEnabled(value);
         }
+    }
+
+    private void addToolTipForButton(JComponent component, String select) throws IOException {
+        Ingredient ing;
+        if (select.contains("main")) {
+            ing = helper.getMainIngredientsAsMap().get(helper.getIdForMainIng(component.getName()));
+        } else if (select.contains("side")) {
+            ing = helper.getSideIngredientsAsMap().get(helper.getIdForSideIng(component.getName()));
+        } else {
+            ing = null;
+        }
+
+        searchHelper.addMacros(ing);
+        component.setToolTipText("Ravintoarvot per 100g: \n"
+                + "Kalorit: " + Math.ceil(ing.getCalories()) + "kcal \n"
+                + "Proteiini: " + Math.ceil(ing.getProtein()) + "g \n"
+                + "Rasva: " + Math.ceil(ing.getFat()) + "g\n"
+                + "Hiilihydraatit: " + Math.ceil(ing.getCarb()) + "g \n"
+                + "Kuidut: " + Math.ceil(ing.getFiber()) + "g");
     }
 }

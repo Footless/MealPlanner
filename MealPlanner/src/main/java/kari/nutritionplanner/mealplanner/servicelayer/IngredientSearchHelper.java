@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.List;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
 import kari.nutritionplanner.mealplanner.util.CSVReader;
+import kari.nutritionplanner.mealplanner.util.ProcessIngredients;
 
 /**
  *
@@ -27,12 +28,23 @@ import kari.nutritionplanner.mealplanner.util.CSVReader;
  */
 public class IngredientSearchHelper {
     private final CSVReader reader;
+    private final ProcessIngredients ingredientProcessor;
     
     public IngredientSearchHelper() throws IOException {
         this.reader = new CSVReader("food_utf.csv");
+        this.ingredientProcessor = new ProcessIngredients();
+    }
+    
+    public IngredientSearchHelper(String fileName) throws IOException {
+        this.reader = new CSVReader(fileName);
+        this.ingredientProcessor = new ProcessIngredients();
     }
     
     public List<Ingredient> search(String s) throws IOException {
         return reader.search(s);
+    }
+    
+    public boolean addMacros(Ingredient ing) throws IOException {
+        return ingredientProcessor.addMacrosToIngredient(ing);
     }
 }

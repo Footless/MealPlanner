@@ -34,7 +34,6 @@ import kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelper;
 public class AddToIngsListener implements ActionListener {
 
     private final JList list;
-    private IngredientSearchHelper helper;
 
     public AddToIngsListener(JPanel searchFieldComp) throws IOException {
         if (searchFieldComp.getComponentCount() > 2) {
@@ -47,28 +46,22 @@ public class AddToIngsListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        try {
-            this.helper = new IngredientSearchHelper();
-            if (e.getActionCommand().equalsIgnoreCase("main")) {
-                if (list.getSelectedValue() != null) {
-                    String name = (String) list.getSelectedValue();
-                    int response = JOptionPane.showConfirmDialog(null, "Haluako todella lisätä raaka-aineen " + name + " "
-                            + "pääraaka-aineisiin?", "Varmista", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                    if (response == JOptionPane.YES_OPTION) {
-                        JOptionPane.showMessageDialog(null, "Valitettavasti tässä vaiheessa kehitystä raaka-aineiden lisääminen ei"
-                                + " vielä onnistu.");
-//                        int id = helper.search(name).get(0).getId();
-                    }
-                }
-            } else if (e.getActionCommand().equalsIgnoreCase("side")) {
-                JOptionPane.showMessageDialog(null, "Valitettavasti tässä vaiheessa kehitystä raaka-aineiden lisääminen ei"
-                                + " vielä onnistu.");
-            } else {
-                JOptionPane.showMessageDialog(null, "Valitettavasti tässä vaiheessa kehitystä raaka-aineiden lisääminen ei"
-                                + " vielä onnistu.");
+        if (e.getActionCommand().equalsIgnoreCase("main")) {
+            String name = (String) list.getSelectedValue();
+            int response = JOptionPane.showConfirmDialog(null, "Haluako todella lisätä raaka-aineen " + name + " "
+                    + "pääraaka-aineisiin?", "Varmista", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (response == JOptionPane.YES_OPTION) {
+                showErrorMessage();
             }
-        } catch (IOException ex) {
-            Logger.getLogger(AddToIngsListener.class.getName()).log(Level.SEVERE, null, ex);
+        } else if (e.getActionCommand().equalsIgnoreCase("side")) {
+            showErrorMessage();
+        } else {
+            showErrorMessage();
         }
+    }
+    
+    private void showErrorMessage() {
+        JOptionPane.showMessageDialog(null, "Valitettavasti tässä vaiheessa kehitystä raaka-aineiden lisääminen ei"
+                        + " vielä onnistu.");
     }
 }

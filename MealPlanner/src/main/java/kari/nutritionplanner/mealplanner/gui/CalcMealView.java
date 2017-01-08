@@ -28,6 +28,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextArea;
+import kari.nutritionplanner.mealplanner.controllers.AskSideIngListener;
 import kari.nutritionplanner.mealplanner.controllers.SelectCaloriesListener;
 import kari.nutritionplanner.mealplanner.controllers.SelectCardListener;
 import kari.nutritionplanner.mealplanner.controllers.SelectFatListener;
@@ -42,26 +43,36 @@ import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
  * @author kari
  */
 public class CalcMealView {
+
     private final CardLayout cardL;
     private final CalculateMeal mealCalculator;
     private final MealCalcHelper helper;
     private final ComponentFactory compFactory;
-    
+
     public CalcMealView(CardLayout cardL, CalculateMeal mealCalculator, MealCalcHelper helper, ComponentFactory compFactory) {
         this.cardL = cardL;
         this.mealCalculator = mealCalculator;
         this.helper = helper;
         this.compFactory = compFactory;
     }
-    
-    public JPanel createMainIngredientCard(JPanel cards) throws IOException {
 
+    public JPanel createMainIngredientCard(Container container) throws IOException {
         JPanel card = new JPanel(new BorderLayout());
         JLabel instructions = compFactory.createLabel("Valitse listasta haluamasi raaka-aine");
         card.add(instructions, BorderLayout.NORTH);
-        ButtonGroup mainsButtonGroup = compFactory.createMainsButtons(card, mealCalculator);
-        ActionListener sml = new SelectMainIngListener(this, cardL, mainsButtonGroup, cards, "askCalories");
-        compFactory.addNextAndBackButtons(cards, card, "start", sml);
+        ButtonGroup mainsButtonGroup = compFactory.createIngButtons(card, mealCalculator, "main");
+        ActionListener sml = new SelectMainIngListener(this, cardL, mainsButtonGroup, container, "askSideIngredient");
+        compFactory.addNextAndBackButtons(container, card, "start", sml);
+        return card;
+    }
+
+    public JPanel createSideIngredienCard(Container container) throws IOException {
+        JPanel card = new JPanel(new BorderLayout());
+        JLabel instructions = compFactory.createLabel("Valitse listasta haluamasi raaka-aine");
+        card.add(instructions, BorderLayout.NORTH);
+        ButtonGroup sideButtonsGroup = compFactory.createIngButtons(card, mealCalculator, "side");
+        ActionListener al = new AskSideIngListener(this, cardL, sideButtonsGroup, container, "askCalories");
+        compFactory.addNextAndBackButtons(container, card, "askMainIngredient", al);
         return card;
     }
 
@@ -133,7 +144,7 @@ public class CalcMealView {
             return 1;
         }
     }
-    
+
     public MealCalcHelper getHelper() {
         return this.helper;
     }

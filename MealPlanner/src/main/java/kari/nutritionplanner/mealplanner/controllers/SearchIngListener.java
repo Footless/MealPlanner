@@ -23,7 +23,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -32,7 +31,6 @@ import javax.swing.JTextField;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
 import kari.nutritionplanner.mealplanner.gui.ComponentFactory;
 import kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelper;
-import kari.nutritionplanner.mealplanner.util.CSVReader;
 
 /**
  *
@@ -59,11 +57,6 @@ public class SearchIngListener implements ActionListener {
         String searchTerm = searchField.getText();
         if (searchFieldComp.getComponentCount() > 2) {
             searchFieldComp.remove(2);
-            try {
-                compFactory.enableIngButtons(searchFieldComp);
-            } catch (IOException ex) {
-                Logger.getLogger(SearchIngListener.class.getName()).log(Level.SEVERE, null, ex);
-            }
             searchFieldComp.validate();
             searchFieldComp.repaint();
         }
@@ -78,12 +71,12 @@ public class SearchIngListener implements ActionListener {
                 for (int i = 0; i < ings.size(); i++) {
                     ingNames[i] = ings.get(i).getName();
                 }
-                searchResults = compFactory.createSearchIngList(ingNames);
+                searchResults = compFactory.createSearchIngList(ingNames, searchFieldComp);
                 JScrollPane scrollResults = new JScrollPane(searchResults);
                 scrollResults.getVerticalScrollBar().setUnitIncrement(10);
                 scrollResults.getHorizontalScrollBar().setUnitIncrement(10);
                 searchFieldComp.add(scrollResults, BorderLayout.CENTER);
-                compFactory.enableIngButtons(searchFieldComp);
+                compFactory.createActionListenersForButtons(searchFieldComp);
                 searchFieldComp.validate();
                 searchFieldComp.repaint();
             }

@@ -53,19 +53,24 @@ public class CalculateMeal {
      * rasvaa ateriassa ei voi olla vähemmän kuin pääraaka-aineesta tulee
      * ateriaan) tekee aterian ja palauttaa true.
      *
-     * @param id pääraaka-aineen id-numero
+     * @param mainId pääraaka-aineen id-numero
+     * @param sideId lisäkkeen id-numero
      * @param calories halutut kalorit
      * @param protein haluttu proteiinin määrä grammoina
      * @param fat haluttu rasvan määrä grammoina
      * @return onnistuiko aterian luonti annetuilla arvoilla
      * @see Ingredient
      */
-    public boolean calculateAllMeal(int id, double calories, double protein, double fat) {
+    public boolean calculateAllMeal(int mainId, int sideId, double calories, double protein, double fat) {
         if (protein < 10 || fat < 5 || calories < 50) {
             return false;
         }
-        randomSide();
-        if (setMainIngredient(id, protein, fat)) {
+        if (sideId == 99999) {
+            randomSide();
+        } else {
+            meal.setSideIngredient(ingredients.get("sides").get(sideId));
+        }
+        if (setMainIngredient(mainId, protein, fat)) {
             setMisc();
             setSauce(fat);
             setSideIngredientAmount(calories);
@@ -90,6 +95,15 @@ public class CalculateMeal {
         } else {
             return false;
         }
+    }
+
+    public boolean setSideIngredient(int id) {
+        if (ingredients.get("sides").containsKey(id)) {
+            Ingredient side = ingredients.get("sides").get(id);
+            meal.setSideIngredient(side);
+            return true;
+        }
+        return false;
     }
 
     private void setSauce(double fat) {

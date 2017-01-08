@@ -61,7 +61,11 @@ public class MealCalcHelper {
     }
 
     public void setSideIngredient(String name) {
-        // TODO: joku näppärä tapa tähän, jossa mahdollisuus myös satunnaiseen, ehkä
+        if (!name.contains("misc")) {
+            meal.setSideIngredient(cm.getIngredients().get("sides").get(getIdForSideIng(name)));
+        } else {
+            meal.setSideIngredient(new Ingredient(99999, "misc"));
+        }
     }
 
     public void setSauce(String name) {
@@ -82,6 +86,10 @@ public class MealCalcHelper {
 
     public int getMainIngredientId() {
         return this.meal.getMainIngredient().getId();
+    }
+    
+    public int getSideIngredientId() {
+        return this.meal.getSideIngredient().getId();
     }
 
     public int getDesiredCalories() {
@@ -113,6 +121,16 @@ public class MealCalcHelper {
         }
         return 0;
     }
+    
+    public int getIdForSideIng(String name) {
+        Map<Integer, Ingredient> sides = cm.getIngredients().get("sides");
+        for (Integer i : sides.keySet()) {
+            if (sides.get(i).getName().toLowerCase().contains(name.toLowerCase())) {
+                return i;
+            }
+        }
+        return 0;
+    }
 
     /**
      * Käyttöliittymälle tarjottu metodi, joka palauttaa listan kaikista
@@ -126,4 +144,15 @@ public class MealCalcHelper {
         return ingredientProcessor.getMainIngredients();
     }
 
+    public Map<Integer, Ingredient> getMainIngredientsAsMap() {
+        return cm.getIngredients().get("mains");
+    }
+    
+    public Map<Integer, Ingredient> getSideIngredientsAsMap() {
+        return cm.getIngredients().get("sides");
+    }
+    
+    public List<Ingredient> getSideIngredients() throws IOException {
+        return ingredientProcessor.getSideIngredients();
+    }
 }

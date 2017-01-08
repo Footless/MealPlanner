@@ -34,7 +34,7 @@ public class ProcessIngredients {
         List<Ingredient> ingredients = lfnr.getAllIngredients();
 
         for (Ingredient ingredient : ingredients) {
-            if (addIngredient(ingredient)) {
+            if (addMacrosToIngredient(ingredient)) {
                 mainIgredients.put(ingredient.getId(), ingredient);
             }
         }
@@ -45,7 +45,7 @@ public class ProcessIngredients {
         List<Ingredient> ingredients = lfnr.getAllIngredients();
 
         for (Ingredient ingredient : ingredients) {
-            if (addIngredient(ingredient)) {
+            if (addMacrosToIngredient(ingredient)) {
                 sideIgredients.put(ingredient.getId(), ingredient);
             }
         }
@@ -56,7 +56,7 @@ public class ProcessIngredients {
         List<Ingredient> ingredients = lfnr.getAllIngredients();
 
         for (Ingredient ingredient : ingredients) {
-            if (addIngredient(ingredient)) {
+            if (addMacrosToIngredient(ingredient)) {
                 sauces.put(ingredient.getId(), ingredient);
             }
         }
@@ -67,19 +67,15 @@ public class ProcessIngredients {
         List<Ingredient> ingredients = lfnr.getAllIngredients();
 
         for (Ingredient ingredient : ingredients) {
-            if (addIngredient(ingredient)) {
+            if (addMacrosToIngredient(ingredient)) {
                 sidesAndMisc.put(ingredient.getId(), ingredient);
             }
         }
     }
 
-    private boolean addIngredient(Ingredient ing) throws IOException {
+    public boolean addMacrosToIngredient(Ingredient ing) throws IOException {
         CSVReader fMacroR = new CSVReader("component_value_stub.csv");
-        if (fMacroR.searchMacros(ing)) {
-            return true;
-        }
-        ;
-        return false;
+        return fMacroR.searchMacros(ing);
     }
 
     private void addAll() throws IOException {
@@ -93,6 +89,11 @@ public class ProcessIngredients {
         CSVReader lfnr = new CSVReader("main_ingredients.csv");
         List<Ingredient> mains = lfnr.getAllIngredients();
         return mains;
+    }
+    
+    public List<Ingredient> getSideIngredients() throws IOException {
+        CSVReader reader = new CSVReader("side_ingredients.csv");
+        return reader.getAllIngredients();
     }
 
     public Map<String, Map<Integer, Ingredient>> getIngredients() {
