@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Wed Jan 11 23:41:11 EET 2017:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-0159-8f7a-4239-0000070995f0 
+Wed Jan 11 23:56:38 EET 2017:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-0159-8f88-67bd-0000070a94a8 
 on database directory /home/kari/dev/MealPlanner/MealPlanner/src/main/resources/components with class loader sun.misc.Launcher$AppClassLoader@18b4aac2 
 Loaded from file:/home/kari/.m2/repository/org/apache/derby/derby/10.12.1.1/derby-10.12.1.1.jar
 java.vendor=Oracle Corporation
