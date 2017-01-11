@@ -45,13 +45,6 @@ public class ProcessIngredientsTest {
      }
      
      @Test
-     public void addMacros() {
-         assertTrue(pi.addMacrosToIngredient(new Ingredient(805, "Kuha")));
-         pi = new ProcessIngredients(false);
-         assertTrue(pi.addMacrosToIngredient(new Ingredient(805, "Kuha")));
-     }
-     
-     @Test
      public void testGetSideIngredients() {
          List<Ingredient> ings = pi.getSideIngredients();
          assertEquals(4, ings.size());

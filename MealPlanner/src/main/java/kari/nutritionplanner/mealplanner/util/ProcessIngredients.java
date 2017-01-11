@@ -54,9 +54,7 @@ public class ProcessIngredients {
             CSVReader lfnr = new CSVReader("main_ingredients.csv");
             List<Ingredient> ingredients;
             ingredients = lfnr.getAllIngredients();
-            ingredients.stream().filter((ingredient) -> (addMacrosToIngredient(ingredient))).forEach((ingredient) -> {
-                mainIgredients.put(ingredient.getId(), ingredient);
-            });
+            lfnr.searchAllMacros(ingredients);
         }
     }
 
@@ -66,9 +64,7 @@ public class ProcessIngredients {
         } else {
             CSVReader lfnr = new CSVReader("side_ingredients.csv");
             List<Ingredient> ingredients = lfnr.getAllIngredients();
-            ingredients.stream().filter((ingredient) -> (addMacrosToIngredient(ingredient))).forEach((ingredient) -> {
-                sideIgredients.put(ingredient.getId(), ingredient);
-            });
+            lfnr.searchAllMacros(ingredients);
         }
     }
 
@@ -78,9 +74,7 @@ public class ProcessIngredients {
         } else {
             CSVReader lfnr = new CSVReader("sauces.csv");
             List<Ingredient> ingredients = lfnr.getAllIngredients();
-            ingredients.stream().filter((ingredient) -> (addMacrosToIngredient(ingredient))).forEach((ingredient) -> {
-                sauces.put(ingredient.getId(), ingredient);
-            });
+            lfnr.searchAllMacros(ingredients);
         }
     }
 
@@ -90,37 +84,7 @@ public class ProcessIngredients {
         } else {
             CSVReader lfnr = new CSVReader("sidesAndStuff.csv");
             List<Ingredient> ingredients = lfnr.getAllIngredients();
-            ingredients.stream().filter((ingredient) -> (addMacrosToIngredient(ingredient))).forEach((ingredient) -> {
-                sidesAndMisc.put(ingredient.getId(), ingredient);
-            });
-        }
-    }
-
-    /**
-     * Lisää makrot annettuun raaka-aineeseen. Palauttaa true tai false, sen
-     * mukaan onnistuiko tehtävä.
-     *
-     * @param ing Ingredient-olio
-     * @return true tai false onnistumisen mukaan
-     * @see CSVReader
-     */
-    public boolean addMacrosToIngredient(Ingredient ing) {
-        if (databaseOk) {
-            try {
-                dbAccess.getIngredient(ing.getId());
-                return true;
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Tietokannan lukemisessa tapahtui virhe: " + ex, "Virhe", 0);
-                this.databaseOk = false;
-                return false;
-            }
-        }
-        CSVReader fMacroR = new CSVReader("component_value_stub.csv");
-        try {
-            return fMacroR.searchMacros(ing);
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Tiedoston lukemisessa tapahtui virhe: " + ex.getMessage(), "Virhe", 0);
-            return false;
+            lfnr.searchAllMacros(ingredients);
         }
     }
 
