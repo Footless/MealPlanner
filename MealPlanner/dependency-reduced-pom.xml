@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>kari.nutritionplanner</groupId>
   <artifactId>MealPlanner</artifactId>
-  <version>0.1</version>
+  <version>0.4a</version>
   <build>
     <plugins>
       <plugin>
