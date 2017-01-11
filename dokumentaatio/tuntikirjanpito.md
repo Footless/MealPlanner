@@ -20,5 +20,8 @@ Päivä | Tunnit | Kuvaus
 6.1.2017 | 6h | GUI:n laajennusta ja siistimistä, refaktorointia
 7.1.2017 | 3h | logiikan säätelyä, GUI:n siistimistä
 8.1.2017 | 5h | lisäkkeen valinta käyttäjälle, dokumentointia
+9.1.2017 | 3h | tietokannan lisäystä
+10.1.2017 | 8h | tietokannan ja BufferedReaderin kanssa tappelua
+11.1.2017 | 8h | tietokannan loppuun viimeistely, refaktorointia, dokumentaatiota, uusia testejä
 
 
