@@ -18,7 +18,6 @@ package kari.nutritionplanner.mealplanner.util.database;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -35,7 +34,6 @@ public class DatabaseSetupTest {
     public void testConstructor() throws SQLException, IOException {
         DatabaseSetup db = new DatabaseSetup();
         DatabaseAccess dbAccess = new DatabaseAccess();
-        assertTrue(db != null);
         assertTrue(dbAccess.databaseOk());
         assertTrue(dbAccess.getUserIngredients() != null);
         assertTrue(dbAccess.getUserIngredients().size() == 4);

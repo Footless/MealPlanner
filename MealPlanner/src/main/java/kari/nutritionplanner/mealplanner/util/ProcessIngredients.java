@@ -47,72 +47,52 @@ public class ProcessIngredients {
         addAll();
     }
 
-    private void addMainIngredients() throws SQLException {
+    private void addMainIngredients() throws SQLException, IOException {
         if (databaseOk) {
             mainIgredients = dbAccess.getUserIngredients().get("mains");
         } else {
             CSVReader lfnr = new CSVReader("main_ingredients.csv");
             List<Ingredient> ingredients;
-            try {
-                ingredients = lfnr.getAllIngredients();
-                ingredients.stream().filter((ingredient) -> (addMacrosToIngredient(ingredient))).forEach((ingredient) -> {
-                    mainIgredients.put(ingredient.getId(), ingredient);
-                });
-            } catch (IOException ex) {
-                JOptionPane.showMessageDialog(null, "Tiedoston lukemisessa tapahtui virhe: " + ex.getMessage(), "Virhe", 0);
-            }
-
+            ingredients = lfnr.getAllIngredients();
+            ingredients.stream().filter((ingredient) -> (addMacrosToIngredient(ingredient))).forEach((ingredient) -> {
+                mainIgredients.put(ingredient.getId(), ingredient);
+            });
         }
     }
 
-    private void addSideIngredients() throws SQLException {
+    private void addSideIngredients() throws SQLException, IOException {
         if (databaseOk) {
             sideIgredients = dbAccess.getUserIngredients().get("sides");
         } else {
-            try {
-                CSVReader lfnr = new CSVReader("side_ingredients.csv");
-                List<Ingredient> ingredients = lfnr.getAllIngredients();
-
-                ingredients.stream().filter((ingredient) -> (addMacrosToIngredient(ingredient))).forEach((ingredient) -> {
-                    sideIgredients.put(ingredient.getId(), ingredient);
-                });
-            } catch (IOException ex) {
-                JOptionPane.showMessageDialog(null, "Tiedoston lukemisessa tapahtui virhe: " + ex.getMessage(), "Virhe", 0);
-            }
+            CSVReader lfnr = new CSVReader("side_ingredients.csv");
+            List<Ingredient> ingredients = lfnr.getAllIngredients();
+            ingredients.stream().filter((ingredient) -> (addMacrosToIngredient(ingredient))).forEach((ingredient) -> {
+                sideIgredients.put(ingredient.getId(), ingredient);
+            });
         }
     }
 
-    private void addSauces() throws SQLException {
+    private void addSauces() throws SQLException, IOException {
         if (databaseOk) {
             sauces = dbAccess.getUserIngredients().get("sauces");
         } else {
-            try {
-                CSVReader lfnr = new CSVReader("sauces.csv");
-                List<Ingredient> ingredients = lfnr.getAllIngredients();
-
-                ingredients.stream().filter((ingredient) -> (addMacrosToIngredient(ingredient))).forEach((ingredient) -> {
-                    sauces.put(ingredient.getId(), ingredient);
-                });
-            } catch (IOException ex) {
-                JOptionPane.showMessageDialog(null, "Tiedoston lukemisessa tapahtui virhe: " + ex.getMessage(), "Virhe", 0);
-            }
+            CSVReader lfnr = new CSVReader("sauces.csv");
+            List<Ingredient> ingredients = lfnr.getAllIngredients();
+            ingredients.stream().filter((ingredient) -> (addMacrosToIngredient(ingredient))).forEach((ingredient) -> {
+                sauces.put(ingredient.getId(), ingredient);
+            });
         }
     }
 
-    private void addSidesAndStuffs() throws SQLException {
+    private void addSidesAndStuffs() throws SQLException, IOException {
         if (databaseOk) {
             sidesAndMisc = dbAccess.getUserIngredients().get("sidesAndMisc");
         } else {
-            try {
-                CSVReader lfnr = new CSVReader("sidesAndStuff.csv");
-                List<Ingredient> ingredients = lfnr.getAllIngredients();
-
-                ingredients.stream().filter((ingredient) -> (addMacrosToIngredient(ingredient))).forEach((ingredient) -> {
-                    sidesAndMisc.put(ingredient.getId(), ingredient);
-                });
-            } catch (IOException ex) {
-                JOptionPane.showMessageDialog(null, "Tiedoston lukemisessa tapahtui virhe: " + ex.getMessage(), "Virhe", 0);
-            }
+            CSVReader lfnr = new CSVReader("sidesAndStuff.csv");
+            List<Ingredient> ingredients = lfnr.getAllIngredients();
+            ingredients.stream().filter((ingredient) -> (addMacrosToIngredient(ingredient))).forEach((ingredient) -> {
+                sidesAndMisc.put(ingredient.getId(), ingredient);
+            });
         }
     }
 
@@ -150,8 +130,8 @@ public class ProcessIngredients {
             addSideIngredients();
             addSauces();
             addSidesAndStuffs();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Tietokannan lukemisessa tapahtui virhe: " + ex, "Virhe", 0);
+        } catch (SQLException | IOException ex) {
+            JOptionPane.showMessageDialog(null, "Tietokannan tai tiedoston lukemisessa tapahtui virhe: " + ex.getLocalizedMessage(), "Virhe", 0);
             this.databaseOk = false;
         }
     }
@@ -194,7 +174,6 @@ public class ProcessIngredients {
 //        });
 //        return saucesAsList;
 //    }
-
     /**
      * Palauttaa kaikki raaka-aineet, yhdessä Mapissa, jossa sisällä neljä
      * Mappia, yksi jokaiselle raaka-ainekategorialle.
