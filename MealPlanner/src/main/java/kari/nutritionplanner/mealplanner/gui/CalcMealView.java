@@ -21,7 +21,6 @@ import java.awt.CardLayout;
 import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -73,14 +72,12 @@ public class CalcMealView {
      *
      * @param container Kaikki "kortit" sisältävä JPanel
      * @return palauttaa valmiin näkymän
-     * @throws IOException saattaa heitellä poikkeuksen ComponentFactoryn
-     * nappien luonnista.
      */
-    public JPanel createMainIngredientCard(Container container) throws IOException {
+    public JPanel createMainIngredientCard(Container container) {
         JPanel card = new JPanel(new BorderLayout());
         JLabel instructions = compFactory.createLabel("Valitse listasta haluamasi raaka-aine");
         card.add(instructions, BorderLayout.NORTH);
-        ButtonGroup mainsButtonGroup = compFactory.createIngButtons(card, mealCalculator, "main");
+        ButtonGroup mainsButtonGroup = compFactory.createIngButtons(card, "main");
         ActionListener sml = new SelectMainIngListener(this, cardL, mainsButtonGroup, container, "askSideIngredient");
         compFactory.addNextAndBackButtons(container, card, "start", sml);
         return card;
@@ -91,14 +88,12 @@ public class CalcMealView {
      *
      * @param container Kaikki "kortit" sisältävä JPanel
      * @return palauttaa valmiin näkymän
-     * @throws IOException IOException saattaa heitellä poikkeuksen
-     * ComponentFactoryn nappien luonnista.
      */
-    public JPanel createSideIngredienCard(Container container) throws IOException {
+    public JPanel createSideIngredienCard(Container container) {
         JPanel card = new JPanel(new BorderLayout());
         JLabel instructions = compFactory.createLabel("Valitse listasta haluamasi raaka-aine");
         card.add(instructions, BorderLayout.NORTH);
-        ButtonGroup sideButtonsGroup = compFactory.createIngButtons(card, mealCalculator, "side");
+        ButtonGroup sideButtonsGroup = compFactory.createIngButtons(card, "side");
         ActionListener al = new SelectSideIngListener(this, cardL, sideButtonsGroup, container, "askCalories");
         compFactory.addNextAndBackButtons(container, card, "askMainIngredient", al);
         return card;
@@ -116,7 +111,7 @@ public class CalcMealView {
         Ingredient ing = mealCalculator.getIngredients().get("mains").get(helper.getMainIngredientId());
         double mul = getMultiplier(ing);
         int min = (int) Math.ceil(ing.getCalories() * mul);
-        JSlider calorieSlider = compFactory.createSlider(min, 800, 800 / 2);
+        JSlider calorieSlider = compFactory.createSlider(min, 800, 400);
         card.add(caloriesInstructions, BorderLayout.NORTH);
         card.add(calorieSlider, BorderLayout.CENTER);
         ActionListener scl = new SelectCaloriesListener(this, cardL, calorieSlider, container, "askProtein");
@@ -134,9 +129,12 @@ public class CalcMealView {
         JPanel card = new JPanel(new BorderLayout());
         JLabel proteinInstructions = compFactory.createLabel("Valitse haluamasi proteiinin määrä:");
         Ingredient ing = mealCalculator.getIngredients().get("mains").get(helper.getMainIngredientId());
+        System.out.println("ing : " + ing);
+        System.out.println("ing protein: " + ing.getProtein());
         double mul = getMultiplier(ing);
+        System.out.println("mul: " + mul);
         int min = (int) Math.ceil(ing.getProtein() * mul);
-        JSlider proteinSlider = compFactory.createSlider(min, min * 5, min * 5 / 2);
+        JSlider proteinSlider = compFactory.createSlider(min, min * 3, min * 2);
         card.add(proteinInstructions, BorderLayout.NORTH);
         card.add(proteinSlider, BorderLayout.CENTER);
         ActionListener spl = new SelectProtListener(this, cardL, proteinSlider, container, "askFat");
@@ -156,7 +154,7 @@ public class CalcMealView {
         Ingredient ing = mealCalculator.getIngredients().get("mains").get(helper.getMainIngredientId());
         double mul = getMultiplier(ing);
         int min = (int) Math.ceil(ing.getFat() * mul);
-        JSlider fatSlider = compFactory.createSlider(min, 40, 40 / 2);
+        JSlider fatSlider = compFactory.createSlider(min, 40, 20);
         card.add(fatInstructions, BorderLayout.NORTH);
         card.add(fatSlider, BorderLayout.CENTER);
         ActionListener sfl = new SelectFatListener(this, cardL, mealCalculator, fatSlider, container, "readyMeal");
@@ -198,8 +196,9 @@ public class CalcMealView {
     }
 
     /**
-     * Helppo tapa tarjota helper ActionListenerien käyttöön, jokainen saa
-     * kuitenkin viitteen tähän luokkaan.
+     * Helppo tapa tarjota helper ActionListenerien käyttöön, jokainen
+     * GetMealListener-luokan toteuttava olio saa konstruktorissa tämän luokan
+     * parametrinä.
      *
      * @return MealCalculateHelper-olio
      */

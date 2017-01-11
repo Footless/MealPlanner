@@ -16,74 +16,51 @@
  */
 package kari.nutritionplanner.mealplanner.gui.controllers;
 
-import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JList;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
-import kari.nutritionplanner.mealplanner.gui.ComponentFactory;
 import kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelper;
 
 /**
  * ActionListener joka suorittaa hakusanan perusteella haun kaikista Finelin
- * tietokannan raaka-aineista, ja tulostaa JListina hakusanan sisältävät raaka-aineet.
+ * tietokannan raaka-aineista, ja tulostaa JListina hakusanan sisältävät
+ * raaka-aineet.
  *
  * @author kari
  */
 public class SearchIngListener implements ActionListener {
 
     private final JTextField searchField;
-    private JList searchResults;
-    private final ComponentFactory compFactory;
-    private final JPanel searchFieldComp;
-    private IngredientSearchHelper helper;
+    private final IngredientSearchHelper searchHelper;
+    private final DefaultListModel listModel;
 
-    public SearchIngListener(JPanel searchFieldComp, JTextField searchField) throws IOException {
-        this.searchFieldComp = searchFieldComp;
+    public SearchIngListener(JTextField searchField, DefaultListModel listModel, IngredientSearchHelper searchHelper) {
         this.searchField = searchField;
-        this.compFactory = new ComponentFactory();
-        
+        this.listModel = listModel;
+        this.searchHelper = searchHelper;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
+
         String searchTerm = searchField.getText();
-        if (searchFieldComp.getComponentCount() > 2) {
-            searchFieldComp.remove(2);
-            searchFieldComp.validate();
-            searchFieldComp.repaint();
-        }
         searchField.setText("");
-        try {
-            this.helper = new IngredientSearchHelper();
-            List<Ingredient> ings = helper.search(searchTerm);
-            if (ings.isEmpty()) {
-                JOptionPane.showMessageDialog(searchField, "Raaka-aineita ei löytynyt");
-            } else {
-                String[] ingNames = new String[ings.size()];
-                for (int i = 0; i < ings.size(); i++) {
-                    ingNames[i] = ings.get(i).getName();
-                }
-                searchResults = compFactory.createSearchIngList(ingNames, searchFieldComp);
-                JScrollPane scrollResults = new JScrollPane(searchResults);
-                scrollResults.getVerticalScrollBar().setUnitIncrement(10);
-                scrollResults.getHorizontalScrollBar().setUnitIncrement(10);
-                searchFieldComp.add(scrollResults, BorderLayout.CENTER);
-                compFactory.createActionListenersForButtons(searchFieldComp);
-                searchFieldComp.validate();
-                searchFieldComp.repaint();
+
+        List<Ingredient> ings = searchHelper.search(searchTerm);
+        if (!listModel.isEmpty()) {
+            listModel.clear();
+        }
+        if (ings.isEmpty()) {
+            JOptionPane.showMessageDialog(searchField, "Raaka-aineita ei löytynyt");
+        } else {
+            for (int i = 0; i < ings.size(); i++) {
+                listModel.addElement(ings.get(i).getName());
             }
-        } catch (IOException ex) {
-            Logger.getLogger(SearchIngListener.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

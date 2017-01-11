@@ -5,24 +5,34 @@
  */
 package kari.nutritionplanner.mealplanner;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.nio.charset.Charset;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import kari.nutritionplanner.mealplanner.gui.UserInterface;
+import kari.nutritionplanner.mealplanner.util.database.DatabaseAccess;
+import kari.nutritionplanner.mealplanner.util.database.DatabaseSetup;
 
 /**
- * Pääluokka, joka käynnistää graafisen käyttöliittymän.
+ * Pääluokka, joka käynnistää graafisen käyttöliittymän. Tarkistaa tietokannan
+ * ja ensimmäisellä käynnistyksellä myös alustaa sen.
  *
  * @author kari
  */
 public class Main {
 
     /**
+     * Käynnistää graafisen käyttöliittymän. Asettaa ensin UTF-8:n merkistöksi,
+     * hakee järjestelmän graafiset asetukset ja lopulta tarkastaa ja
+     * tarvittaessa alustaa tietokannan.
+     *
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         System.setProperty("file.encoding", "UTF-8");
         Field charset;
         try {
@@ -30,14 +40,38 @@ public class Main {
             charset.setAccessible(true);
             charset.set(null, null);
         } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException | SecurityException ex) {
-            throw new ExceptionInInitializerError(ex);
+            JOptionPane.showMessageDialog(null, "Tapahtui seuraava virhe ohjelmaa käynnistäessä: " + ex, "Virhe", 0);
+            throw new Error(ex);
         }
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException | UnsupportedLookAndFeelException | InstantiationException | IllegalAccessException ex) {
-            throw new ExceptionInInitializerError(ex);
+            JOptionPane.showMessageDialog(null, "Tapahtui seuraava virhe ohjelmaa käynnistäessä: " + ex, "Virhe", 0);
+            throw new Error(ex);
         }
-        UserInterface ui = new UserInterface();
+        boolean dataBaseOk = true;
+        try {
+            new DatabaseSetup();
+            DatabaseAccess dbAccess = new DatabaseAccess();
+            dataBaseOk = dbAccess.databaseOk();
+        } catch (SQLException | IOException ex) {
+            showErrorMessage(ex);
+            dataBaseOk = false;
+        }
+        if (!dataBaseOk) {
+            showErrorMessage();
+        }
+        UserInterface ui = new UserInterface(dataBaseOk);
         SwingUtilities.invokeLater(ui);
+    }
+
+    private static void showErrorMessage() {
+        JOptionPane.showMessageDialog(null, "Tapahtui virhe tietokantaa ladattaessa, ohjelma käyttää "
+                + "ainoastaan supistettua tietokantaa.", "Virhe tietokantayhteydessä", 0);
+    }
+    
+    private static void showErrorMessage(Exception ex) {
+        JOptionPane.showMessageDialog(null, "Tapahtui virhe tietokantaa ladattaessa, ohjelma käyttää "
+                + "ainoastaan supistettua tietokantaa. Virhekoodi: " + ex.toString(), "Virhe tietokantayhteydessä", 0);
     }
 }

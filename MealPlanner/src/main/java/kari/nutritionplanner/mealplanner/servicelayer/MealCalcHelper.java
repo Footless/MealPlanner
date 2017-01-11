@@ -16,7 +16,6 @@
  */
 package kari.nutritionplanner.mealplanner.servicelayer;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
@@ -25,7 +24,7 @@ import kari.nutritionplanner.mealplanner.util.ProcessIngredients;
 
 /**
  * Apuluokka GUI:lle, jossa säilötään saatuja arvoja, kunnes ne saadaan
- * syötettyä MealCalculatorille.
+ * syötettyä MealCalculatorille. Tarjoaa myös apumetodeja raaka-aineiden saamiseen.
  *
  * @author kari
  */
@@ -35,22 +34,18 @@ public class MealCalcHelper {
     private int desiredCalories;
     private int desiredProtein;
     private int desiredFat;
-    private final CalculateMeal cm;
     private final ProcessIngredients ingredientProcessor;
 
     /**
      * Konstruktori saa parametrinä CalculateMeal-olion, jonka metodeja se voi
      * käyttää.
      *
-     * @param cm CalculateMeal-olio (UserInterfacesta)
-     * @throws IOException heittää poikkeuksen, jos ProcessIngredientsin luonti
-     * epäonnistuu
+     * @param ingredientProcessor ProcessIngredients-olio raaka-aineita varten
      * @see ProcessIngredients
      */
-    public MealCalcHelper(CalculateMeal cm) throws IOException {
-        this.cm = cm;
+    public MealCalcHelper(ProcessIngredients ingredientProcessor) {
         this.meal = new Meal();
-        this.ingredientProcessor = new ProcessIngredients();
+        this.ingredientProcessor = ingredientProcessor;
     }
 
     /**
@@ -59,7 +54,7 @@ public class MealCalcHelper {
      * @param name pääraaka-aineen nimi
      */
     public void setMainIngredient(String name) {
-        meal.setMainIngredient(cm.getIngredients().get("mains").get(getIdForMainIng(name)));
+        meal.setMainIngredient(ingredientProcessor.getIngredients().get("mains").get(getIdForMainIng(name)));
     }
 
     /**
@@ -81,7 +76,9 @@ public class MealCalcHelper {
      */
     public void setSideIngredient(String name) {
         if (!name.contains("misc")) {
-            meal.setSideIngredient(cm.getIngredients().get("sides").get(getIdForSideIng(name)));
+            if (ingredientProcessor.getIngredients().get("sides").containsKey(getIdForSideIng(name.toLowerCase()))) {
+                meal.setSideIngredient(ingredientProcessor.getIngredients().get("sides").get(getIdForSideIng(name.toLowerCase())));
+            }
         } else {
             meal.setSideIngredient(new Ingredient(99999, "misc"));
         }
@@ -143,7 +140,7 @@ public class MealCalcHelper {
      * @see Ingredient
      */
     public int getIdForMainIng(String name) {
-        Map<Integer, Ingredient> mains = cm.getIngredients().get("mains");
+        Map<Integer, Ingredient> mains = ingredientProcessor.getIngredients().get("mains");
         for (Integer i : mains.keySet()) {
             if (mains.get(i).getName().toLowerCase().contains(name.toLowerCase())) {
                 return i;
@@ -159,7 +156,7 @@ public class MealCalcHelper {
      * @return raaka-aineen id-numero
      */
     public int getIdForSideIng(String name) {
-        Map<Integer, Ingredient> sides = cm.getIngredients().get("sides");
+        Map<Integer, Ingredient> sides = ingredientProcessor.getIngredients().get("sides");
         for (Integer i : sides.keySet()) {
             if (sides.get(i).getName().toLowerCase().contains(name.toLowerCase())) {
                 return i;
@@ -185,7 +182,7 @@ public class MealCalcHelper {
      * @return Map-olio, jossa kaikki saatavilla olevat pääraaka-aineet.
      */
     public Map<Integer, Ingredient> getMainIngredientsAsMap() {
-        return cm.getIngredients().get("mains");
+        return ingredientProcessor.getIngredients().get("mains");
     }
 
     /**
@@ -194,7 +191,7 @@ public class MealCalcHelper {
      * @return Map-olio, jossa kaikki saatavilla olevat lisäkkeet.
      */
     public Map<Integer, Ingredient> getSideIngredientsAsMap() {
-        return cm.getIngredients().get("sides");
+        return ingredientProcessor.getIngredients().get("sides");
     }
 
     /**

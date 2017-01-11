@@ -27,7 +27,7 @@ import kari.nutritionplanner.mealplanner.servicelayer.CalculateMeal;
 import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
 
 /**
- * ActionListeneri toteuttava luokka. Ottaa rasva-arvon talteen ja suorittaa
+ * GetMealin toteuttava luokka. Ottaa rasva-arvon talteen ja suorittaa
  * aterian laskemisen, jos mahdollista ja näyttää valmiin aterian.
  * 
  * @author kari

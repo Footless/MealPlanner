@@ -21,16 +21,12 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -43,7 +39,6 @@ import javax.swing.JRadioButton;
 import javax.swing.JSlider;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import kari.nutritionplanner.mealplanner.gui.controllers.AddToIngsListener;
 import kari.nutritionplanner.mealplanner.gui.controllers.SelectCardListener;
@@ -72,33 +67,13 @@ public class ComponentFactory {
      * jotta se pystyy paremmin toimimaan CalcMealView:n kanssa.
      *
      * @param cardL CardLayout, jonka päällä käyttöliittymä pyörii
+     * @param searchHelper Raaka-aineiden hakemiseen tarkoitettu pikkuluokka
      * @param helper MealCalcHelper, auttaa käyttöliittymää aterian laskemisessa
-     * @throws IOException IngredientSearchHelper saattaa heittää poikkeuksen
-     * tännepäin
      */
-    public ComponentFactory(CardLayout cardL, MealCalcHelper helper) throws IOException {
+    public ComponentFactory(CardLayout cardL, MealCalcHelper helper, IngredientSearchHelper searchHelper) {
         this.cardL = cardL;
         this.helper = helper;
-        this.searchHelper = new IngredientSearchHelper();
-    }
-    
-    public ComponentFactory(CardLayout cardL) throws IOException {
-        this.cardL = cardL;
-        this.helper = new MealCalcHelper(new CalculateMeal());
-        this.searchHelper = new IngredientSearchHelper();
-    }
-
-    /**
-     * Konstruktori ilman parametrejä. Suurin osa komponenteista voidaan
-     * muodostaa ilman CardLayouttia ja helperiä.
-     *
-     * @throws IOException IngredientSearchHelper saattaa heittää poikkeuksen
-     * tännepäin
-     */
-    public ComponentFactory() throws IOException {
-        this.cardL = null;
-        this.helper = new MealCalcHelper(new CalculateMeal());
-        this.searchHelper = new IngredientSearchHelper();
+        this.searchHelper = searchHelper;
     }
 
     private JTextArea createIngText(Ingredient ing, double amount) {
@@ -190,7 +165,7 @@ public class ComponentFactory {
         return slider;
     }
 
-    protected ButtonGroup createIngButtons(JPanel card, CalculateMeal mealCalculator, String select) throws IOException {
+    protected ButtonGroup createIngButtons(JPanel card, String select) {
         List<Ingredient> ings;
         if (select.contains("main")) {
             ings = helper.getMainIngredients();
@@ -250,41 +225,29 @@ public class ComponentFactory {
      * Käytetään luomaan JList annetuista raaka-aineista. Sisältää myös
      * ListSelecionListenerin luonnin.
      *
-     * @param ings raaka-aineet tauluna
-     * @param searchFieldComp JPanel jonne valmis JList tökätään
-     * @return palauttaa JListin, jossa halutut raaka-aineet
+     * @param searchFieldComp JPanel jonne valmis JList asetetaan
+     * @param results
      * @see enableIngButtons
      */
-    public JList createSearchIngList(String[] ings, JPanel searchFieldComp) {
-        JList list = new JList(ings);
-        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        list.setLayoutOrientation(JList.VERTICAL);
-        list.setVisibleRowCount(-1);
-        Font f2 = new Font("Arial", 1, 15);
-        list.setFont(f2);
-        list.setCursor(new Cursor(0));
-        list.setBackground(mainColor);
-        list.addListSelectionListener((ListSelectionEvent e) -> {
+    protected void createSearchIngList(JPanel searchFieldComp, JList results) {
+        results.addListSelectionListener((ListSelectionEvent e) -> {
             if (e.getValueIsAdjusting() == false) {
-                if (list.getSelectedIndex() == -1) {
+                if (results.getSelectedIndex() == -1) {
                     enableIngButtons(searchFieldComp, false);
                 } else {
                     enableIngButtons(searchFieldComp, true);
                 }
             }
         });
-        return list;
     }
 
     /**
      * Tekee ActionListenerit raaka-ainehaun nappuloille.
      *
      * @param searchFieldComp JPanel jossa nappulat sijaitsevat.
-     * @throws IOException AddToIngsListener saattaa heittää poikkeuksen tähän
-     * suuntaan
+     * @param panel Panel jossa nappulat sijaitsevat.
      */
-    public void createActionListenersForButtons(JPanel searchFieldComp) throws IOException {
-        JPanel panel = (JPanel) searchFieldComp.getComponent(1);
+    public void createActionListenersForButtons(JPanel searchFieldComp, JPanel panel) {
         Component[] buttons = panel.getComponents();
         ActionListener btnListener = new AddToIngsListener(searchFieldComp);
         for (Component button : buttons) {
@@ -300,19 +263,21 @@ public class ComponentFactory {
         JButton addToSides = createButton("Lisää lisäkkeisiin");
         addToSides.setActionCommand("side");
         JButton addToSauces = createButton("Lisää kastikkeisiin");
+        addToSauces.setActionCommand("sauce");
         addToMains.setEnabled(false);
         addToSides.setEnabled(false);
         addToSauces.setEnabled(false);
         panel.add(addToMains);
         panel.add(addToSides);
         panel.add(addToSauces);
+        createActionListenersForButtons(searchFieldComp, panel);
         searchFieldComp.add(panel, BorderLayout.SOUTH);
         panel.validate();
         panel.repaint();
     }
 
     protected void enableIngButtons(JPanel searchFieldComp, boolean value) {
-        JPanel panel = (JPanel) searchFieldComp.getComponent(1);
+        JPanel panel = (JPanel) searchFieldComp.getComponent(2);
         Component[] buttons = panel.getComponents();
         for (Component button1 : buttons) {
             JButton button = (JButton) button1;
@@ -320,7 +285,7 @@ public class ComponentFactory {
         }
     }
 
-    private void addToolTipForButton(JComponent component, String select) throws IOException {
+    private void addToolTipForButton(JComponent component, String select) {
         Ingredient ing;
         if (select.contains("main")) {
             ing = helper.getMainIngredientsAsMap().get(helper.getIdForMainIng(component.getName()));
@@ -330,12 +295,19 @@ public class ComponentFactory {
             ing = null;
         }
 
-        searchHelper.addMacros(ing);
         component.setToolTipText("Ravintoarvot per 100g: \n"
                 + "Kalorit: " + Math.ceil(ing.getCalories()) + "kcal \n"
                 + "Proteiini: " + Math.ceil(ing.getProtein()) + "g \n"
                 + "Rasva: " + Math.ceil(ing.getFat()) + "g \n"
                 + "Hiilihydraatit: " + Math.ceil(ing.getCarb()) + "g \n"
                 + "Kuidut: " + Math.ceil(ing.getFiber()) + "g");
+    }
+
+    public MealCalcHelper getHelper() {
+        return this.helper;
+    }
+
+    public IngredientSearchHelper getSearchHelper() {
+        return this.searchHelper;
     }
 }

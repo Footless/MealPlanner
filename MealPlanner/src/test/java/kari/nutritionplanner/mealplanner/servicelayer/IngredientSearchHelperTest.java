@@ -16,13 +16,14 @@
  */
 package kari.nutritionplanner.mealplanner.servicelayer;
 
-import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
-import org.junit.After;
-import org.junit.AfterClass;
+import kari.nutritionplanner.mealplanner.util.ProcessIngredients;
+import kari.nutritionplanner.mealplanner.util.database.DatabaseAccess;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -39,8 +40,13 @@ public class IngredientSearchHelperTest {
     }
 
     @Before
-    public void setUp() throws IOException {
-        this.helper = new IngredientSearchHelper();
+    public void setUp() {
+        DatabaseAccess dbAccess = new DatabaseAccess();
+        try {
+            this.helper = new IngredientSearchHelper(new ProcessIngredients(dbAccess.databaseOk()));
+        } catch (SQLException ex) {
+            Logger.getLogger(IngredientSearchHelperTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Test
@@ -49,26 +55,25 @@ public class IngredientSearchHelperTest {
     }
     
     @Test
-    public void testConstructorWithFileName() throws IOException {
-        this.helper = new IngredientSearchHelper("sauces.csv");
-        assertTrue(this.helper != null);
-    }
-    
-    @Test
-    public void testSearch() throws IOException {
+    public void testSearch() {
         List<Ingredient> ings = helper.search("kuha");
         assertEquals(1, ings.size());
+        List<Ingredient> ings2 = helper.search("4334");
+        assertEquals(0, ings2.size());
+        List<Ingredient> ings4 = helper.search(";");
+        assertTrue(ings4 != null);
     }
     
     @Test
-    public void testAddMacros() throws IOException {
+    public void testSearchDatabaseOff() {
+        helper = new IngredientSearchHelper(new ProcessIngredients(false));
         List<Ingredient> ings = helper.search("kuha");
-        Ingredient ing = ings.get(0);
-        assertTrue(helper.addMacros(ing));
-        assertEquals(79.641491396, ing.getCalories(), delta);
-        assertEquals(18.658, ing.getProtein(), delta);
-        assertEquals(0.433, ing.getFat(), delta);
-        assertEquals(0, ing.getCarb(), delta);
-        assertEquals(0, ing.getFiber(), delta);
+        assertEquals(1, ings.size());
+        List<Ingredient> ings2 = helper.search("4334");
+        assertEquals(0, ings2.size());
+        List<Ingredient> ings3 = helper.search("4334");
+        assertTrue(ings3 != null);
+        List<Ingredient> ings4 = helper.search(";");
+        assertTrue(ings4 != null);
     }
 }

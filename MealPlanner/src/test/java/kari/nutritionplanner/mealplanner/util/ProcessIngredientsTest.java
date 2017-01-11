@@ -5,7 +5,7 @@
  */
 package kari.nutritionplanner.mealplanner.util;
 
-import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
 import org.junit.Before;
@@ -24,8 +24,8 @@ public class ProcessIngredientsTest {
     }
     
     @Before
-    public void setUp() throws IOException {
-        this.pi = new ProcessIngredients();
+    public void setUp() {
+        this.pi = new ProcessIngredients(true);
     }
 
      @Test
@@ -39,10 +39,21 @@ public class ProcessIngredientsTest {
          assertTrue(mains.size() > 0);
      }
      
-//     @Test
-//     public void testGetIngredientNotEmpty() {
-//         Map<String, Map<String, Ingredient>> ingredients = pi.getIngredients();
-//         Map<String, Ingredient> mains = ingredients.get("mains");
-//         assertTrue(mains.size() > 0);
-//     }
+     @Test
+     public void testDatabaseOk() {
+         assertTrue(pi.getDatabaseOk());
+     }
+     
+     @Test
+     public void addMacros() {
+         assertTrue(pi.addMacrosToIngredient(new Ingredient(805, "Kuha")));
+         pi = new ProcessIngredients(false);
+         assertTrue(pi.addMacrosToIngredient(new Ingredient(805, "Kuha")));
+     }
+     
+     @Test
+     public void testGetSideIngredients() {
+         List<Ingredient> ings = pi.getSideIngredients();
+         assertEquals(4, ings.size());
+     }
 }

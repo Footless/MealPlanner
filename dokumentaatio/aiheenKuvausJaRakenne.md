@@ -7,13 +7,20 @@
 
 **Käyttäjien toiminnot:** Käyttäjä valitsee haluamansa pääraaka-aineen, lisäkkeen (myös satunnainen valittavissa) sekä haluamansa kalorimäärän, proteiinin määrän ja rasvan määrän. Ainakin alkuvaiheessa ohjelma valitsee lisukkeen (tässä vaiheessa automaattisesti uunijuurekset) ja kastikkeen, mutta tulevaisuudessa käyttäjä voi vaikuttaa siihen myös itse. Lopuksi  ohjelma kertoo paljonko mitäkin raaka-ainetta pitää olla ja paljonko kaloreita lopullisessa annoksessa on. Ohjelma kertoo myös makrot ja mahdolliseti tarkempia ravintotietoja, data mahdollistaa myös allergeenien sekä vitamiinimäärien näyttämisen, myös rasvojen erottelu eri koostumuksiin on mahdollista.
 
-###Toteutusvaiheen eräs luokkakaavio###
-
-![Toteutusvaiheen luokkakaavio](luokkakaavio3.png)
 
 ##Pari sekvenssikaaviota##
 
 ![Graafisen käyttöliittymän perusnäkymän ja aloituskorttien luonti](sekvenssi1.png)
 
 ![CalculateMeal laskee ateriaa](sekvenssi2.png)
+
+###Toteutusvaiheen eräs luokkakaavio###
+
+![Toteutusvaiheen luokkakaavio](luokkakaavio4.png)
+
+##Rakennekuvaus##
+
+Ohjelman mainin käynnityessa tarkistetaan onko tietokantaa olemassa ja jos ei ole, se luodaan, lisätään tarvittavat taulut sinne ja täytetään ne CSV-tiedostoista saatavilla tiedoilla. Tämän jälkeen tarkistetaan vielä tietokannan toimivuus ja käynnistetään graafinen käyttöliittymä. Käyttöliittymä käyttää CardLayoutia ja koostuu viidestä osasta. UserInterface on pääluokka josta muut luokat luodaan, CalcMealView:sta käsittää kaikki aterian laskemiseen liittyvät kortit, AddIngredients:sta joka sisältää raaka-aineen lisäämiseen tietokantaan liittyvät komponentit, ComponentFactorysta jossa voidaan luoda useasti käytettyjä (seassa muutama toistaiseksi vain kerran käytettykin) komponentteja sekä joukosta ActionListenereita, jotka ovat omissa luokissaan gui.controllers paketin alla. Käyttöliittymän kanssa tiiviissä yhteistyössä toimivat apuluokat MealCalcHelper ja IngredientSearchHelper. MealCalcHelper tarjoaa pääsyn raaka-aineisiin metodiensa kanssa, sekä kerää ActionListenereilta käyttäjän antamat arvot talteen, kunnes ne luovutetaan CalculateMealille. IngredientSearchHelper auttaa raaka-aineiden haun kanssa AddIngredientsView'ta. Ateriaa laskiessa ainoastaan MainIngredient-kortti on alussa valmiina, muut kortit luodaan sitä mukaan kun käyttäjä antaa arvoja.
+
+Varsinaisen ohjelman ytimen muodostavat CalculateMeal ja sen apuluokat MealTweaker sekä ProcessIngredients. CalculateMeal laskee aterian saatuaan käyttöliittymältä käyttäjältä kerätyt toiveet. Kun ateria (Meal) on saatu kasattua, annetaan se MealTweakerille joka pyörittelee sitä aikansa ja yrittää päästä mahdollisimman lähelle haluttua lopputulosta. Kaikissa tapauksissa täysin haluttuja makroja ei voi saada aikaiseksi, mutta ainakin kalorit saadaan kohdalleen, muissa voi olla heittoja. ProcessIngredients kerää tietokannasta (DatabaseAccess) tai tiedostoista (CSVReader) raaka-aineet (Ingredient) ja niiden makrot ja tarjoaa ne CalculateMealille käyttöön.
 

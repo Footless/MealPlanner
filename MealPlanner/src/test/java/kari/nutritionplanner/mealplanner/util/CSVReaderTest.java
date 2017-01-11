@@ -5,8 +5,8 @@
  */
 package kari.nutritionplanner.mealplanner.util;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
 import org.junit.Before;
@@ -25,7 +25,7 @@ public class CSVReaderTest {
     }
     
     @Before
-    public void setUp() throws FileNotFoundException {
+    public void setUp() {
         reader = new CSVReader("main_ingredients.csv");
     }
 
@@ -35,11 +35,11 @@ public class CSVReaderTest {
      }
      
      @Test
-     public void testSearchMacros() throws FileNotFoundException, IOException {
+     public void testSearchMacros() throws IOException {
          reader = new CSVReader("component_value.csv");
          Ingredient ing = new Ingredient(8062, "test");
          reader.searchMacros(ing);
-         assertEquals(79.660611855, ing.getCalories(), delta);
+         assertEquals(79.660611, ing.getCalories(), delta);
          assertEquals(5.473, ing.getCarb(), delta);
          assertEquals(3.762, ing.getFat(), delta);
          assertEquals(5.64, ing.getProtein(), delta);
@@ -53,16 +53,39 @@ public class CSVReaderTest {
      }
      
      @Test
-     public void testSearchMacrosInvalidIng() throws FileNotFoundException, IOException {
+     public void testSearchMacrosInvalidIng() throws IOException {
          reader = new CSVReader("component_value.csv");
          Ingredient ing = new Ingredient(56033, "test");
          assertFalse(reader.searchMacros(ing));
      }
      
      @Test
-     public void testSearchMacrosNullIng() throws FileNotFoundException, IOException {
+     public void testSearchMacrosNullIng() throws IOException {
          reader = new CSVReader("component_value.csv");
          Ingredient ing = null;
          assertFalse(reader.searchMacros(ing));
+     }
+     
+     @Test
+     public void testSearchAllMacros() throws IOException {
+         reader = new CSVReader("component_value.csv");
+         List<Ingredient> ings = new ArrayList<>();
+         ings.add(new Ingredient(805, "Kuha"));
+         ings.add(new Ingredient(34307, "Nyhtökaura, nude"));
+         reader.searchAllMacros(ings);
+         assertEquals(18.658, ings.get(0).getProtein(), delta);
+         assertEquals(0.433, ings.get(0).getFat(), delta);
+         assertEquals(31.2, ings.get(1).getProtein(), delta);
+         assertEquals(4.9, ings.get(1).getFat(), delta);
+         reader.closeReader();
+     }
+     
+     @Test(expected = IOException.class)
+     public void testExceptionOnClosedReader() throws IOException {
+         reader = new CSVReader("component_value.csv");
+         List<Ingredient> ings = reader.getAllIngredients();
+         assertTrue(ings.size() > 3000);
+         reader.closeReader();
+         reader.getAllIngredients();
      }
 }

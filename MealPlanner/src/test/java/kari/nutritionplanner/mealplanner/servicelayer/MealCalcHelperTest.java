@@ -16,7 +16,7 @@
  */
 package kari.nutritionplanner.mealplanner.servicelayer;
 
-import java.io.IOException;
+import kari.nutritionplanner.mealplanner.util.ProcessIngredients;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -33,9 +33,10 @@ public class MealCalcHelperTest {
     }
 
     @Before
-    public void setUp() throws IOException {
-        this.cm = new CalculateMeal();
-        this.helper = new MealCalcHelper(cm);
+    public void setUp() {
+        ProcessIngredients pi = new ProcessIngredients(true);
+        this.cm = new CalculateMeal(pi);
+        this.helper = new MealCalcHelper(pi);
     }
 
     @Test
@@ -76,4 +77,27 @@ public class MealCalcHelperTest {
         assertEquals(0, helper.getDesiredProtein());
         assertEquals(0, helper.getMainIngredientId());
     }
+    
+    @Test
+    public void testSetSideIngredient() {
+        helper.setSideIngredient("peruna");
+        assertEquals(204, helper.getSideIngredientId());
+        helper.setSideIngredient("testijajotainvielä");
+        assertEquals(204, helper.getSideIngredientId());
+        assertEquals(0, helper.getIdForSideIng("kuha"));
+        helper.setSideIngredient("misc");
+        assertEquals(99999, helper.getSideIngredientId());
+    }
+    
+    @Test
+    public void testIngsAsMap() {
+        assertEquals(5, helper.getMainIngredientsAsMap().size());
+        assertEquals(4, helper.getSideIngredientsAsMap().size());
+    }
+    
+    @Test
+    public void testGetSidesList() {
+        assertEquals(4, helper.getSideIngredients().size());
+    }
 }
+ 

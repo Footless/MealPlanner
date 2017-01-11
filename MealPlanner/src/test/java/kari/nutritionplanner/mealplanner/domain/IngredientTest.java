@@ -29,13 +29,13 @@ public class IngredientTest {
      public void testConstructor() {
          int id = ing.getId();
          String name = ing.toString();
-         assertEquals("test", name);
+         assertEquals("Test", name);
          assertEquals(1, id);
      }
      
      @Test
      public void testName() {
-         assertEquals("test", ing.getName());
+         assertEquals("Test", ing.getName());
      }
      
      @Test

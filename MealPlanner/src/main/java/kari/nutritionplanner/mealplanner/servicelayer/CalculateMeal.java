@@ -1,6 +1,5 @@
 package kari.nutritionplanner.mealplanner.servicelayer;
 
-import java.io.IOException;
 import kari.nutritionplanner.mealplanner.util.ProcessIngredients;
 import java.util.Map;
 import java.util.Random;
@@ -18,22 +17,20 @@ import kari.nutritionplanner.mealplanner.util.MealTweaker;
 public class CalculateMeal {
 
     private final Meal meal;
-    private final ProcessIngredients ingredientProcessor;
     private final Map<String, Map<Integer, Ingredient>> ingredients;
-    private final MacroCalculator mc = new MacroCalculator();
+    private final MacroCalculator mc;
 
     /**
-     * Konstruktori, ei mitään ihmeellistä. Luo ProcessIngredients-olion ja
-     * hakee sen metodilla raaka-aineet. Luo uuden tyhjän Meal-olion virheitä ja
-     * nulleja estämään.
+     * Konstruktori. Luo ProcessIngredients-olion ja hakee sen metodilla
+     * raaka-aineet. Luo uuden tyhjän Meal-olion virheitä ja nulleja estämään.
      *
-     * @throws IOException heittää poikkeuksen jos ProcessIngredients heittää
-     * semmoisen
+     * @param ingredientProcessor ProcessIngredients, josta myös saadaan tieto
+     * tietokannan käytettävyydestä.
      */
-    public CalculateMeal() throws IOException {
-        this.ingredientProcessor = new ProcessIngredients();
+    public CalculateMeal(ProcessIngredients ingredientProcessor) {
         this.ingredients = ingredientProcessor.getIngredients();
         meal = new Meal();
+        this.mc = new MacroCalculator();
     }
 
     /**

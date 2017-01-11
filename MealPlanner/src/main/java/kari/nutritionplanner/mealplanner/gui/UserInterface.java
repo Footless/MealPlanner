@@ -11,19 +11,18 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 import kari.nutritionplanner.mealplanner.servicelayer.CalculateMeal;
+import kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelper;
 import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
+import kari.nutritionplanner.mealplanner.util.ProcessIngredients;
 
 /**
- * Graafinen käyttöliittymä Meal Plannerille. Luo aloituskortin sekä CalcMealView'n ja AddIngsView'n
- * joissa varsinainen työ tapahtuu.
+ * Graafinen käyttöliittymä Meal Plannerille. Luo aloituskortin sekä
+ * CalcMealView'n ja AddIngsView'n joissa varsinainen työ tapahtuu.
  *
  * @author kari
  */
@@ -34,7 +33,12 @@ public class UserInterface implements Runnable {
     private CalculateMeal mealCalculator;
     private MealCalcHelper helper;
     private ComponentFactory compFactory;
+    private final boolean databaseOk;
+    private IngredientSearchHelper searchHelper;
 
+    public UserInterface(boolean databaseOk) {
+        this.databaseOk = databaseOk;
+    }
     @Override
     public void run() {
         frame = new JFrame("Meal Planner");
@@ -43,21 +47,19 @@ public class UserInterface implements Runnable {
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        try {
-            createComponents(frame.getContentPane());
-        } catch (IOException ex) {
-            Logger.getLogger(UserInterface.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        createComponents(frame.getContentPane());
 
         frame.setLocationByPlatform(true);
         frame.pack();
         frame.setVisible(true);
     }
 
-    private void createComponents(Container contentPane) throws IOException {
-        mealCalculator = new CalculateMeal();
-        helper = new MealCalcHelper(mealCalculator);
-        compFactory = new ComponentFactory(cardL, helper);
+    private void createComponents(Container contentPane) {
+        ProcessIngredients ingredientProcessor = new ProcessIngredients(databaseOk);
+        mealCalculator = new CalculateMeal(ingredientProcessor);
+        helper = new MealCalcHelper(ingredientProcessor);
+        this.searchHelper = new IngredientSearchHelper(ingredientProcessor);
+        compFactory = new ComponentFactory(cardL, helper, searchHelper);
         JPanel cards = new JPanel(cardL);
 
         JPanel startCard = createStartCard(cards);
@@ -66,7 +68,7 @@ public class UserInterface implements Runnable {
         CalcMealView calcMealView = new CalcMealView(cardL, mealCalculator, helper, compFactory);
         createMealCards(cards, calcMealView);
 
-        AddIngredientsView addIngsView = new AddIngredientsView(cardL);
+        AddIngredientsView addIngsView = new AddIngredientsView(cardL, compFactory);
         createAddIngCards(cards, addIngsView);
 
         contentPane.add(cards);
@@ -94,17 +96,21 @@ public class UserInterface implements Runnable {
         return startCard;
     }
 
-    private void createMealCards(JPanel cards, CalcMealView calcMealView) throws IOException {
+    private void createMealCards(JPanel cards, CalcMealView calcMealView) {
         JPanel mainIngredientCard = calcMealView.createMainIngredientCard(cards);
         cards.add(mainIngredientCard, "askMainIngredient");
     }
 
-    private void createAddIngCards(JPanel cards, AddIngredientsView addIngsView) throws IOException {
+    private void createAddIngCards(JPanel cards, AddIngredientsView addIngsView) {
         JPanel searchIngCard = addIngsView.createSearchIngCard(cards);
         cards.add(searchIngCard, "addIngredient");
     }
 
     public MealCalcHelper getHelper() {
         return this.helper;
+    }
+    
+    public boolean databaseOk() {
+        return this.databaseOk;
     }
 }

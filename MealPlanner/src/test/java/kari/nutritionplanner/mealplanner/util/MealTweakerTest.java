@@ -16,7 +16,6 @@
  */
 package kari.nutritionplanner.mealplanner.util;
 
-import java.io.IOException;
 import kari.nutritionplanner.mealplanner.domain.Meal;
 import kari.nutritionplanner.mealplanner.servicelayer.CalculateMeal;
 import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
@@ -42,9 +41,10 @@ public class MealTweakerTest {
     }
 
     @Before
-    public void setUp() throws IOException {
-        this.cm = new CalculateMeal();
-        this.helper = new MealCalcHelper(cm);
+    public void setUp() {
+        ProcessIngredients pi = new ProcessIngredients(true);
+        this.cm = new CalculateMeal(pi);
+        this.helper = new MealCalcHelper(pi);
         meal = new Meal();
         meal.setMainIngredient(cm.getIngredients().get("mains").get(helper.getIdForMainIng("kuha")));
         meal.setSideIngredient(cm.getIngredients().get("sides").get(204));
@@ -91,4 +91,19 @@ public class MealTweakerTest {
         assertEquals(1.46, meal.getSideIngredientAmount(), 0.0);
         assertEquals(1.46, meal.getSauceAmount(), 0.0);
     }
+    
+//    @Test
+//    public void testProteinOk() {
+//        meal.setMainIngredientAmount(0);
+//        meal.setMiscAmount(0);
+//        meal.setSauceAmount(0);
+//        meal.setSideIngredientAmount(0);
+//        assertFalse(mt.proteinOk());
+//        meal.setMainIngredientAmount(1.61);
+//        assertTrue(mt.proteinOk());
+//        meal.setMainIngredientAmount(1.7);
+//        assertTrue(mt.proteinOk());
+//        meal.setMainIngredientAmount(1.51);
+//        assertTrue(mt.proteinOk());
+//    }
 }

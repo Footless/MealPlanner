@@ -17,42 +17,41 @@
 package kari.nutritionplanner.mealplanner.servicelayer;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
+import javax.swing.JOptionPane;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
 import kari.nutritionplanner.mealplanner.util.CSVReader;
 import kari.nutritionplanner.mealplanner.util.ProcessIngredients;
+import kari.nutritionplanner.mealplanner.util.database.DatabaseAccess;
 
 /**
- * Apuluokka raaka-aineiden etsimiseen.
+ * Apuluokka raaka-aineiden etsimiseen. Käyttää joko tietokantayhteyttä tai
+ * scv-tiedostoja.
  *
  * @author kari
  */
 public class IngredientSearchHelper {
 
     private final CSVReader reader;
+    private boolean databaseOk;
+    private final DatabaseAccess dbAccess;
     private final ProcessIngredients ingredientProcessor;
 
     /**
      * Konstruktori luo Readerin, joka lukee tiedostoa food_utf.csv joka
-     * sisältää kaikkien Finelin tietokannan elintarvikkeiden nimet ja id:t.
+     * sisältää kaikkien Finelin tietokannan elintarvikkeiden nimet ja id:t sekä
+     * tarjoaa yhteyden tietokantaan, josta saatavilla sekä nimet, id:t että
+     * makrot.
      *
-     * @throws IOException heittää poikkeuksen jos ProcessIngredients heittää semmoisen
+     * @param ingredientProcessor ProcessIngredients-olio raaka-aineiden hakua
+     * varten.
      */
-    public IngredientSearchHelper() throws IOException {
+    public IngredientSearchHelper(ProcessIngredients ingredientProcessor) {
+        this.ingredientProcessor = ingredientProcessor;
         this.reader = new CSVReader("food_utf.csv");
-        this.ingredientProcessor = new ProcessIngredients();
-    }
-
-    /**
-     * Konstruktori antaa mahdollisuuden luoda readerin myös muille tiedostoille
-     * tarpeen tullen. Tuskin tulee ja tämä poistetaan ennen pitkää.
-     *
-     * @param fileName halutun tiedoston nimi
-     * @throws IOException heittää poikkeuksen jos ProcessIngredients heittää semmoisen
-     */
-    public IngredientSearchHelper(String fileName) throws IOException {
-        this.reader = new CSVReader(fileName);
-        this.ingredientProcessor = new ProcessIngredients();
+        this.databaseOk = ingredientProcessor.getDatabaseOk();
+        this.dbAccess = new DatabaseAccess();
     }
 
     /**
@@ -61,20 +60,22 @@ public class IngredientSearchHelper {
      *
      * @param s hakutermi, jonka käyttäjä on syöttänyt käyttöliittymässä
      * @return listan hakua vastaavista raaka-aineista
-     * @throws IOException heittää poikkeuksen jos tiedoston luku epäonnistuu
      */
-    public List<Ingredient> search(String s) throws IOException {
-        return reader.search(s);
-    }
-
-    /**
-     * Lisää makrot parametrina annettuun raaka-aineeseen.
-     *
-     * @param ing raaka-aine Ingredient-oliona
-     * @return palauttaa true tai false, riippuen onnistuiko makrojen lisääminen
-     * @throws IOException heittää poikkeuksen jos ProcessIngredients heittää semmoisen
-     */
-    public boolean addMacros(Ingredient ing) throws IOException {
-        return ingredientProcessor.addMacrosToIngredient(ing);
+    public List<Ingredient> search(String s) {
+        if (databaseOk) {
+            try {
+                return dbAccess.searchIngredients(s);
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Tietokannan haussa tapahtui virhe: " + ex, "Virhe", 0);
+                this.databaseOk = false;
+                return null;
+            }
+        }
+        try {
+            return reader.search(s);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Tiedoston luvussa tapahtui virhe: " + ex, "Virhe", 0);
+            return null;
+        }
     }
 }

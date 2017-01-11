@@ -1,0 +1,7 @@
+kari.nutritionplanner.mealplanner
+kari.nutritionplanner.mealplanner.domain
+kari.nutritionplanner.mealplanner.gui
+kari.nutritionplanner.mealplanner.gui.controllers
+kari.nutritionplanner.mealplanner.servicelayer
+kari.nutritionplanner.mealplanner.util
+kari.nutritionplanner.mealplanner.util.database

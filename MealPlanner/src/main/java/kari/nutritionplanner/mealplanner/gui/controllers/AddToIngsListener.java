@@ -18,15 +18,14 @@ package kari.nutritionplanner.mealplanner.gui.controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 /**
- * ActionListener, joka käsittelee uuden raaka-aineen lisäämistä valittavissa oleviin raaka-aineisiin.
- * 8.1.2017 yhä keskeneräinen.
+ * ActionListener, joka käsittelee uuden raaka-aineen lisäämistä valittavissa
+ * oleviin raaka-aineisiin. 11.1.2017 yhä keskeneräinen.
  *
  * @author kari
  */
@@ -34,19 +33,16 @@ public class AddToIngsListener implements ActionListener {
 
     private final JList list;
 
-    public AddToIngsListener(JPanel searchFieldComp) throws IOException {
-        if (searchFieldComp.getComponentCount() > 2) {
-            JScrollPane scroll = (JScrollPane) searchFieldComp.getComponent(2);
-            this.list = (JList) scroll.getViewport().getComponent(0);
-        } else {
-            this.list = new JList();
-        }
+    public AddToIngsListener(JPanel searchFieldComp) {
+        JScrollPane scroll = (JScrollPane) searchFieldComp.getComponent(0);
+        this.list = (JList) scroll.getViewport().getComponent(0);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equalsIgnoreCase("main")) {
             String name = (String) list.getSelectedValue();
+//            list.clearSelection();
             int response = JOptionPane.showConfirmDialog(null, "Haluako todella lisätä raaka-aineen " + name + " "
                     + "pääraaka-aineisiin?", "Varmista", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (response == JOptionPane.YES_OPTION) {
@@ -54,13 +50,13 @@ public class AddToIngsListener implements ActionListener {
             }
         } else if (e.getActionCommand().equalsIgnoreCase("side")) {
             showErrorMessage();
-        } else {
+        } else if (e.getActionCommand().equalsIgnoreCase("sauce")) {
             showErrorMessage();
         }
     }
-    
+
     private void showErrorMessage() {
         JOptionPane.showMessageDialog(null, "Valitettavasti tässä vaiheessa kehitystä raaka-aineiden lisääminen ei"
-                        + " vielä onnistu.");
+                + " vielä onnistu.");
     }
 }

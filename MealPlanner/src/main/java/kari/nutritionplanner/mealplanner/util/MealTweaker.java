@@ -54,19 +54,19 @@ public class MealTweaker {
      *
      */
     public void tweakMeal() {
-        evenUpIngredients(calories, protein, fat);
+        evenUpIngredients();
         roundUpIngredients();
     }
 
-    private void proteinSubber(double protein) {
-//        if (protein < meal.getProtein()) {
-        double proteinToSub = protein - meal.getProtein();
-        if (meal.getSideIngredient().getProtein() > 3) {
-            subFromBoth(proteinToSub);
-        } else {
-            subFromMain(proteinToSub);
+    private void proteinAlterer() {
+        if (!proteinOk()) {
+            double proteinToSub = protein - meal.getProtein();
+            if (meal.getSideIngredient().getProtein() > 3 && protein < meal.getProtein()) {
+                subFromBoth(proteinToSub);
+            } else {
+                subFromMain(proteinToSub);
+            }
         }
-//        }
     }
 
     private void subFromMain(double proteinToSub) {
@@ -81,8 +81,8 @@ public class MealTweaker {
     }
 
     private void subFromBoth(double proteinToSub) {
-        double mainAmount = mc.calculateAmountForProtein(proteinToSub / 2, meal.getMainIngredient());
-        double sideAmount = mc.calculateAmountForProtein(proteinToSub / 2, meal.getSideIngredient());
+        double mainAmount = mc.calculateAmountForProtein(proteinToSub / 4 * 3, meal.getMainIngredient());
+        double sideAmount = mc.calculateAmountForProtein(proteinToSub / 4, meal.getSideIngredient());
         if (meal.getMainIngredientAmount() + mainAmount > 0.5 && meal.getSideIngredientAmount() + sideAmount > 0) {
             meal.setMainIngredientAmount(meal.getMainIngredientAmount() + mainAmount);
             meal.setSideIngredientAmount(meal.getSideIngredientAmount() + sideAmount);
@@ -94,61 +94,37 @@ public class MealTweaker {
         }
     }
 
-    private void caloriesTweaker(double calories) {
-        double caloriesToTweak = calories - meal.getCalories();
-        double caloriesToTweakSide = mc.calculateAmountForCalories((caloriesToTweak / 8) * 4, meal.getSideIngredient());
-        double caloriesToTweakMain = mc.calculateAmountForCalories((caloriesToTweak / 8) * 1, meal.getMainIngredient());
-        double caloriesToTweakSauce = mc.calculateAmountForCalories((caloriesToTweak / 8) * 3, meal.getSauce());
-        double caloriesToAddTweakSide = mc.calculateAmountForCalories(caloriesToTweak, meal.getSideIngredient());
-        double caloriesToTweakTotalMain = mc.calculateAmountForCalories(caloriesToTweak, meal.getMainIngredient());
-        if (meal.getSideIngredientAmount() + caloriesToTweakSide >= 0 && meal.getMainIngredientAmount() + caloriesToTweakMain >= 0.8) {
-            meal.setSideIngredientAmount(meal.getSideIngredientAmount() + caloriesToTweakSide);
-            meal.setMainIngredientAmount(meal.getMainIngredientAmount() + caloriesToTweakMain);
-            meal.setSauceAmount(meal.getSauceAmount() + caloriesToTweakSauce);
-        } else if (meal.getSideIngredientAmount() + caloriesToAddTweakSide >= 0) {
-            meal.setSideIngredientAmount(meal.getSideIngredientAmount() + caloriesToAddTweakSide);
-        } else if (meal.getMainIngredientAmount() + caloriesToTweakTotalMain >= 0.8) {
-            meal.setMainIngredientAmount(meal.getMainIngredientAmount() + caloriesToTweakTotalMain);
+    private void caloriesTweaker() {
+        if (calories < meal.getCalories()) {
+            subCalories();
         } else {
-            meal.setSideIngredientAmount(meal.getSideIngredientAmount() + caloriesToTweakSide);
-            meal.setMainIngredientAmount(meal.getMainIngredientAmount() + caloriesToTweakMain);
-        }
-        if (meal.getSideIngredientAmount() < 0) {
-            meal.setSideIngredientAmount(0);
-        }
-        if (meal.getMainIngredientAmount() < 0.5) {
-            meal.setMainIngredientAmount(0.5);
-        }
-        if (meal.getSauceAmount() < 0) {
-            meal.setSauceAmount(0);
+            addCalories();
         }
     }
 
-    private void fatSubber(double fat) {
-//        if (fat < meal.getFat() && meal.getSauceAmount() > 0) {
-        double fatToSub = fat - meal.getFat();
-        meal.setSauceAmount(meal.getSauceAmount() + mc.calculateAmountForFat(fatToSub, meal.getSauce()));
-        if (meal.getSauceAmount() < 0.1) {
-            meal.setSauceAmount(0);
+    private void fatSubber() {
+        if (!fatOk()) {
+            double fatToSub = fat - meal.getFat();
+            meal.setSauceAmount(meal.getSauceAmount() + mc.calculateAmountForFat(fatToSub, meal.getSauce()));
+            if (meal.getSauceAmount() < 0.1) {
+                meal.setSauceAmount(0);
+            }
         }
-//        }
     }
 
-    private void evenUpIngredients(double calories, double protein, double fat) {
-        for (int i = 0; i < 20; i++) {
-            if (allOk(calories, protein, fat)) {
+    private void evenUpIngredients() {
+        for (int i = 0; i < 50; i++) {
+            if (allOk()) {
                 break;
             }
-            fatSubber(fat);
-            proteinSubber(protein);
-            caloriesTweaker(calories);
+            fatSubber();
+            proteinAlterer();
+            caloriesTweaker();
         }
     }
 
-    private boolean allOk(double calories, double protein, double fat) {
-        return (meal.getCalories() <= calories + 20 && meal.getCalories() >= calories - 20)
-                && (meal.getProtein() <= protein + 1 && meal.getProtein() >= protein - 1)
-                && (meal.getFat() <= fat + 1 && meal.getFat() >= fat - 1);
+    private boolean allOk() {
+        return caloriesOk() && proteinOk() && fatOk();
     }
 
     /**
@@ -164,4 +140,86 @@ public class MealTweaker {
         meal.setSauceAmount(sauce);
     }
 
+    private void subCalories() {
+        double toSub = calories - meal.getCalories();
+        // jos protskut ja rasva ok, vähennä vain lisäkettä, jos sitä on
+        if (proteinOk() && fatOk() && meal.getSideIngredientAmount() > 0.05) {
+            alterCaloriesFromSide(toSub);
+            // jos protskut ok, vähennetään lisäkettä ja soosia, jos lisäkettä on
+        } else if (proteinOk() && meal.getSideIngredientAmount() > 0.05) {
+            alterCaloriesFromSideAndSauce(toSub);
+            // jos protskut tai rasva ok ja joko soosi tai lisäke on lähellä nollaa, vähennetään pääraaka-ainetta
+        } else if (proteinOk() && (meal.getSideIngredientAmount() < 0.1 || meal.getSauceAmount() < 0.1)) {
+            alterCaloriesFromMain(toSub);
+            // jos rasva ok, vähennetään pääraaka-ainetta ja lisuketta, jos lisuketta on
+        } else if (fatOk() && meal.getSideIngredientAmount() > 0.05) {
+            alterCaloriesFromMainAndSide(toSub);
+            // tai sitten vähennetään vähän kaikkia
+        } else {
+            alterCaloriesFromAll(toSub);
+        }
+        if (meal.getSideIngredientAmount() < 0) {
+            meal.setSideIngredientAmount(0);
+        }
+        if (meal.getSauceAmount() < 0) {
+            meal.setSauceAmount(0);
+        }
+    }
+
+    private void addCalories() {
+        double toAdd = calories - meal.getCalories();
+        // jos protskut ja rasva ok, lisää vain lisäkettä
+        if (proteinOk() && fatOk()) {
+            alterCaloriesFromSide(toAdd);
+        } else if (proteinOk()) {
+            alterCaloriesFromSideAndSauce(toAdd);
+        } else {
+            alterCaloriesFromAll(toAdd);
+        }
+    }
+
+    private boolean proteinOk() {
+        return (meal.getProtein() <= protein + 2 && meal.getProtein() >= protein - 2);
+    }
+
+    private boolean caloriesOk() {
+        return (meal.getCalories() <= calories + 20 && meal.getCalories() >= calories - 20);
+    }
+
+    private boolean fatOk() {
+        return (meal.getFat() <= fat + 2 && meal.getFat() >= fat - 2);
+    }
+
+    private void alterCaloriesFromSide(double toAlter) {
+        double amountToSubFromSide = mc.calculateAmountForCalories(toAlter, meal.getSideIngredient());
+        meal.setSideIngredientAmount(meal.getSideIngredientAmount() + amountToSubFromSide);
+    }
+
+    private void alterCaloriesFromSideAndSauce(double toAlter) {
+        double amountToSubFromSide = mc.calculateAmountForCalories((toAlter / 8 * 5), meal.getSideIngredient());
+        double amountToSubFromSauce = mc.calculateAmountForCalories((toAlter / 8 * 3), meal.getSauce());
+        meal.setSideIngredientAmount(meal.getSideIngredientAmount() + amountToSubFromSide);
+        meal.setSauceAmount(meal.getSauceAmount() + amountToSubFromSauce);
+    }
+
+    private void alterCaloriesFromAll(double toAlter) {
+        double amountToSubFromSide = mc.calculateAmountForCalories((toAlter / 8 * 5), meal.getSideIngredient());
+        double amountToSubFromSauce = mc.calculateAmountForCalories((toAlter / 8 * 2), meal.getSauce());
+        double amountToSubFromMain = mc.calculateAmountForCalories(toAlter / 8, meal.getMainIngredient());
+        meal.setSideIngredientAmount(meal.getSideIngredientAmount() + amountToSubFromSide);
+        meal.setSauceAmount(meal.getSauceAmount() + amountToSubFromSauce);
+        meal.setMainIngredientAmount(meal.getMainIngredientAmount() + amountToSubFromMain);
+    }
+
+    private void alterCaloriesFromMainAndSide(double toAlter) {
+        double amountToSubFromSide = mc.calculateAmountForCalories((toAlter / 4 * 3), meal.getSideIngredient());
+        double amountToSubFromMain = mc.calculateAmountForCalories(toAlter / 4, meal.getMainIngredient());
+        meal.setSideIngredientAmount(meal.getSideIngredientAmount() + amountToSubFromSide);
+        meal.setMainIngredientAmount(meal.getMainIngredientAmount() + amountToSubFromMain);
+    }
+
+    private void alterCaloriesFromMain(double toAlter) {
+        double amountToSubFromMain = mc.calculateAmountForCalories(toAlter, meal.getMainIngredient());
+        meal.setMainIngredientAmount(meal.getMainIngredientAmount() + amountToSubFromMain);
+    }
 }

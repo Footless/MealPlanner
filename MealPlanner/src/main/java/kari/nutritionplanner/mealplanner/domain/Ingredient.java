@@ -21,6 +21,13 @@ public class Ingredient {
     private double carb;
     private double fiber;
 
+    /**
+     * Luo raaka-aineen asettamalla sille id-numeron ja nimen. Makrojen arvot
+     * alustetaan nollaan.
+     *
+     * @param id raaka-aineen id-numero kokonaislukuna
+     * @param name raaka-aineen nimi
+     */
     public Ingredient(int id, String name) {
         this.id = id;
         this.name = name;
@@ -35,8 +42,14 @@ public class Ingredient {
         return id;
     }
 
+    /**
+     * Palauttaa raaka-aineen nimen. Nimeen vaihdetaan iso alkukirjain, koska
+     * tietokannassa kaikki raaka-aineet ovat pienillä kirjaimilla.
+     *
+     * @return Raaka-aineen nimi.
+     */
     public String getName() {
-        return name;
+        return makeFirstLetterCapital(name);
     }
 
     public void setCalories(double calories) {
@@ -81,7 +94,11 @@ public class Ingredient {
 
     @Override
     public String toString() {
-        return "" + name;
+        return "" + makeFirstLetterCapital(name);
     }
 
+    private String makeFirstLetterCapital(String s) {
+        String ret = s.replaceFirst(s.substring(0, 1), s.substring(0, 1).toUpperCase());
+        return ret;
+    }
 }
