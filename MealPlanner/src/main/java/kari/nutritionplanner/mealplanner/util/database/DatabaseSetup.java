@@ -57,6 +57,7 @@ public class DatabaseSetup {
         DatabaseMetaData dbm = conn.getMetaData();
         ResultSet tables = dbm.getTables(null, null, "MAINS", null);
         // jos ei ole, tehdään ne
+        System.out.println(tables);
         if (!tables.next()) {
             // luodaan taulut käyttäjän raaka-aineille, jos niitä ei vielä ole luotu
             stmt.executeUpdate("Create table mains(id int primary key, name varchar(100))");
@@ -70,7 +71,7 @@ public class DatabaseSetup {
             addIngredientsToDB();
         } 
 //        else {
-//            testauskäyttöä varten tiputellaan tauluja.  
+////            testauskäyttöä varten tiputellaan tauluja.  
 //            stmt.execute("drop table MAINS");
 //            stmt.execute("drop table SIDES");
 //            stmt.execute("drop table MISC");
@@ -95,7 +96,8 @@ public class DatabaseSetup {
         List<Ingredient> allIngs = reader.getAllIngredients();
         reader.closeReader();
         for (Ingredient ing : allIngs) {
-            stmt.execute("INSERT INTO INGREDIENTS VALUES(" + ing.getId() + ", '" + ing.getName() + "')");
+//            System.out.println("id: " + ing.getId() + " nimi: " + ing.getName());
+            stmt.execute("INSERT INTO INGREDIENTS VALUES(" + ing.getId() + ", '" + ing.getName().toLowerCase() + "')");
         }
         addMacros(allIngs, stmt);
     }
@@ -104,6 +106,7 @@ public class DatabaseSetup {
         CSVReader reader = new CSVReader("component_value.csv");
         reader.searchAllMacros(allIngs);
         for (Ingredient ing : allIngs) {
+//            System.out.println("makroja : id: " + ing.getId() + " nimi: " + ing.getName());
             stmt.executeUpdate("INSERT INTO MACROS VALUES(" + ing.getId() + "," + ing.getCalories() + ","
                     + ing.getProtein() + "," + ing.getFat() + "," + ing.getCarb() + ", " + ing.getFiber() + ")");
         }

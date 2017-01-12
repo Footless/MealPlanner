@@ -19,15 +19,18 @@ package kari.nutritionplanner.mealplanner.servicelayer;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
 import kari.nutritionplanner.mealplanner.util.CSVReader;
 import kari.nutritionplanner.mealplanner.util.ProcessIngredients;
-import kari.nutritionplanner.mealplanner.util.database.DatabaseAccess;
+import kari.nutritionplanner.mealplanner.util.database.DatabaseAccessRead;
+import kari.nutritionplanner.mealplanner.util.database.DatabaseAccessWrite;
 
 /**
- * Apuluokka raaka-aineiden etsimiseen. Käyttää joko tietokantayhteyttä tai
- * scv-tiedostoja.
+ * Apuluokka tietokannan ja CSV-tiedostojen käsittelyyn. Suorittaa hakuja
+ * tietokannasta ja lisää raaka-aineita käyttäjän omiin raaka-aineisiin.
  *
  * @author kari
  */
@@ -35,7 +38,8 @@ public class IngredientSearchHelper {
 
     private final CSVReader reader;
     private boolean databaseOk;
-    private final DatabaseAccess dbAccess;
+    private final DatabaseAccessRead dbAccess;
+    private final DatabaseAccessWrite dbWriter;
     private final ProcessIngredients ingredientProcessor;
 
     /**
@@ -51,12 +55,13 @@ public class IngredientSearchHelper {
         this.ingredientProcessor = ingredientProcessor;
         this.reader = new CSVReader("food_utf.csv");
         this.databaseOk = ingredientProcessor.getDatabaseOk();
-        this.dbAccess = new DatabaseAccess();
+        this.dbAccess = new DatabaseAccessRead();
+        this.dbWriter = new DatabaseAccessWrite();
     }
 
     /**
-     * Hakee raaka-aineita readerin määrittelemästä tiedostosta annetun
-     * hakutermin perusteella.
+     * Hakee hakutermillä joko tietokannasta tai sen ollessa pois käytöstä
+     * CSV-tiedostoista.
      *
      * @param s hakutermi, jonka käyttäjä on syöttänyt käyttöliittymässä
      * @return listan hakua vastaavista raaka-aineista
@@ -65,8 +70,9 @@ public class IngredientSearchHelper {
         if (databaseOk) {
             try {
                 return dbAccess.searchIngredients(s);
+
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Tietokannan haussa tapahtui virhe: " + ex, "Virhe", 0);
+                JOptionPane.showMessageDialog(null, "Tietokannan haussa tapahtui virhe: " + ex.getLocalizedMessage(), "Virhe", 0);
                 this.databaseOk = false;
                 return null;
             }
@@ -74,8 +80,36 @@ public class IngredientSearchHelper {
         try {
             return reader.search(s);
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Tiedoston luvussa tapahtui virhe: " + ex, "Virhe", 0);
+            JOptionPane.showMessageDialog(null, "Tiedoston luvussa tapahtui virhe: " + ex.getLocalizedMessage(), "Virhe", 0);
             return null;
         }
+    }
+    
+    public Ingredient getIngredientByName(String name) {
+        if (databaseOk) {
+            try {
+                int id = dbAccess.getIngredientIdByName(name);
+                return dbAccess.getIngredient(id);
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Tietokannan haussa tapahtui virhe: " + ex.getLocalizedMessage(), "Virhe", 0);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Yrittää lisätä annetun raaka-aineen käyttäjän raaka-aineisiin.
+     *
+     * @param ing Raaka-aine joka halutaan lisätä
+     * @param select Määrittää mihin raaka-aineisiin lisätään, mains, sides vai
+     * sauces. Raaka-ainetta ei voi lisätä jos se on jo ennestään tietokannassa.
+     * @return boolean riippuen onnistumisesta. Jos tietokanta ei ole käytössä,
+     * automaattinen false.
+     */
+    public boolean addIngredientToDatabase(Ingredient ing, String select) {
+        if (databaseOk) {
+            return dbWriter.addIntoUserIngredients(ing, select);
+        }
+        return false;
     }
 }

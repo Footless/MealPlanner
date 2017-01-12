@@ -22,6 +22,8 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import kari.nutritionplanner.mealplanner.domain.Ingredient;
+import kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelper;
 
 /**
  * ActionListener, joka käsittelee uuden raaka-aineen lisäämistä valittavissa
@@ -32,31 +34,59 @@ import javax.swing.JScrollPane;
 public class AddToIngsListener implements ActionListener {
 
     private final JList list;
+    private final IngredientSearchHelper searchHelper;
 
-    public AddToIngsListener(JPanel searchFieldComp) {
+    public AddToIngsListener(JPanel searchFieldComp, IngredientSearchHelper searchHelper) {
         JScrollPane scroll = (JScrollPane) searchFieldComp.getComponent(0);
         this.list = (JList) scroll.getViewport().getComponent(0);
+        this.searchHelper = searchHelper;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equalsIgnoreCase("main")) {
-            String name = (String) list.getSelectedValue();
-//            list.clearSelection();
-            int response = JOptionPane.showConfirmDialog(null, "Haluako todella lisätä raaka-aineen " + name + " "
-                    + "pääraaka-aineisiin?", "Varmista", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        String name = (String) list.getSelectedValue();
+        if (e.getActionCommand().equalsIgnoreCase("mains")) {
+            int response = showConfirmDialog(e, name);
             if (response == JOptionPane.YES_OPTION) {
-                showErrorMessage();
+                addToIngredients(name, e.getActionCommand());
             }
-        } else if (e.getActionCommand().equalsIgnoreCase("side")) {
-            showErrorMessage();
-        } else if (e.getActionCommand().equalsIgnoreCase("sauce")) {
-            showErrorMessage();
+        } else if (e.getActionCommand().equalsIgnoreCase("sides")) {
+            int response = showConfirmDialog(e, name);
+            if (response == JOptionPane.YES_OPTION) {
+                addToIngredients(name, e.getActionCommand());
+            }
+        } else if (e.getActionCommand().equalsIgnoreCase("sauces")) {
+            int response = showConfirmDialog(e, name);
+            if (response == JOptionPane.YES_OPTION) {
+                addToIngredients(name, e.getActionCommand());
+            }
         }
     }
 
     private void showErrorMessage() {
         JOptionPane.showMessageDialog(null, "Valitettavasti tässä vaiheessa kehitystä raaka-aineiden lisääminen ei"
                 + " vielä onnistu.");
+    }
+    
+    private int showConfirmDialog(ActionEvent e, String name) {
+        String category = "";
+        if (e.getActionCommand().equalsIgnoreCase("mains")) {
+            category += "pääraaka-aineisiin?";
+        } else if (e.getActionCommand().equalsIgnoreCase("sides")) {
+            category += "lisäkkeisiin?";
+        } else if (e.getActionCommand().equalsIgnoreCase("sauces")) {
+            category += "kastikkeisiin?";
+        }
+        int response = JOptionPane.showConfirmDialog(null, "Haluako todella lisätä raaka-aineen " + name + " "
+                    + category, "Varmista", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        return response;
+    }
+
+    private void addToIngredients(String name, String select) {
+        Ingredient ing = searchHelper.getIngredientByName(name);
+        boolean success = searchHelper.addIngredientToDatabase(ing, select);
+        if (!success) {
+            JOptionPane.showMessageDialog(null, "Raaka-aineen lisääminen tietokantaan epäonnistui.");
+        }
     }
 }

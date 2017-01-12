@@ -33,7 +33,7 @@ import kari.nutritionplanner.mealplanner.domain.Ingredient;
  *
  * @author kari
  */
-public class DatabaseAccess {
+public class DatabaseAccessRead {
 
     private final static String CONNECTIONADDRESS = "jdbc:derby:/home/kari/dev/MealPlanner/MealPlanner/src/main/resources/components;create=false";
     private Connection conn;
@@ -107,7 +107,7 @@ public class DatabaseAccess {
     public int getIngredientIdByName(String s) throws SQLException {
         conn = DriverManager.getConnection(CONNECTIONADDRESS);
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT id FROM INGREDIENTS WHERE name = '" + s + "'");
+        ResultSet rs = stmt.executeQuery("SELECT id FROM INGREDIENTS WHERE name = '" + s.toLowerCase() + "'");
         while (rs.next()) {
             int id = rs.getInt("id");
             conn.close();

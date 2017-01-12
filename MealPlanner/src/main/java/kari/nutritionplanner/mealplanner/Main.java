@@ -14,7 +14,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import kari.nutritionplanner.mealplanner.gui.UserInterface;
-import kari.nutritionplanner.mealplanner.util.database.DatabaseAccess;
+import kari.nutritionplanner.mealplanner.util.database.DatabaseAccessRead;
 import kari.nutritionplanner.mealplanner.util.database.DatabaseSetup;
 
 /**
@@ -51,8 +51,8 @@ public class Main {
         }
         boolean dataBaseOk = true;
         try {
-            new DatabaseSetup();
-            DatabaseAccess dbAccess = new DatabaseAccess();
+            DatabaseSetup db = new DatabaseSetup();
+            DatabaseAccessRead dbAccess = new DatabaseAccessRead();
             dataBaseOk = dbAccess.databaseOk();
         } catch (SQLException | IOException ex) {
             showErrorMessage(ex);

@@ -249,7 +249,7 @@ public class ComponentFactory {
      */
     public void createActionListenersForButtons(JPanel searchFieldComp, JPanel panel) {
         Component[] buttons = panel.getComponents();
-        ActionListener btnListener = new AddToIngsListener(searchFieldComp);
+        ActionListener btnListener = new AddToIngsListener(searchFieldComp, searchHelper);
         for (Component button : buttons) {
             JButton jbutton = (JButton) button;
             jbutton.addActionListener(btnListener);
@@ -259,11 +259,13 @@ public class ComponentFactory {
     protected void createAddIngButtons(JPanel searchFieldComp) {
         JPanel panel = new JPanel(new GridLayout(1, 3));
         JButton addToMains = createButton("Lisää pääraaka-aineisiin");
-        addToMains.setActionCommand("main");
+        addToMains.setActionCommand("mains");
         JButton addToSides = createButton("Lisää lisäkkeisiin");
-        addToSides.setActionCommand("side");
+        addToSides.setActionCommand("sides");
         JButton addToSauces = createButton("Lisää kastikkeisiin");
-        addToSauces.setActionCommand("sauce");
+        addToSauces.setActionCommand("sauces");
+//        JButton addToMiscs = createButton("Lisää lisukkeisiin");
+//        addToMiscs.setActionCommand("miscs");
         addToMains.setEnabled(false);
         addToSides.setEnabled(false);
         addToSauces.setEnabled(false);

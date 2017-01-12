@@ -29,15 +29,15 @@ import static org.junit.Assert.*;
  * @author kari
  */
 public class DatabaseAccessTest {
-    private DatabaseAccess dbAccess;
-    
+
+    private DatabaseAccessRead dbAccess;
+
     public DatabaseAccessTest() {
     }
 
-    
     @Before
     public void setUp() {
-        this.dbAccess = new DatabaseAccess();
+        this.dbAccess = new DatabaseAccessRead();
     }
 
     @Test
@@ -45,42 +45,51 @@ public class DatabaseAccessTest {
         assertTrue(dbAccess != null);
         assertTrue(dbAccess.databaseOk());
     }
-    
+
     @Test
     public void testGetIngredientById() throws SQLException {
-        Ingredient ing = dbAccess.getIngredient(805);
-        assertEquals("Kuha", ing.getName());
-        assertTrue(ing.getCalories() > 0);
-        assertTrue(ing.getProtein() > 0);
+        if (dbAccess.databaseOk()) {
+            Ingredient ing = dbAccess.getIngredient(805);
+            assertEquals("Kuha", ing.getName());
+            assertTrue(ing.getCalories() > 0);
+            assertTrue(ing.getProtein() > 0);
+        }
+
     }
-    
+
     @Test
     public void testGetIngredientByName() throws SQLException {
-        int id = dbAccess.getIngredientIdByName("kuha");
-        assertEquals(805, id);
-    }
-    
-    @Test
-    public void testSearch() throws SQLException {
-        List<Ingredient> ings = dbAccess.searchIngredients("kana");
-        assertEquals(165, ings.size());
-        for (Ingredient ing : ings) {
-            assertTrue(ing.getName().toLowerCase().contains("kana"));
+        if (dbAccess.databaseOk()) {
+            int id = dbAccess.getIngredientIdByName("Kuha");
+            assertEquals(805, id);
         }
     }
-    
+
+    @Test
+    public void testSearch() throws SQLException {
+        if (dbAccess.databaseOk()) {
+            List<Ingredient> ings = dbAccess.searchIngredients("Kana");
+            assertEquals(165, ings.size());
+            for (Ingredient ing : ings) {
+                assertTrue(ing.getName().toLowerCase().contains("kana"));
+            }
+        }
+    }
+
     @Test
     public void testGetUserIngs() throws SQLException {
-        Map<String, Map<Integer, Ingredient>> ingsMap = dbAccess.getUserIngredients();
-        assertTrue(ingsMap.size() == 4);
-        assertTrue(ingsMap.get("mains").size() == 5);
-        assertTrue(ingsMap.get("sides").size() == 4);
-        assertTrue(ingsMap.get("sauces").size() == 1);
-        assertTrue(ingsMap.get("sidesAndMisc").size() == 1);
-        for (Object object : ingsMap.values()) {
-            Map<Integer, Ingredient> ings = (Map) object;
-            for (Ingredient ing : ings.values()) {
-                assertTrue(ing != null);
+        if (dbAccess.databaseOk()) {
+            Map<String, Map<Integer, Ingredient>> ingsMap = dbAccess.getUserIngredients();
+            assertTrue(ingsMap.size() == 4);
+            assertTrue(ingsMap.get("mains").size() == 5);
+            assertTrue(ingsMap.get("sides").size() == 4);
+            assertTrue(ingsMap.get("sauces").size() == 1);
+            assertTrue(ingsMap.get("sidesAndMisc").size() == 1);
+            for (Object object : ingsMap.values()) {
+                Map<Integer, Ingredient> ings = (Map) object;
+                for (Ingredient ing : ings.values()) {
+                    assertTrue(ing != null);
+                }
             }
         }
     }

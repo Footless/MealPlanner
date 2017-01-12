@@ -161,7 +161,7 @@ public class CSVReader {
                 id = next;
             }
             if (i == 1) {
-                ingredients.add(new Ingredient(Integer.parseInt(id), parseString(next).toLowerCase()));
+                ingredients.add(new Ingredient(Integer.parseInt(id), parseString(next).toLowerCase().trim()));
                 return;
             }
             i++;

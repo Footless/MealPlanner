@@ -12,6 +12,9 @@ import kari.nutritionplanner.mealplanner.domain.Ingredient;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Rule;
+import org.junit.rules.ExpectedException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -64,6 +67,16 @@ public class CSVReaderTest {
          reader = new CSVReader("component_value.csv");
          Ingredient ing = null;
          assertFalse(reader.searchMacros(ing));
+         assertTrue(reader.searchMacros(new Ingredient(805, "Kuha")));
+     }
+     
+     @Rule
+     public ExpectedException thrown = ExpectedException.none();
+     
+     @Test
+     public void testConstructor() {
+         thrown.equals(JOptionPane.class);
+         CSVReader reader2 = new CSVReader("null.csv");
      }
      
      @Test

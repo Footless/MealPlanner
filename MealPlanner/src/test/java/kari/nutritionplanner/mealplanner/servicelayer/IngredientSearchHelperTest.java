@@ -22,7 +22,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
 import kari.nutritionplanner.mealplanner.util.ProcessIngredients;
-import kari.nutritionplanner.mealplanner.util.database.DatabaseAccess;
+import kari.nutritionplanner.mealplanner.util.database.DatabaseAccessRead;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -41,7 +41,7 @@ public class IngredientSearchHelperTest {
 
     @Before
     public void setUp() {
-        DatabaseAccess dbAccess = new DatabaseAccess();
+        DatabaseAccessRead dbAccess = new DatabaseAccessRead();
         try {
             this.helper = new IngredientSearchHelper(new ProcessIngredients(dbAccess.databaseOk()));
         } catch (SQLException ex) {
@@ -56,7 +56,7 @@ public class IngredientSearchHelperTest {
     
     @Test
     public void testSearch() {
-        List<Ingredient> ings = helper.search("kuha");
+        List<Ingredient> ings = helper.search("Kuha");
         assertEquals(1, ings.size());
         List<Ingredient> ings2 = helper.search("4334");
         assertEquals(0, ings2.size());
@@ -67,7 +67,7 @@ public class IngredientSearchHelperTest {
     @Test
     public void testSearchDatabaseOff() {
         helper = new IngredientSearchHelper(new ProcessIngredients(false));
-        List<Ingredient> ings = helper.search("kuha");
+        List<Ingredient> ings = helper.search("Kuha");
         assertEquals(1, ings.size());
         List<Ingredient> ings2 = helper.search("4334");
         assertEquals(0, ings2.size());

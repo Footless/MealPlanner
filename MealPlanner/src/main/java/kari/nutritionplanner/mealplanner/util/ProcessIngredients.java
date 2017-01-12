@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
-import kari.nutritionplanner.mealplanner.util.database.DatabaseAccess;
+import kari.nutritionplanner.mealplanner.util.database.DatabaseAccessRead;
 
 /**
  * Hakee raaka-aineet joko tietokannasta tai sen ollessa poissa käytöstä
@@ -25,7 +25,7 @@ public class ProcessIngredients {
     private Map<Integer, Ingredient> sauces;
     private Map<Integer, Ingredient> sidesAndMisc;
     private boolean databaseOk;
-    private final DatabaseAccess dbAccess;
+    private final DatabaseAccessRead dbAccess;
 
     /**
      * Konstuktori luo sekä Mapit raaka-aineille, että myös täyttää ne
@@ -36,7 +36,7 @@ public class ProcessIngredients {
     public ProcessIngredients(boolean databaseOk) {
         this.databaseOk = databaseOk;
         if (databaseOk) {
-            this.dbAccess = new DatabaseAccess();
+            this.dbAccess = new DatabaseAccessRead();
         } else {
             this.dbAccess = null;
         }
