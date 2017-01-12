@@ -35,15 +35,18 @@ public class AddToIngsListener implements ActionListener {
 
     private final JList list;
     private final IngredientSearchHelper searchHelper;
+    private String category;
 
     public AddToIngsListener(JPanel searchFieldComp, IngredientSearchHelper searchHelper) {
         JScrollPane scroll = (JScrollPane) searchFieldComp.getComponent(0);
         this.list = (JList) scroll.getViewport().getComponent(0);
         this.searchHelper = searchHelper;
+        this.category = "";
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        setCategory(e);
         String name = (String) list.getSelectedValue();
         if (e.getActionCommand().equalsIgnoreCase("mains")) {
             int response = showConfirmDialog(e, name);
@@ -62,23 +65,10 @@ public class AddToIngsListener implements ActionListener {
             }
         }
     }
-
-    private void showErrorMessage() {
-        JOptionPane.showMessageDialog(null, "Valitettavasti tässä vaiheessa kehitystä raaka-aineiden lisääminen ei"
-                + " vielä onnistu.");
-    }
     
     private int showConfirmDialog(ActionEvent e, String name) {
-        String category = "";
-        if (e.getActionCommand().equalsIgnoreCase("mains")) {
-            category += "pääraaka-aineisiin?";
-        } else if (e.getActionCommand().equalsIgnoreCase("sides")) {
-            category += "lisäkkeisiin?";
-        } else if (e.getActionCommand().equalsIgnoreCase("sauces")) {
-            category += "kastikkeisiin?";
-        }
-        int response = JOptionPane.showConfirmDialog(null, "Haluako todella lisätä raaka-aineen " + name + " "
-                    + category, "Varmista", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        int response = JOptionPane.showConfirmDialog(null, "Haluako todella lisätä raaka-aineen " + name + " tietokantaan "
+                    + category + "?", "Varmista", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         return response;
     }
 
@@ -87,6 +77,18 @@ public class AddToIngsListener implements ActionListener {
         boolean success = searchHelper.addIngredientToDatabase(ing, select);
         if (!success) {
             JOptionPane.showMessageDialog(null, "Raaka-aineen lisääminen tietokantaan epäonnistui.");
+        } else {
+            JOptionPane.showMessageDialog(null, "" + name + " lisätty tietokantaan " + category, "Raaka-aine lisätty", 1);
+        }
+    }
+
+    private void setCategory(ActionEvent e) {
+        if (e.getActionCommand().equalsIgnoreCase("mains")) {
+            category += "pääraaka-aineet";
+        } else if (e.getActionCommand().equalsIgnoreCase("sides")) {
+            category += "lisäkkeet";
+        } else if (e.getActionCommand().equalsIgnoreCase("sauces")) {
+            category += "kastikkeet";
         }
     }
 }

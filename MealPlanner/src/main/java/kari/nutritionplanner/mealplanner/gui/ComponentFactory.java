@@ -39,6 +39,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JSlider;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import kari.nutritionplanner.mealplanner.gui.controllers.AddToIngsListener;
 import kari.nutritionplanner.mealplanner.gui.controllers.SelectCardListener;
@@ -145,6 +146,7 @@ public class ComponentFactory {
 
     protected JLabel createLabel(String text) {
         JLabel label = new JLabel(text);
+        label.setHorizontalAlignment(SwingConstants.LEFT);
         label.setFont(f);
         return label;
     }

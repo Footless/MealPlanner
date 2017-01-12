@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
 
 /**
@@ -35,7 +37,7 @@ import kari.nutritionplanner.mealplanner.domain.Ingredient;
  */
 public class DatabaseAccessRead {
 
-    private final static String CONNECTIONADDRESS = "jdbc:derby:/home/kari/dev/MealPlanner/MealPlanner/src/main/resources/components;create=false";
+    private final static String CONNECTIONADDRESS = "jdbc:derby:components;create=false";
     private Connection conn;
 
     /**

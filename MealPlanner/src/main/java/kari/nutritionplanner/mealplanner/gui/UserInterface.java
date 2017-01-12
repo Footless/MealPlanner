@@ -50,6 +50,7 @@ public class UserInterface implements Runnable {
         createComponents(frame.getContentPane());
 
         frame.setLocationByPlatform(true);
+        frame.setLocationRelativeTo(null);
         frame.pack();
         frame.setVisible(true);
     }

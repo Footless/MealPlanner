@@ -24,18 +24,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
 import kari.nutritionplanner.mealplanner.util.CSVReader;
 
 /**
- * Tietokannan luomiseen ja alustamiseen tarkoitettu luokka. 
+ * Tietokannan luomiseen ja alustamiseen tarkoitettu luokka.
  *
  * @author kari
  */
 public class DatabaseSetup {
 
-    private final Connection conn;
-    private final static String CONNADDRESS = "jdbc:derby:/home/kari/dev/MealPlanner/MealPlanner/src/main/resources/components;create=true";
+    private Connection conn;
+    private final static String CONNADDRESS = "jdbc:derby:components;create=true";
 
     /**
      * Konstruktori avaa tietokannan ja luo sen tarvittaessa, sekä siirtää
@@ -46,9 +48,20 @@ public class DatabaseSetup {
      * @throws java.io.IOException Jos tiedostojen luku epäonnistuu.
      */
     public DatabaseSetup() throws SQLException, IOException {
-        conn = DriverManager.getConnection(CONNADDRESS);
-        setupDatabase();
-        conn.close();
+        conn = null;
+        try {
+            setDBSystemDir();
+            Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
+            conn = DriverManager.getConnection(CONNADDRESS);
+            setupDatabase();
+            conn.close();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DatabaseSetup.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void setDBSystemDir() {
+        System.setProperty("derby.system.home", "db");
     }
 
     private void setupDatabase() throws SQLException, IOException {
@@ -57,7 +70,6 @@ public class DatabaseSetup {
         DatabaseMetaData dbm = conn.getMetaData();
         ResultSet tables = dbm.getTables(null, null, "MAINS", null);
         // jos ei ole, tehdään ne
-        System.out.println(tables);
         if (!tables.next()) {
             // luodaan taulut käyttäjän raaka-aineille, jos niitä ei vielä ole luotu
             stmt.executeUpdate("Create table mains(id int primary key, name varchar(100))");
@@ -69,7 +81,7 @@ public class DatabaseSetup {
             // sekä makroille
             stmt.executeUpdate("Create table macros(id int primary key, calories float, protein float, fat float, carb float, fiber float)");
             addIngredientsToDB();
-        } 
+        }
 //        else {
 ////            testauskäyttöä varten tiputellaan tauluja.  
 //            stmt.execute("drop table MAINS");
@@ -96,7 +108,6 @@ public class DatabaseSetup {
         List<Ingredient> allIngs = reader.getAllIngredients();
         reader.closeReader();
         for (Ingredient ing : allIngs) {
-//            System.out.println("id: " + ing.getId() + " nimi: " + ing.getName());
             stmt.execute("INSERT INTO INGREDIENTS VALUES(" + ing.getId() + ", '" + ing.getName().toLowerCase() + "')");
         }
         addMacros(allIngs, stmt);

@@ -21,8 +21,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
 
@@ -34,7 +32,7 @@ import kari.nutritionplanner.mealplanner.domain.Ingredient;
  */
 public class DatabaseAccessWrite {
 
-    private final static String CONNECTIONADDRESS = "jdbc:derby:/home/kari/dev/MealPlanner/MealPlanner/src/main/resources/components;create=false";
+    private final static String CONNECTIONADDRESS = "jdbc:derby:components;create=false";
     private Connection conn;
 
     /**
@@ -42,7 +40,8 @@ public class DatabaseAccessWrite {
      * ensin onko raaka-aine jo lisättynä.
      *
      * @param ing Lisättävä raaka-aine
-     * @param select Osoittaa mihin tauluun raaka-aine lisätään, mains, sides tai sauce
+     * @param select Osoittaa mihin tauluun raaka-aine lisätään, mains, sides
+     * tai sauce
      * @return boolean sen mukaan onnistuiko raaka-aineen lisääminen
      */
     public boolean addIntoUserIngredients(Ingredient ing, String select) {

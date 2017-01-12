@@ -46,6 +46,20 @@ public class ProcessIngredients {
         this.sideIgredients = new HashMap<>();
         addAll();
     }
+    
+    public void updateIngs() {
+        if (databaseOk) {
+            clearIngs();
+            addAll();
+        }  
+    }
+    
+    private void clearIngs() {
+        this.mainIgredients = null;
+        this.sideIgredients = null;
+        this.sauces = null;
+        this.sidesAndMisc = null;
+    }
 
     private void addMainIngredients() throws SQLException, IOException {
         if (databaseOk) {
