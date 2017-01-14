@@ -1,13 +1,13 @@
 ----------------------------------------------------------------
-Thu Jan 12 14:57:06 EET 2017:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-0159-92c0-cc7e-000000000c7e 
-on database directory /home/ad/fshome6/u6/v/vankari/Linux/dev/MealPlanner/MealPlanner/db/components with class loader sun.misc.Launcher$AppClassLoader@73d16e93 
-Loaded from file:/home/ad/fshome6/u6/v/vankari/Linux/.m2/repository/org/apache/derby/derby/10.12.1.1/derby-10.12.1.1.jar
+Sat Jan 14 15:36:52 EET 2017:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-0159-9d31-ed1f-000000000c7e 
+on database directory /home/kari/dev/MealPlanner/MealPlanner/db/components with class loader sun.misc.Launcher$AppClassLoader@73d16e93 
+Loaded from file:/home/kari/.m2/repository/org/apache/derby/derby/10.12.1.1/derby-10.12.1.1.jar
 java.vendor=Oracle Corporation
 java.runtime.version=1.8.0_111-b14
-user.dir=/home/ad/fshome6/u6/v/vankari/Linux/dev/MealPlanner/MealPlanner
+user.dir=/home/kari/dev/MealPlanner/MealPlanner
 os.name=Linux
 os.arch=amd64
-os.version=3.13.0-106-generic
+os.version=4.4.0-59-generic
 derby.system.home=db
 Database Class Loader started - derby.database.classpath=''

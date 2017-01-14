@@ -40,6 +40,19 @@ public class DatabaseAccessRead {
     private final static String CONNECTIONADDRESS = "jdbc:derby:components;create=false";
     private Connection conn;
 
+    public DatabaseAccessRead() {
+        try {
+            setDBSystemDir();
+            Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
+        } catch (ClassNotFoundException ex) {
+            System.err.println("Virhe: " + ex.getLocalizedMessage());
+        }
+    }
+    
+    private void setDBSystemDir() {
+        System.setProperty("derby.system.home", "db");
+    }
+
     /**
      * Tarkistaa onko tietokanta olemassa ja onko siellä halutut taulut.
      * Tarkistaa sekä ensin luotavan taulun että viimeisenä luotavan taulun.
@@ -174,6 +187,7 @@ public class DatabaseAccessRead {
             int id = rs.getInt("id");
             ings.put(id, getIngredient(id));
         }
+
         return ings;
     }
 }

@@ -91,13 +91,13 @@ public class MealCalcHelperTest {
     
     @Test
     public void testIngsAsMap() {
-        assertEquals(5, helper.getMainIngredientsAsMap().size());
-        assertEquals(4, helper.getSideIngredientsAsMap().size());
+        assertTrue(helper.getMainIngredientsAsMap().size() > 4);
+        assertTrue(helper.getSideIngredientsAsMap().size() > 3);
     }
     
     @Test
     public void testGetSidesList() {
-        assertEquals(4, helper.getSideIngredients().size());
+        assertTrue(helper.getSideIngredients().size() > 3);
     }
 }
  

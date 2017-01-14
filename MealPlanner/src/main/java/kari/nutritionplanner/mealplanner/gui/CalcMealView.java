@@ -108,7 +108,7 @@ public class CalcMealView {
     public JPanel createCaloriesCard(Container container) {
         JPanel card = new JPanel(new BorderLayout());
         JLabel caloriesInstructions = compFactory.createLabel("Valitse haluamasi määrä kaloreita:");
-        Ingredient ing = mealCalculator.getIngredients().get("mains").get(helper.getMainIngredientId());
+        Ingredient ing = helper.getMainIngredientsAsMap().get(helper.getMainIngredientId());
         double mul = getMultiplier(ing);
         int min = (int) Math.ceil(ing.getCalories() * mul);
         JSlider calorieSlider = compFactory.createSlider(min, 800, 400);
@@ -128,11 +128,10 @@ public class CalcMealView {
     public JPanel createProteinsCard(Container container) {
         JPanel card = new JPanel(new BorderLayout());
         JLabel proteinInstructions = compFactory.createLabel("Valitse haluamasi proteiinin määrä:");
-        Ingredient ing = mealCalculator.getIngredients().get("mains").get(helper.getMainIngredientId());
-        System.out.println("ing : " + ing);
+        Ingredient ing = helper.getMainIngredientsAsMap().get(helper.getMainIngredientId());
+        System.out.println("ing: " + ing);
         System.out.println("ing protein: " + ing.getProtein());
         double mul = getMultiplier(ing);
-        System.out.println("mul: " + mul);
         int min = (int) Math.ceil(ing.getProtein() * mul);
         JSlider proteinSlider = compFactory.createSlider(min, min * 3, min * 2);
         card.add(proteinInstructions, BorderLayout.NORTH);
@@ -151,7 +150,7 @@ public class CalcMealView {
     public JPanel createFatsCard(Container container) {
         JPanel card = new JPanel(new BorderLayout());
         JLabel fatInstructions = compFactory.createLabel("Valitse haluamasi rasvan määrä:");
-        Ingredient ing = mealCalculator.getIngredients().get("mains").get(helper.getMainIngredientId());
+        Ingredient ing = helper.getMainIngredientsAsMap().get(helper.getMainIngredientId());
         double mul = getMultiplier(ing);
         int min = (int) Math.ceil(ing.getFat() * mul);
         JSlider fatSlider = compFactory.createSlider(min, 40, 20);

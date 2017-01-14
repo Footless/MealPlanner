@@ -21,6 +21,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
 
@@ -34,6 +36,20 @@ public class DatabaseAccessWrite {
 
     private final static String CONNECTIONADDRESS = "jdbc:derby:components;create=false";
     private Connection conn;
+    
+    public DatabaseAccessWrite() {
+        try {
+            setDBSystemDir();
+            Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
+        } catch (ClassNotFoundException ex) {
+            System.err.println("Virhe: " + ex.getLocalizedMessage());
+        }
+    }
+    
+    private void setDBSystemDir() {
+        System.setProperty("derby.system.home", "db");
+    }
+
 
     /**
      * Lisää annetun raaka-aineen käyttäjän omiin raaka-aineisiin. Tarkistaa
@@ -45,10 +61,6 @@ public class DatabaseAccessWrite {
      * @return boolean sen mukaan onnistuiko raaka-aineen lisääminen
      */
     public boolean addIntoUserIngredients(Ingredient ing, String select) {
-//        if (!select.equalsIgnoreCase("mains") || !select.equalsIgnoreCase("sides") || !select.equalsIgnoreCase("sauces")) {
-//            System.out.println("hä?");
-//            return false;
-//        }
         try {
             conn = DriverManager.getConnection(CONNECTIONADDRESS);
             boolean check = checkIfIngredientExistsInDatabase(ing, select);
@@ -61,13 +73,28 @@ public class DatabaseAccessWrite {
         }
         return false;
     }
+    
+    public boolean removeUserIngredient(Ingredient ing, String select) {
+        try {
+            conn = DriverManager.getConnection(CONNECTIONADDRESS);
+            boolean check = checkIfIngredientExistsInDatabase(ing, select);
+            if (check) {
+                return removeIngredientFromDatabase(ing, select);
+            }
+            return false;
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Tietokannan käsittelyssä tapahtui virhe: " + ex.getLocalizedMessage(), "Virhe", 0);
+            return false;
+        }
+    }
 
     private boolean checkIfIngredientExistsInDatabase(Ingredient ing, String select) throws SQLException {
         Statement stmt = conn.createStatement();
+        System.out.println(ing + " " + select);
         ResultSet rs = stmt.executeQuery("SELECT * FROM " + select + " WHERE id =" + ing.getId());
         while (rs.next()) {
+            System.out.println(rs.getInt("id") + " haettu id: " + ing.getId());
             if (rs.getInt("id") == ing.getId()) {
-                System.out.println(rs.getInt("id"));
                 return true;
             }
         }
@@ -78,5 +105,12 @@ public class DatabaseAccessWrite {
         Statement stmt = conn.createStatement();
         stmt.execute("INSERT INTO " + select + " VALUES(" + ing.getId() + ", '" + ing.getName() + "')");
         return true;
+    }
+
+    private boolean removeIngredientFromDatabase(Ingredient ing, String select) throws SQLException {
+        Statement stmt = conn.createStatement();
+        stmt.execute("DELETE FROM " + select + " WHERE id=" + ing.getId());
+        boolean success = checkIfIngredientExistsInDatabase(ing, select);
+        return !success;
     }
 }

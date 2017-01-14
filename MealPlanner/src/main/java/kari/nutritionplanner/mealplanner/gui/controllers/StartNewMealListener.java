@@ -19,41 +19,37 @@ package kari.nutritionplanner.mealplanner.gui.controllers;
 import java.awt.CardLayout;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
-import javax.swing.ButtonGroup;
-import javax.swing.ButtonModel;
+import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 import kari.nutritionplanner.mealplanner.gui.CalcMealView;
-import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
+import kari.nutritionplanner.mealplanner.gui.UserInterface;
 
 /**
- * ActionListener joka on vastuussa lisäkkeen lisäämisestä ateriaan. Hakee
- * buttongroupista valitun raaka-aineen ja lisää sen MealCalcHelperiin talteen
- * ja tekee sekä näyttää seuraavan kortin.
  *
  * @author kari
  */
-public class SelectSideIngListener extends GetMealListener {
-    private final MealCalcHelper helper;
-    private final ButtonGroup bg;
-    private final Container container;
-    private final String nextCard;
+public class StartNewMealListener implements ActionListener {
 
-    public SelectSideIngListener(CalcMealView view, CardLayout cardL, ButtonGroup bg, Container container, String nextCard) {
-        super(view, cardL);
-        this.helper = view.getHelper();
-        this.bg = bg;
-        this.nextCard = nextCard;
+    private final UserInterface ui;
+    private final CardLayout cards;
+    private final Container container;
+    private final String card;
+    private final CalcMealView cmv;
+
+    public StartNewMealListener(UserInterface ui, CardLayout cards, Container container, String card, CalcMealView cmv) {
+        this.ui = ui;
+        this.cards = cards;
         this.container = container;
+        this.card = card;
+        this.cmv = cmv;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ButtonModel b = bg.getSelection();
-        String name = b.getActionCommand();
-        helper.setSideIngredient(name);
-        JPanel card = view.createCaloriesCard(container);
-        container.add(card, nextCard);
-        cardL.show(container, nextCard);
+        ui.createMealCards(container, cmv);
+//        startCard.validate();
+//        startCard.repaint();
+        cards.show(container, card);
     }
 
 }

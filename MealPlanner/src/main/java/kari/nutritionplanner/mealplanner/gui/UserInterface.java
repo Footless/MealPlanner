@@ -11,10 +11,13 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
+import kari.nutritionplanner.mealplanner.gui.controllers.BrowseIngsListener;
+import kari.nutritionplanner.mealplanner.gui.controllers.StartNewMealListener;
 import kari.nutritionplanner.mealplanner.servicelayer.CalculateMeal;
 import kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelper;
 import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
@@ -80,16 +83,20 @@ public class UserInterface implements Runnable {
         startCard.setBackground(Color.DARK_GRAY);
         startCard.setLayout(new GridLayout(3, 1, 2, 2));
 
+        CalcMealView calcMealView = new CalcMealView(cardL, mealCalculator, helper, compFactory);
+        
         JButton getMeal = compFactory.createButton("Laske ateria");
-        SelectCardListener snml = new SelectCardListener(cardL, container, "askMainIngredient");
-        getMeal.addActionListener(snml);
+        ActionListener startNewMealListener = new StartNewMealListener(this, cardL, container, "askMainIngredient", calcMealView);
+//        SelectCardListener snml = new SelectCardListener(cardL, container, "askMainIngredient");
+        getMeal.addActionListener(startNewMealListener);
 
         JButton addIngredients = compFactory.createButton("Lisää uusia raaka-aineita");
         SelectCardListener addIngListener = new SelectCardListener(cardL, container, "addIngredient");
         addIngredients.addActionListener(addIngListener);
 
         JButton browseIngredients = compFactory.createButton("Selaa raaka-aineita");
-        browseIngredients.setEnabled(false);
+        BrowseIngsListener browseIngsL = new BrowseIngsListener(cardL, container, compFactory, "browseIngredients");
+        browseIngredients.addActionListener(browseIngsL);
 
         startCard.add(getMeal);
         startCard.add(addIngredients);
@@ -97,9 +104,9 @@ public class UserInterface implements Runnable {
         return startCard;
     }
 
-    private void createMealCards(JPanel cards, CalcMealView calcMealView) {
-        JPanel mainIngredientCard = calcMealView.createMainIngredientCard(cards);
-        cards.add(mainIngredientCard, "askMainIngredient");
+    public void createMealCards(Container container, CalcMealView calcMealView) {
+        JPanel mainIngredientCard = calcMealView.createMainIngredientCard(container);
+        container.add(mainIngredientCard, "askMainIngredient");
     }
 
     private void createAddIngCards(JPanel cards, AddIngredientsView addIngsView) {

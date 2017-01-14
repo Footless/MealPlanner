@@ -170,9 +170,9 @@ public class ComponentFactory {
     protected ButtonGroup createIngButtons(JPanel card, String select) {
         List<Ingredient> ings;
         if (select.contains("main")) {
-            ings = helper.getMainIngredients();
+            ings = searchHelper.getIngredientProcessor().getMainIngredients();
         } else if (select.contains("side")) {
-            ings = helper.getSideIngredients();
+            ings = searchHelper.getIngredientProcessor().getSideIngredients();
         } else {
             ings = new ArrayList<>();
         }

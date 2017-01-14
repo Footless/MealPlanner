@@ -82,7 +82,12 @@ public class IngredientSearchHelper {
             return null;
         }
     }
-    
+    /**
+     * Palauttaa Ingredient-olion annetun nimen perusteella. Vaatii tarkan, oikean nimen toimiakseen.
+     * 
+     * @param name Raaka-aineen koko nimi.
+     * @return Ingredient, jossa kaikki arvot asetettuna.
+     */
     public Ingredient getIngredientByName(String name) {
         if (databaseOk) {
             try {
@@ -93,6 +98,13 @@ public class IngredientSearchHelper {
             }
         }
         return null;
+    }
+    
+    public boolean removeIngredientFromDB(Ingredient ing, String select) {
+        if (databaseOk) {
+            return dbWriter.removeUserIngredient(ing, select);
+        }
+        return false;
     }
 
     /**

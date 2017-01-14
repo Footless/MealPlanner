@@ -49,24 +49,24 @@ public class AddToIngsListener implements ActionListener {
         setCategory(e);
         String name = (String) list.getSelectedValue();
         if (e.getActionCommand().equalsIgnoreCase("mains")) {
-            int response = showConfirmDialog(e, name);
+            int response = showConfirmDialog(name);
             if (response == JOptionPane.YES_OPTION) {
                 addToIngredients(name, e.getActionCommand());
             }
         } else if (e.getActionCommand().equalsIgnoreCase("sides")) {
-            int response = showConfirmDialog(e, name);
+            int response = showConfirmDialog(name);
             if (response == JOptionPane.YES_OPTION) {
                 addToIngredients(name, e.getActionCommand());
             }
         } else if (e.getActionCommand().equalsIgnoreCase("sauces")) {
-            int response = showConfirmDialog(e, name);
+            int response = showConfirmDialog(name);
             if (response == JOptionPane.YES_OPTION) {
                 addToIngredients(name, e.getActionCommand());
             }
         }
     }
     
-    private int showConfirmDialog(ActionEvent e, String name) {
+    private int showConfirmDialog(String name) {
         int response = JOptionPane.showConfirmDialog(null, "Haluako todella lisätä raaka-aineen " + name + " tietokantaan "
                     + category + "?", "Varmista", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         return response;
@@ -76,9 +76,10 @@ public class AddToIngsListener implements ActionListener {
         Ingredient ing = searchHelper.getIngredientByName(name);
         boolean success = searchHelper.addIngredientToDatabase(ing, select);
         if (!success) {
-            JOptionPane.showMessageDialog(null, "Raaka-aineen lisääminen tietokantaan epäonnistui.");
+            JOptionPane.showMessageDialog(null, "Raaka-aineen lisääminen tietokantaan epäonnistui.", "Virhe", 0);
         } else {
             JOptionPane.showMessageDialog(null, "" + name + " lisätty tietokantaan " + category, "Raaka-aine lisätty", 1);
+            searchHelper.getIngredientProcessor().updateIngs();
         }
     }
 

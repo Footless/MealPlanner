@@ -98,7 +98,7 @@ public class CalculateMealTest {
     @Test
     public void testGetMaingIngs() {
         List<Ingredient> ings = helper.getMainIngredients();
-        assertEquals(5, ings.size());
+        assertTrue(ings.size() > 4);
     }
 
 //    @Test

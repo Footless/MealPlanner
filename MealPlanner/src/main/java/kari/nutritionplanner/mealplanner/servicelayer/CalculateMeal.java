@@ -17,8 +17,8 @@ import kari.nutritionplanner.mealplanner.util.MealTweaker;
 public class CalculateMeal {
 
     private final Meal meal;
-    private final Map<String, Map<Integer, Ingredient>> ingredients;
     private final MacroCalculator mc;
+    private final ProcessIngredients ingredientProcessor;
 
     /**
      * Konstruktori. Luo ProcessIngredients-olion ja hakee sen metodilla
@@ -28,9 +28,9 @@ public class CalculateMeal {
      * tietokannan käytettävyydestä.
      */
     public CalculateMeal(ProcessIngredients ingredientProcessor) {
-        this.ingredients = ingredientProcessor.getIngredients();
         meal = new Meal();
         this.mc = new MacroCalculator();
+        this.ingredientProcessor = ingredientProcessor;
     }
 
     /**
@@ -43,7 +43,7 @@ public class CalculateMeal {
      * raaka-aineet aterian rakennusta varten.
      */
     public Map<String, Map<Integer, Ingredient>> getIngredients() {
-        return ingredients;
+        return ingredientProcessor.getIngredients();
     }
 
     /**
@@ -80,7 +80,7 @@ public class CalculateMeal {
     }
 
     private boolean setMainIngredient(int id, double protein, double fat) {
-        Ingredient main = ingredients.get("mains").get(id);
+        Ingredient main = ingredientProcessor.getIngredients().get("mains").get(id);
         double proteinToAdd = protein - meal.getProtein();
         double mainAmount = mc.calculateAmountForProtein(proteinToAdd, main);
         if (mainAmount < 0.5) {
@@ -99,8 +99,8 @@ public class CalculateMeal {
         if (sideId == 99999) {
             randomSide();
             return true;
-        } else if (ingredients.get("sides").containsKey(sideId)) {
-            meal.setSideIngredient(ingredients.get("sides").get(sideId));
+        } else if (ingredientProcessor.getIngredients().get("sides").containsKey(sideId)) {
+            meal.setSideIngredient(ingredientProcessor.getIngredients().get("sides").get(sideId));
             return true;
         }
         return false;
@@ -109,14 +109,14 @@ public class CalculateMeal {
     private void setSauce(double fat) {
         double fatAmountInMeal = meal.getFat();
         if (fatAmountInMeal < fat) {
-            Ingredient sauce = ingredients.get("sauces").get(5009);
+            Ingredient sauce = ingredientProcessor.getIngredients().get("sauces").get(5009);
             meal.setSauce(sauce);
             meal.setSauceAmount(mc.calculateAmountForFat((fat - fatAmountInMeal), sauce));
         }
     }
 
     private void setMisc() {
-        Ingredient misc = ingredients.get("sidesAndMisc").get(33182);
+        Ingredient misc = ingredientProcessor.getIngredients().get("sidesAndMisc").get(33182);
         meal.setMisc(misc);
         if (meal.getSideIngredient().getProtein() >= 3 || meal.getMainIngredient().getProtein() >= 20) {
             meal.setMiscAmount(1);
@@ -134,11 +134,11 @@ public class CalculateMeal {
     }
 
     private void randomSide() {
-        int seed = new Random().nextInt(ingredients.get("sides").size() - 1);
+        int seed = new Random().nextInt(ingredientProcessor.getIngredients().get("sides").size() - 1);
         int j = 0;
-        for (Integer i : ingredients.get("sides").keySet()) {
+        for (Integer i : ingredientProcessor.getIngredients().get("sides").keySet()) {
             if (seed == j) {
-                meal.setSideIngredient(ingredients.get("sides").get(i));
+                meal.setSideIngredient(ingredientProcessor.getIngredients().get("sides").get(i));
                 break;
             }
             j++;

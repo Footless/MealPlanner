@@ -45,7 +45,7 @@ public class AddIngredientsView {
 
     private final CardLayout cardL;
     private final ComponentFactory compFactory;
-    private final Color mainColor = Color.white;
+    private final static Color MAINCOLOR = Color.white;
 
     /**
      * Konstuktori. Saa parametrinä käyttöliittymän käyttämän CardLayout-olion.
@@ -74,8 +74,10 @@ public class AddIngredientsView {
 
         card.add(searchFieldComp, BorderLayout.CENTER);
 
-        ActionListener al = new SelectCardListener(cardL, cards, "start");
-        compFactory.addNextAndBackButtons(cards, card, "start", al);
+        JButton readyButton = new JButton("Valmis");
+        ActionListener ready = new SelectCardListener(cardL, cards, "start");
+        readyButton.addActionListener(ready);
+        card.add(readyButton, BorderLayout.SOUTH);
 
         return card;
     }
@@ -107,7 +109,7 @@ public class AddIngredientsView {
         Font f2 = new Font("Arial", 1, 15);
         searchResults.setFont(f2);
         searchResults.setCursor(new Cursor(0));
-        searchResults.setBackground(mainColor);
+        searchResults.setBackground(MAINCOLOR);
         searchFieldComp.add(scrollResults, BorderLayout.CENTER);
         searchResults.addListSelectionListener((ListSelectionEvent e) -> {
             if (e.getValueIsAdjusting() == false) {
