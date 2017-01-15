@@ -3395,7 +3395,7 @@ body{
 <a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2bcda694_223'>2</a>
 <span>
 1. alterCaloriesFromSideAndSauce : Replaced double division with multiplication &rarr; SURVIVED<br/>
-2. alterCaloriesFromSideAndSauce : Replaced double multiplication with division &rarr; SURVIVED<br/>
+2. alterCaloriesFromSideAndSauce : Replaced double multiplication with division &rarr; KILLED<br/>
 
 </span>
 </td>
@@ -3407,16 +3407,16 @@ body{
 <a name='org.pitest.mutationtest.report.html.SourceFile@2bcda694_224'/>
 224
 </td>
-<td class='killed'>
+<td class='survived'>
 <span class='pop'>
 <a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2bcda694_224'>2</a>
 <span>
-1. alterCaloriesFromSideAndSauce : Replaced double addition with subtraction &rarr; KILLED<br/>
+1. alterCaloriesFromSideAndSauce : Replaced double addition with subtraction &rarr; SURVIVED<br/>
 2. alterCaloriesFromSideAndSauce : removed call to kari/nutritionplanner/mealplanner/domain/Meal::setSideIngredientAmount &rarr; KILLED<br/>
 
 </span>
 </td>
-<td class='covered'><pre><span  class='killed'>        meal.setSideIngredientAmount(meal.getSideIngredientAmount() + amountToSubFromSide);</span></pre></td></tr>
+<td class='covered'><pre><span  class='survived'>        meal.setSideIngredientAmount(meal.getSideIngredientAmount() + amountToSubFromSide);</span></pre></td></tr>
 
 
 <tr>
@@ -3606,16 +3606,16 @@ body{
 <a name='org.pitest.mutationtest.report.html.SourceFile@2bcda694_237'/>
 237
 </td>
-<td class='survived'>
+<td class='killed'>
 <span class='pop'>
 <a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2bcda694_237'>2</a>
 <span>
-1. alterCaloriesFromMain : removed call to kari/nutritionplanner/mealplanner/domain/Meal::setMainIngredientAmount &rarr; SURVIVED<br/>
-2. alterCaloriesFromMain : Replaced double addition with subtraction &rarr; KILLED<br/>
+1. alterCaloriesFromMain : Replaced double addition with subtraction &rarr; KILLED<br/>
+2. alterCaloriesFromMain : removed call to kari/nutritionplanner/mealplanner/domain/Meal::setMainIngredientAmount &rarr; KILLED<br/>
 
 </span>
 </td>
-<td class='covered'><pre><span  class='survived'>        meal.setMainIngredientAmount(meal.getMainIngredientAmount() + amountToSubFromMain);</span></pre></td></tr>
+<td class='covered'><pre><span  class='killed'>        meal.setMainIngredientAmount(meal.getMainIngredientAmount() + amountToSubFromMain);</span></pre></td></tr>
 
 
 <tr>
@@ -3963,7 +3963,7 @@ body{
 
 <a name='grouporg.pitest.mutationtest.report.html.SourceFile@2bcda694_59'/> 
 
-<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>tweakMeal<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.logic.CalculateMealTest.testSetWholeMeal(kari.nutritionplanner.mealplanner.logic.CalculateMealTest)</span></span> removed call to kari/nutritionplanner/mealplanner/logic/MealTweaker::evenUpIngredients &rarr; KILLED</p> 
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>tweakMeal<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.logic.CalculateMealTest.testSetWholeMealFat(kari.nutritionplanner.mealplanner.logic.CalculateMealTest)</span></span> removed call to kari/nutritionplanner/mealplanner/logic/MealTweaker::evenUpIngredients &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
@@ -4023,7 +4023,7 @@ body{
 
 <a name='grouporg.pitest.mutationtest.report.html.SourceFile@2bcda694_71'/> 
 
-<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>proteinAlterer<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.logic.CalculateMealTest.testSetWholeMeal(kari.nutritionplanner.mealplanner.logic.CalculateMealTest)</span></span> removed call to kari/nutritionplanner/mealplanner/logic/MealTweaker::subFromBoth &rarr; KILLED</p> 
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>proteinAlterer<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.logic.CalculateMealTest.testSetWholeMealProtein(kari.nutritionplanner.mealplanner.logic.CalculateMealTest)</span></span> removed call to kari/nutritionplanner/mealplanner/logic/MealTweaker::subFromBoth &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
@@ -4153,7 +4153,7 @@ body{
 
 <a name='grouporg.pitest.mutationtest.report.html.SourceFile@2bcda694_98'/> 
 
-<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>subFromBoth<br/><b>Killed by : </b>none</span></span> changed conditional boundary &rarr; SURVIVED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>subFromBoth<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.logic.CalculateMealTest.testSetWholeMealProtein(kari.nutritionplanner.mealplanner.logic.CalculateMealTest)</span></span> negated conditional &rarr; KILLED</p> 
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>subFromBoth<br/><b>Killed by : </b>none</span></span> changed conditional boundary &rarr; SURVIVED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>subFromBoth<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.logic.CalculateMealTest.testSetWholeMeal(kari.nutritionplanner.mealplanner.logic.CalculateMealTest)</span></span> negated conditional &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
@@ -4233,7 +4233,7 @@ body{
 
 <a name='grouporg.pitest.mutationtest.report.html.SourceFile@2bcda694_115'/> 
 
-<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>fatSubber<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.logic.CalculateMealTest.testSetWholeMealFat(kari.nutritionplanner.mealplanner.logic.CalculateMealTest)</span></span> Replaced double addition with subtraction &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>fatSubber<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.logic.CalculateMealTest.testSetWholeMealFat(kari.nutritionplanner.mealplanner.logic.CalculateMealTest)</span></span> removed call to kari/nutritionplanner/mealplanner/domain/Meal::setSauceAmount &rarr; KILLED</p> 
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>fatSubber<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.logic.CalculateMealTest.testSetWholeMeal(kari.nutritionplanner.mealplanner.logic.CalculateMealTest)</span></span> Replaced double addition with subtraction &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>fatSubber<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.logic.CalculateMealTest.testSetWholeMeal(kari.nutritionplanner.mealplanner.logic.CalculateMealTest)</span></span> removed call to kari/nutritionplanner/mealplanner/domain/Meal::setSauceAmount &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
@@ -4243,7 +4243,7 @@ body{
 
 <a name='grouporg.pitest.mutationtest.report.html.SourceFile@2bcda694_116'/> 
 
-<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>fatSubber<br/><b>Killed by : </b>none</span></span> changed conditional boundary &rarr; SURVIVED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>fatSubber<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.logic.CalculateMealTest.testSetWholeMealFat(kari.nutritionplanner.mealplanner.logic.CalculateMealTest)</span></span> negated conditional &rarr; KILLED</p> 
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>fatSubber<br/><b>Killed by : </b>none</span></span> changed conditional boundary &rarr; SURVIVED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>fatSubber<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.logic.CalculateMealTest.testSetWholeMeal(kari.nutritionplanner.mealplanner.logic.CalculateMealTest)</span></span> negated conditional &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
@@ -4283,7 +4283,7 @@ body{
 
 <a name='grouporg.pitest.mutationtest.report.html.SourceFile@2bcda694_125'/> 
 
-<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>evenUpIngredients<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.logic.CalculateMealTest.testSetWholeMealFat(kari.nutritionplanner.mealplanner.logic.CalculateMealTest)</span></span> negated conditional &rarr; KILLED</p> 
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>evenUpIngredients<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.logic.CalculateMealTest.testSetWholeMeal(kari.nutritionplanner.mealplanner.logic.CalculateMealTest)</span></span> negated conditional &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
@@ -4293,7 +4293,7 @@ body{
 
 <a name='grouporg.pitest.mutationtest.report.html.SourceFile@2bcda694_128'/> 
 
-<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>evenUpIngredients<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.logic.CalculateMealTest.testSetWholeMeal(kari.nutritionplanner.mealplanner.logic.CalculateMealTest)</span></span> removed call to kari/nutritionplanner/mealplanner/logic/MealTweaker::fatSubber &rarr; KILLED</p> 
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>evenUpIngredients<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.logic.CalculateMealTest.testSetWholeMealFat(kari.nutritionplanner.mealplanner.logic.CalculateMealTest)</span></span> removed call to kari/nutritionplanner/mealplanner/logic/MealTweaker::fatSubber &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
@@ -4323,7 +4323,7 @@ body{
 
 <a name='grouporg.pitest.mutationtest.report.html.SourceFile@2bcda694_135'/> 
 
-<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>allOk<br/><b>Killed by : </b>none</span></span> negated conditional &rarr; SURVIVED</p> <p class='SURVIVED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>allOk<br/><b>Killed by : </b>none</span></span> negated conditional &rarr; SURVIVED</p> <p class='SURVIVED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>allOk<br/><b>Killed by : </b>none</span></span> negated conditional &rarr; SURVIVED</p> <p class='KILLED'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>allOk<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.logic.CalculateMealTest.testSetWholeMeal(kari.nutritionplanner.mealplanner.logic.CalculateMealTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>allOk<br/><b>Killed by : </b>none</span></span> negated conditional &rarr; SURVIVED</p> <p class='SURVIVED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>allOk<br/><b>Killed by : </b>none</span></span> negated conditional &rarr; SURVIVED</p> <p class='SURVIVED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>allOk<br/><b>Killed by : </b>none</span></span> negated conditional &rarr; SURVIVED</p> <p class='KILLED'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>allOk<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.logic.CalculateMealTest.testSetWholeMealFat(kari.nutritionplanner.mealplanner.logic.CalculateMealTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
@@ -4593,7 +4593,7 @@ body{
 
 <a name='grouporg.pitest.mutationtest.report.html.SourceFile@2bcda694_191'/> 
 
-<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>addCalories<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.logic.CalculateMealTest.testSetWholeMeal(kari.nutritionplanner.mealplanner.logic.CalculateMealTest)</span></span> Replaced double subtraction with addition &rarr; KILLED</p> 
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>addCalories<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.logic.CalculateMealTest.testSetWholeMealFat(kari.nutritionplanner.mealplanner.logic.CalculateMealTest)</span></span> Replaced double subtraction with addition &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
@@ -4693,7 +4693,7 @@ body{
 
 <a name='grouporg.pitest.mutationtest.report.html.SourceFile@2bcda694_213'/> 
 
-<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>fatOk<br/><b>Killed by : </b>none</span></span> changed conditional boundary &rarr; SURVIVED</p> <p class='SURVIVED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>fatOk<br/><b>Killed by : </b>none</span></span> changed conditional boundary &rarr; SURVIVED</p> <p class='SURVIVED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>fatOk<br/><b>Killed by : </b>none</span></span> Replaced double addition with subtraction &rarr; SURVIVED</p> <p class='SURVIVED'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>fatOk<br/><b>Killed by : </b>none</span></span> Replaced double subtraction with addition &rarr; SURVIVED</p> <p class='KILLED'><span class='pop'>5.<span><b>5</b><br/><b>Location : </b>fatOk<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.logic.CalculateMealTest.testSetWholeMealFat(kari.nutritionplanner.mealplanner.logic.CalculateMealTest)</span></span> negated conditional &rarr; KILLED</p> <p class='SURVIVED'><span class='pop'>6.<span><b>6</b><br/><b>Location : </b>fatOk<br/><b>Killed by : </b>none</span></span> negated conditional &rarr; SURVIVED</p> <p class='KILLED'><span class='pop'>7.<span><b>7</b><br/><b>Location : </b>fatOk<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.logic.CalculateMealTest.testLowFatMeal(kari.nutritionplanner.mealplanner.logic.CalculateMealTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>fatOk<br/><b>Killed by : </b>none</span></span> changed conditional boundary &rarr; SURVIVED</p> <p class='SURVIVED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>fatOk<br/><b>Killed by : </b>none</span></span> changed conditional boundary &rarr; SURVIVED</p> <p class='SURVIVED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>fatOk<br/><b>Killed by : </b>none</span></span> Replaced double addition with subtraction &rarr; SURVIVED</p> <p class='SURVIVED'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>fatOk<br/><b>Killed by : </b>none</span></span> Replaced double subtraction with addition &rarr; SURVIVED</p> <p class='KILLED'><span class='pop'>5.<span><b>5</b><br/><b>Location : </b>fatOk<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.logic.CalculateMealTest.testSetWholeMealFat(kari.nutritionplanner.mealplanner.logic.CalculateMealTest)</span></span> negated conditional &rarr; KILLED</p> <p class='SURVIVED'><span class='pop'>6.<span><b>6</b><br/><b>Location : </b>fatOk<br/><b>Killed by : </b>none</span></span> negated conditional &rarr; SURVIVED</p> <p class='KILLED'><span class='pop'>7.<span><b>7</b><br/><b>Location : </b>fatOk<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.logic.CalculateMealTest.testSetWholeMealFat(kari.nutritionplanner.mealplanner.logic.CalculateMealTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
@@ -4723,7 +4723,7 @@ body{
 
 <a name='grouporg.pitest.mutationtest.report.html.SourceFile@2bcda694_223'/> 
 
-<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>alterCaloriesFromSideAndSauce<br/><b>Killed by : </b>none</span></span> Replaced double division with multiplication &rarr; SURVIVED</p> <p class='SURVIVED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>alterCaloriesFromSideAndSauce<br/><b>Killed by : </b>none</span></span> Replaced double multiplication with division &rarr; SURVIVED</p> 
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>alterCaloriesFromSideAndSauce<br/><b>Killed by : </b>none</span></span> Replaced double division with multiplication &rarr; SURVIVED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>alterCaloriesFromSideAndSauce<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.logic.CalculateMealTest.testSetWholeMeal(kari.nutritionplanner.mealplanner.logic.CalculateMealTest)</span></span> Replaced double multiplication with division &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
@@ -4733,7 +4733,7 @@ body{
 
 <a name='grouporg.pitest.mutationtest.report.html.SourceFile@2bcda694_224'/> 
 
-<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>alterCaloriesFromSideAndSauce<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.logic.CalculateMealTest.testSetWholeMeal(kari.nutritionplanner.mealplanner.logic.CalculateMealTest)</span></span> Replaced double addition with subtraction &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>alterCaloriesFromSideAndSauce<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.logic.CalculateMealTest.testSetWholeMeal(kari.nutritionplanner.mealplanner.logic.CalculateMealTest)</span></span> removed call to kari/nutritionplanner/mealplanner/domain/Meal::setSideIngredientAmount &rarr; KILLED</p> 
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>alterCaloriesFromSideAndSauce<br/><b>Killed by : </b>none</span></span> Replaced double addition with subtraction &rarr; SURVIVED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>alterCaloriesFromSideAndSauce<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.logic.CalculateMealTest.testSetWholeMeal(kari.nutritionplanner.mealplanner.logic.CalculateMealTest)</span></span> removed call to kari/nutritionplanner/mealplanner/domain/Meal::setSideIngredientAmount &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
@@ -4793,7 +4793,7 @@ body{
 
 <a name='grouporg.pitest.mutationtest.report.html.SourceFile@2bcda694_237'/> 
 
-<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>alterCaloriesFromMain<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.logic.CalculateMealTest.testSetWholeMeal(kari.nutritionplanner.mealplanner.logic.CalculateMealTest)</span></span> Replaced double addition with subtraction &rarr; KILLED</p> <p class='SURVIVED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>alterCaloriesFromMain<br/><b>Killed by : </b>none</span></span> removed call to kari/nutritionplanner/mealplanner/domain/Meal::setMainIngredientAmount &rarr; SURVIVED</p> 
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>alterCaloriesFromMain<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.logic.CalculateMealTest.testSetWholeMeal(kari.nutritionplanner.mealplanner.logic.CalculateMealTest)</span></span> Replaced double addition with subtraction &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>alterCaloriesFromMain<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.logic.CalculateMealTest.testSetWholeMeal(kari.nutritionplanner.mealplanner.logic.CalculateMealTest)</span></span> removed call to kari/nutritionplanner/mealplanner/domain/Meal::setMainIngredientAmount &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
@@ -4914,7 +4914,7 @@ body{
 
 <h2>Tests examined</h2>
 <ul>
-<li>kari.nutritionplanner.mealplanner.logic.CalculateMealTest.testSetMainIng(kari.nutritionplanner.mealplanner.logic.CalculateMealTest) (15 ms)</li><li>kari.nutritionplanner.mealplanner.logic.CalculateMealTest.testLowFatMeal(kari.nutritionplanner.mealplanner.logic.CalculateMealTest) (15 ms)</li><li>kari.nutritionplanner.mealplanner.logic.MealTweakerTest.testZeroChecker(kari.nutritionplanner.mealplanner.logic.MealTweakerTest) (5 ms)</li><li>kari.nutritionplanner.mealplanner.logic.CalculateMealTest.testSetWholeMealProtein(kari.nutritionplanner.mealplanner.logic.CalculateMealTest) (6 ms)</li><li>kari.nutritionplanner.mealplanner.logic.MealTweakerTest.testRounder(kari.nutritionplanner.mealplanner.logic.MealTweakerTest) (3 ms)</li><li>kari.nutritionplanner.mealplanner.logic.CalculateMealTest.testCalculateAllMealNotRandomSide(kari.nutritionplanner.mealplanner.logic.CalculateMealTest) (44 ms)</li><li>kari.nutritionplanner.mealplanner.logic.CalculateMealTest.testSetWholeMealFat(kari.nutritionplanner.mealplanner.logic.CalculateMealTest) (4 ms)</li><li>kari.nutritionplanner.mealplanner.logic.CalculateMealTest.testSetWholeMeal(kari.nutritionplanner.mealplanner.logic.CalculateMealTest) (713 ms)</li>
+<li>kari.nutritionplanner.mealplanner.logic.CalculateMealTest.testSetMainIng(kari.nutritionplanner.mealplanner.logic.CalculateMealTest) (16 ms)</li><li>kari.nutritionplanner.mealplanner.logic.CalculateMealTest.testLowFatMeal(kari.nutritionplanner.mealplanner.logic.CalculateMealTest) (18 ms)</li><li>kari.nutritionplanner.mealplanner.logic.MealTweakerTest.testZeroChecker(kari.nutritionplanner.mealplanner.logic.MealTweakerTest) (5 ms)</li><li>kari.nutritionplanner.mealplanner.logic.CalculateMealTest.testSetWholeMealProtein(kari.nutritionplanner.mealplanner.logic.CalculateMealTest) (7 ms)</li><li>kari.nutritionplanner.mealplanner.logic.MealTweakerTest.testRounder(kari.nutritionplanner.mealplanner.logic.MealTweakerTest) (6 ms)</li><li>kari.nutritionplanner.mealplanner.logic.CalculateMealTest.testCalculateAllMealNotRandomSide(kari.nutritionplanner.mealplanner.logic.CalculateMealTest) (33 ms)</li><li>kari.nutritionplanner.mealplanner.logic.CalculateMealTest.testSetWholeMealFat(kari.nutritionplanner.mealplanner.logic.CalculateMealTest) (6 ms)</li><li>kari.nutritionplanner.mealplanner.logic.CalculateMealTest.testSetWholeMeal(kari.nutritionplanner.mealplanner.logic.CalculateMealTest) (760 ms)</li>
 </ul>
 
 <br/>

@@ -557,15 +557,15 @@ body{
 <a name='org.pitest.mutationtest.report.html.SourceFile@4d0e1a9a_36'/>
 36
 </td>
-<td class='uncertain'>
+<td class='killed'>
 <span class='pop'>
 <a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4d0e1a9a_36'>1</a>
 <span>
-1. <init> : negated conditional &rarr; TIMED_OUT<br/>
+1. <init> : negated conditional &rarr; KILLED<br/>
 
 </span>
 </td>
-<td class='covered'><pre><span  class='uncertain'>        if (in != null) {</span></pre></td></tr>
+<td class='covered'><pre><span  class='killed'>        if (in != null) {</span></pre></td></tr>
 
 
 <tr>
@@ -1617,17 +1617,17 @@ body{
 <a name='org.pitest.mutationtest.report.html.SourceFile@4d0e1a9a_110'/>
 110
 </td>
-<td class='uncertain'>
+<td class='survived'>
 <span class='pop'>
 <a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4d0e1a9a_110'>3</a>
 <span>
-1. lambda$searchAllMacros$0 : Replaced integer subtraction with addition &rarr; TIMED_OUT<br/>
-2. lambda$searchAllMacros$0 : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; TIMED_OUT<br/>
-3. searchAllMacros : removed call to java/util/Collections::sort &rarr; TIMED_OUT<br/>
+1. lambda$searchAllMacros$0 : Replaced integer subtraction with addition &rarr; SURVIVED<br/>
+2. lambda$searchAllMacros$0 : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; SURVIVED<br/>
+3. searchAllMacros : removed call to java/util/Collections::sort &rarr; SURVIVED<br/>
 
 </span>
 </td>
-<td class='covered'><pre><span  class='uncertain'>        Collections.sort(allIngs, (i1, i2) -&#62; i1.getId() - i2.getId());</span></pre></td></tr>
+<td class='covered'><pre><span  class='survived'>        Collections.sort(allIngs, (i1, i2) -&#62; i1.getId() - i2.getId());</span></pre></td></tr>
 
 
 <tr>
@@ -2171,17 +2171,17 @@ body{
 <a name='org.pitest.mutationtest.report.html.SourceFile@4d0e1a9a_148'/>
 148
 </td>
-<td class='uncertain'>
+<td class='survived'>
 <span class='pop'>
 <a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4d0e1a9a_148'>3</a>
 <span>
-1. addIngredient : changed conditional boundary &rarr; TIMED_OUT<br/>
+1. addIngredient : changed conditional boundary &rarr; SURVIVED<br/>
 2. addIngredient : negated conditional &rarr; KILLED<br/>
 3. addIngredient : negated conditional &rarr; KILLED<br/>
 
 </span>
 </td>
-<td class='covered'><pre><span  class='uncertain'>            if (i == 0 &#38;&#38; next.length() &#60; 6) {</span></pre></td></tr>
+<td class='covered'><pre><span  class='survived'>            if (i == 0 &#38;&#38; next.length() &#60; 6) {</span></pre></td></tr>
 
 
 <tr>
@@ -2217,15 +2217,15 @@ body{
 <a name='org.pitest.mutationtest.report.html.SourceFile@4d0e1a9a_151'/>
 151
 </td>
-<td class='uncertain'>
+<td class='survived'>
 <span class='pop'>
 <a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4d0e1a9a_151'>1</a>
 <span>
-1. addIngredient : negated conditional &rarr; TIMED_OUT<br/>
+1. addIngredient : negated conditional &rarr; SURVIVED<br/>
 
 </span>
 </td>
-<td class='covered'><pre><span  class='uncertain'>            if (i == 1) {</span></pre></td></tr>
+<td class='covered'><pre><span  class='survived'>            if (i == 1) {</span></pre></td></tr>
 
 
 <tr>
@@ -2820,15 +2820,15 @@ body{
 <a name='org.pitest.mutationtest.report.html.SourceFile@4d0e1a9a_192'/>
 192
 </td>
-<td class='uncertain'>
+<td class='survived'>
 <span class='pop'>
 <a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4d0e1a9a_192'>1</a>
 <span>
-1. setMacros : Changed increment from 1 to -1 &rarr; TIMED_OUT<br/>
+1. setMacros : Changed increment from 1 to -1 &rarr; SURVIVED<br/>
 
 </span>
 </td>
-<td class='covered'><pre><span  class='uncertain'>            i++;</span></pre></td></tr>
+<td class='covered'><pre><span  class='survived'>            i++;</span></pre></td></tr>
 
 
 <tr>
@@ -3284,18 +3284,18 @@ body{
 <a name='org.pitest.mutationtest.report.html.SourceFile@4d0e1a9a_224'/>
 224
 </td>
-<td class='uncertain'>
+<td class='survived'>
 <span class='pop'>
 <a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4d0e1a9a_224'>4</a>
 <span>
-1. analyseLineForMacros : changed conditional boundary &rarr; TIMED_OUT<br/>
+1. analyseLineForMacros : changed conditional boundary &rarr; SURVIVED<br/>
 2. analyseLineForMacros : negated conditional &rarr; KILLED<br/>
 3. analyseLineForMacros : negated conditional &rarr; KILLED<br/>
 4. analyseLineForMacros : negated conditional &rarr; KILLED<br/>
 
 </span>
 </td>
-<td class='covered'><pre><span  class='uncertain'>        if (i == 0 &#38;&#38; next.length() &#60; 6 &#38;&#38; Integer.parseInt(next) == ing.getId()) {</span></pre></td></tr>
+<td class='covered'><pre><span  class='survived'>        if (i == 0 &#38;&#38; next.length() &#60; 6 &#38;&#38; Integer.parseInt(next) == ing.getId()) {</span></pre></td></tr>
 
 
 <tr>
@@ -3585,7 +3585,7 @@ body{
 
 <a name='grouporg.pitest.mutationtest.report.html.SourceFile@4d0e1a9a_36'/> 
 
-<p class='TIMED_OUT'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b><init><br/><b>Killed by : </b>none</span></span> negated conditional &rarr; TIMED_OUT</p> 
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b><init><br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.util.CSVReaderTest.testSearchAllIngs(kari.nutritionplanner.mealplanner.util.CSVReaderTest)</span></span> negated conditional &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
@@ -3705,7 +3705,7 @@ body{
 
 <a name='grouporg.pitest.mutationtest.report.html.SourceFile@4d0e1a9a_110'/> 
 
-<p class='TIMED_OUT'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>lambda$searchAllMacros$0<br/><b>Killed by : </b>none</span></span> Replaced integer subtraction with addition &rarr; TIMED_OUT</p> <p class='TIMED_OUT'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>lambda$searchAllMacros$0<br/><b>Killed by : </b>none</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; TIMED_OUT</p> <p class='TIMED_OUT'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>searchAllMacros<br/><b>Killed by : </b>none</span></span> removed call to java/util/Collections::sort &rarr; TIMED_OUT</p> 
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>lambda$searchAllMacros$0<br/><b>Killed by : </b>none</span></span> Replaced integer subtraction with addition &rarr; SURVIVED</p> <p class='SURVIVED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>lambda$searchAllMacros$0<br/><b>Killed by : </b>none</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; SURVIVED</p> <p class='SURVIVED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>searchAllMacros<br/><b>Killed by : </b>none</span></span> removed call to java/util/Collections::sort &rarr; SURVIVED</p> 
 </td>
 </tr>
 <tr>
@@ -3805,7 +3805,7 @@ body{
 
 <a name='grouporg.pitest.mutationtest.report.html.SourceFile@4d0e1a9a_148'/> 
 
-<p class='TIMED_OUT'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>addIngredient<br/><b>Killed by : </b>none</span></span> changed conditional boundary &rarr; TIMED_OUT</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>addIngredient<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.util.CSVReaderTest.testSearchAllIngs(kari.nutritionplanner.mealplanner.util.CSVReaderTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>addIngredient<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.util.CSVReaderTest.testSearchAllIngs(kari.nutritionplanner.mealplanner.util.CSVReaderTest)</span></span> negated conditional &rarr; KILLED</p> 
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>addIngredient<br/><b>Killed by : </b>none</span></span> changed conditional boundary &rarr; SURVIVED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>addIngredient<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.util.CSVReaderTest.testSearchAllIngs(kari.nutritionplanner.mealplanner.util.CSVReaderTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>addIngredient<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.util.CSVReaderTest.testSearchAllIngs(kari.nutritionplanner.mealplanner.util.CSVReaderTest)</span></span> negated conditional &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
@@ -3815,7 +3815,7 @@ body{
 
 <a name='grouporg.pitest.mutationtest.report.html.SourceFile@4d0e1a9a_151'/> 
 
-<p class='TIMED_OUT'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>addIngredient<br/><b>Killed by : </b>none</span></span> negated conditional &rarr; TIMED_OUT</p> 
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>addIngredient<br/><b>Killed by : </b>none</span></span> negated conditional &rarr; SURVIVED</p> 
 </td>
 </tr>
 <tr>
@@ -3935,7 +3935,7 @@ body{
 
 <a name='grouporg.pitest.mutationtest.report.html.SourceFile@4d0e1a9a_192'/> 
 
-<p class='TIMED_OUT'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>setMacros<br/><b>Killed by : </b>none</span></span> Changed increment from 1 to -1 &rarr; TIMED_OUT</p> 
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>setMacros<br/><b>Killed by : </b>none</span></span> Changed increment from 1 to -1 &rarr; SURVIVED</p> 
 </td>
 </tr>
 <tr>
@@ -4005,7 +4005,7 @@ body{
 
 <a name='grouporg.pitest.mutationtest.report.html.SourceFile@4d0e1a9a_224'/> 
 
-<p class='TIMED_OUT'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>analyseLineForMacros<br/><b>Killed by : </b>none</span></span> changed conditional boundary &rarr; TIMED_OUT</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>analyseLineForMacros<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.util.CSVReaderTest.testSearchMacrosNullIng(kari.nutritionplanner.mealplanner.util.CSVReaderTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>analyseLineForMacros<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.util.CSVReaderTest.testSearchMacrosNullIng(kari.nutritionplanner.mealplanner.util.CSVReaderTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>analyseLineForMacros<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.util.CSVReaderTest.testSearchMacros(kari.nutritionplanner.mealplanner.util.CSVReaderTest)</span></span> negated conditional &rarr; KILLED</p> 
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>analyseLineForMacros<br/><b>Killed by : </b>none</span></span> changed conditional boundary &rarr; SURVIVED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>analyseLineForMacros<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.util.CSVReaderTest.testSearchMacrosNullIng(kari.nutritionplanner.mealplanner.util.CSVReaderTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>analyseLineForMacros<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.util.CSVReaderTest.testSearchMacrosNullIng(kari.nutritionplanner.mealplanner.util.CSVReaderTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>analyseLineForMacros<br/><b>Killed by : </b>kari.nutritionplanner.mealplanner.util.CSVReaderTest.testSearchMacros(kari.nutritionplanner.mealplanner.util.CSVReaderTest)</span></span> negated conditional &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
@@ -4146,7 +4146,7 @@ body{
 
 <h2>Tests examined</h2>
 <ul>
-<li>kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest.testAddAndRemoveIngredient(kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest) (189 ms)</li><li>kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest.testSearch(kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest) (92 ms)</li><li>kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest.testSearchOnClosedConnection(kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest) (529 ms)</li><li>kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest.testGetProcessIngredients(kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest) (33 ms)</li><li>kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest.testAddIngClosedConnection(kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest) (1520 ms)</li><li>kari.nutritionplanner.mealplanner.util.CSVReaderTest.testSearchAllMacros(kari.nutritionplanner.mealplanner.util.CSVReaderTest) (1218 ms)</li><li>kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest.testSearchDatabaseOff(kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest) (186 ms)</li><li>kari.nutritionplanner.mealplanner.util.CSVReaderTest.testNewReader(kari.nutritionplanner.mealplanner.util.CSVReaderTest) (1 ms)</li><li>kari.nutritionplanner.mealplanner.util.CSVReaderTest.testCloseReader(kari.nutritionplanner.mealplanner.util.CSVReaderTest) (1 ms)</li><li>kari.nutritionplanner.mealplanner.util.CSVReaderTest.testSearchAllIngs(kari.nutritionplanner.mealplanner.util.CSVReaderTest) (1 ms)</li><li>kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest.testConstructor(kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest) (45 ms)</li><li>kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest.testGetIngredientByName(kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest) (48 ms)</li><li>kari.nutritionplanner.mealplanner.util.CSVReaderTest.testExceptionOnClosedReader(kari.nutritionplanner.mealplanner.util.CSVReaderTest) (1161 ms)</li><li>kari.nutritionplanner.mealplanner.util.CSVReaderTest.testSearchMacrosNullIng(kari.nutritionplanner.mealplanner.util.CSVReaderTest) (98 ms)</li><li>kari.nutritionplanner.mealplanner.util.CSVReaderTest.testSearchMacrosInvalidIng(kari.nutritionplanner.mealplanner.util.CSVReaderTest) (958 ms)</li><li>kari.nutritionplanner.mealplanner.util.ProcessIngredientsTest.testIngsDatabaseClosed(kari.nutritionplanner.mealplanner.util.ProcessIngredientsTest) (9 ms)</li><li>kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest.testMacroChecker(kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest) (39 ms)</li><li>kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest.testConstructorClosedDatabase(kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest) (536 ms)</li><li>kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest.testRemoveIngClosedConnection(kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest) (547 ms)</li><li>kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest.testGetIngredientByNameDatabaseClosed(kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest) (578 ms)</li><li>kari.nutritionplanner.mealplanner.util.CSVReaderTest.testSearchMacros(kari.nutritionplanner.mealplanner.util.CSVReaderTest) (321 ms)</li>
+<li>kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest.testAddAndRemoveIngredient(kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest) (183 ms)</li><li>kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest.testSearch(kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest) (71 ms)</li><li>kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest.testSearchOnClosedConnection(kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest) (715 ms)</li><li>kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest.testGetProcessIngredients(kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest) (17 ms)</li><li>kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest.testAddIngClosedConnection(kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest) (16554 ms)</li><li>kari.nutritionplanner.mealplanner.util.CSVReaderTest.testSearchAllMacros(kari.nutritionplanner.mealplanner.util.CSVReaderTest) (1234 ms)</li><li>kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest.testSearchDatabaseOff(kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest) (212 ms)</li><li>kari.nutritionplanner.mealplanner.util.CSVReaderTest.testNewReader(kari.nutritionplanner.mealplanner.util.CSVReaderTest) (0 ms)</li><li>kari.nutritionplanner.mealplanner.util.CSVReaderTest.testSearchAllIngs(kari.nutritionplanner.mealplanner.util.CSVReaderTest) (0 ms)</li><li>kari.nutritionplanner.mealplanner.util.CSVReaderTest.testCloseReader(kari.nutritionplanner.mealplanner.util.CSVReaderTest) (5 ms)</li><li>kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest.testGetIngredientByName(kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest) (23 ms)</li><li>kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest.testConstructor(kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest) (50 ms)</li><li>kari.nutritionplanner.mealplanner.util.CSVReaderTest.testExceptionOnClosedReader(kari.nutritionplanner.mealplanner.util.CSVReaderTest) (1323 ms)</li><li>kari.nutritionplanner.mealplanner.util.CSVReaderTest.testSearchMacrosNullIng(kari.nutritionplanner.mealplanner.util.CSVReaderTest) (98 ms)</li><li>kari.nutritionplanner.mealplanner.util.CSVReaderTest.testSearchMacrosInvalidIng(kari.nutritionplanner.mealplanner.util.CSVReaderTest) (932 ms)</li><li>kari.nutritionplanner.mealplanner.util.ProcessIngredientsTest.testIngsDatabaseClosed(kari.nutritionplanner.mealplanner.util.ProcessIngredientsTest) (5 ms)</li><li>kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest.testMacroChecker(kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest) (15 ms)</li><li>kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest.testConstructorClosedDatabase(kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest) (546 ms)</li><li>kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest.testRemoveIngClosedConnection(kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest) (653 ms)</li><li>kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest.testGetIngredientByNameDatabaseClosed(kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelperTest) (551 ms)</li><li>kari.nutritionplanner.mealplanner.util.CSVReaderTest.testSearchMacros(kari.nutritionplanner.mealplanner.util.CSVReaderTest) (311 ms)</li>
 </ul>
 
 <br/>

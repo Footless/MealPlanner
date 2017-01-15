@@ -13,8 +13,10 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import kari.nutritionplanner.mealplanner.domain.Ingredient;
 import kari.nutritionplanner.mealplanner.gui.UserInterface;
 import kari.nutritionplanner.mealplanner.util.database.DatabaseAccessRead;
+import kari.nutritionplanner.mealplanner.util.database.DatabaseAccessWrite;
 import kari.nutritionplanner.mealplanner.util.database.DatabaseSetup;
 
 /**
@@ -53,6 +55,10 @@ public class Main {
         try {
             new DatabaseSetup();
             DatabaseAccessRead dbAccess = new DatabaseAccessRead();
+            DatabaseAccessWrite dbWrite = new DatabaseAccessWrite();
+            // seuraavat rivit poistavat PIT-testien läpipäästämät raaka-aineet, jotka muuten rikkoisivat vähän kaikkea.
+            dbWrite.removeUserIngredient(new Ingredient(99999, "test"), "mains");
+            dbWrite.removeUserIngredient(new Ingredient(99999, "test"), "misc");
             dataBaseOk = dbAccess.databaseOk();
         } catch (SQLException | IOException ex) {
             showErrorMessage(ex);
