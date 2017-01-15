@@ -185,7 +185,7 @@ public class CalcMealView {
     }
 
     private double getMultiplier(Ingredient ing) {
-        if (ing.getProtein() > 23) {
+        if (ing.getProtein() > 23 | ing.getFat() > 10) {
             return 0.5;
         } else {
             return 1;

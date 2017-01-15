@@ -58,7 +58,7 @@ public class MealTweaker {
         evenUpIngredients();
         roundUpIngredients();
     }
-    
+
     protected Meal getMeal() {
         return this.meal;
     }
@@ -105,6 +105,7 @@ public class MealTweaker {
         } else {
             addCalories();
         }
+        checkLessThanZeros();
     }
 
     private void fatSubber() {
@@ -119,6 +120,7 @@ public class MealTweaker {
 
     private void evenUpIngredients() {
         for (int i = 0; i < 50; i++) {
+            checkForNegative();
             if (allOk()) {
                 break;
             }
@@ -163,18 +165,24 @@ public class MealTweaker {
         } else if (fatOk() && meal.getSideIngredientAmount() > 0.05) {
             alterCaloriesFromMainAndSide(toSub);
             // tai sitten vähennetään vähän kaikkia
-        }  else {
-            alterCaloriesFromSauce(toSub);
+        } else {
+            alterCaloriesFromAll(toSub);
         }
-        checkLessThanZeros();
     }
-    
+
     protected void checkLessThanZeros() {
         if (meal.getSideIngredientAmount() < 0) {
             meal.setSideIngredientAmount(0);
         }
         if (meal.getSauceAmount() < 0) {
             meal.setSauceAmount(0);
+        }
+        if (meal.getMainIngredientAmount() < 0) {
+            if (meal.getMainIngredient().getProtein() > 23) {
+                meal.setMainIngredientAmount(0.5);
+            } else {
+                meal.setMainIngredientAmount(0.8);
+            }
         }
     }
 
@@ -233,4 +241,18 @@ public class MealTweaker {
         meal.setSauceAmount(meal.getSauceAmount() + amountToSubFromSauce);
     }
 
+    private void alterCaloriesFromAll(double toAlter) {
+        double amountToSubFromSide = mc.calculateAmountForCalories((toAlter / 8) * 5, meal.getSideIngredient());
+        double amountToSubFromMain = mc.calculateAmountForCalories((toAlter / 8) * 1, meal.getMainIngredient());
+        double amountToSubFromSauce = mc.calculateAmountForCalories((toAlter / 8) * 2, meal.getSauce());
+        meal.setSideIngredientAmount(meal.getSideIngredientAmount() + amountToSubFromSide);
+        meal.setMainIngredientAmount(meal.getMainIngredientAmount() + amountToSubFromMain);
+        meal.setSauceAmount(meal.getSauceAmount() + amountToSubFromSauce);
+    }
+
+    private void checkForNegative() {
+        meal.setMainIngredientAmount(Math.abs(meal.getMainIngredientAmount()));
+        meal.setSideIngredientAmount(Math.abs(meal.getSideIngredientAmount()));
+        meal.setSauceAmount(Math.abs(meal.getSauceAmount()));
+    }
 }
