@@ -18,7 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 import kari.nutritionplanner.mealplanner.gui.controllers.BrowseIngsListener;
 import kari.nutritionplanner.mealplanner.gui.controllers.StartNewMealListener;
-import kari.nutritionplanner.mealplanner.util.CalculateMeal;
+import kari.nutritionplanner.mealplanner.logic.CalculateMeal;
 import kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelper;
 import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
 import kari.nutritionplanner.mealplanner.util.ProcessIngredients;

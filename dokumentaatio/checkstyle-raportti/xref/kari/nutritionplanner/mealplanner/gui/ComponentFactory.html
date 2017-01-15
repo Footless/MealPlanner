@@ -54,7 +54,7 @@
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>  <strong class="jxr_keyword">import</strong> kari.nutritionplanner.mealplanner.domain.Ingredient;
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>  <strong class="jxr_keyword">import</strong> kari.nutritionplanner.mealplanner.domain.Meal;
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>  <strong class="jxr_keyword">import</strong> kari.nutritionplanner.mealplanner.gui.controllers.ShowIngMacrosListener;
-<a class="jxr_linenumber" name="L49" href="#L49">49</a>  <strong class="jxr_keyword">import</strong> kari.nutritionplanner.mealplanner.util.CalculateMeal;
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>  <strong class="jxr_keyword">import</strong> kari.nutritionplanner.mealplanner.logic.CalculateMeal;
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>  <strong class="jxr_keyword">import</strong> kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelper;
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>  <strong class="jxr_keyword">import</strong> kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>  
@@ -102,7 +102,7 @@
 <a class="jxr_linenumber" name="L94" href="#L94">94</a>          <strong class="jxr_keyword">return</strong> jta;
 <a class="jxr_linenumber" name="L95" href="#L95">95</a>      }
 <a class="jxr_linenumber" name="L96" href="#L96">96</a>  
-<a class="jxr_linenumber" name="L97" href="#L97">97</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> createAllMacros(<a href="../../../../kari/nutritionplanner/mealplanner/util/CalculateMeal.html">CalculateMeal</a> cm, JPanel pane) {
+<a class="jxr_linenumber" name="L97" href="#L97">97</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> createAllMacros(<a href="../../../../kari/nutritionplanner/mealplanner/logic/CalculateMeal.html">CalculateMeal</a> cm, JPanel pane) {
 <a class="jxr_linenumber" name="L98" href="#L98">98</a>          <a href="../../../../kari/nutritionplanner/mealplanner/domain/Meal.html">Meal</a> meal = cm.getMeal();
 <a class="jxr_linenumber" name="L99" href="#L99">99</a>          JLabel subTitle = createLabel(<span class="jxr_string">"Ravintosisältö (suluissa halutut makrot)"</span>);
 <a class="jxr_linenumber" name="L100" href="#L100">100</a>         subTitle.setBackground(mainColor);
@@ -119,7 +119,7 @@
 <a class="jxr_linenumber" name="L111" href="#L111">111</a>         pane.add(fiber);
 <a class="jxr_linenumber" name="L112" href="#L112">112</a>     }
 <a class="jxr_linenumber" name="L113" href="#L113">113</a> 
-<a class="jxr_linenumber" name="L114" href="#L114">114</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> createAllIngs(<a href="../../../../kari/nutritionplanner/mealplanner/util/CalculateMeal.html">CalculateMeal</a> cm, JPanel pane) {
+<a class="jxr_linenumber" name="L114" href="#L114">114</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> createAllIngs(<a href="../../../../kari/nutritionplanner/mealplanner/logic/CalculateMeal.html">CalculateMeal</a> cm, JPanel pane) {
 <a class="jxr_linenumber" name="L115" href="#L115">115</a>         <a href="../../../../kari/nutritionplanner/mealplanner/domain/Meal.html">Meal</a> meal = cm.getMeal();
 <a class="jxr_linenumber" name="L116" href="#L116">116</a>         JLabel title = createLabel(<span class="jxr_string">"Komponentit ja määrät:"</span>);
 <a class="jxr_linenumber" name="L117" href="#L117">117</a>         pane.add(title);
@@ -136,7 +136,7 @@
 <a class="jxr_linenumber" name="L128" href="#L128">128</a>         pane.add(misc);
 <a class="jxr_linenumber" name="L129" href="#L129">129</a>     }
 <a class="jxr_linenumber" name="L130" href="#L130">130</a> 
-<a class="jxr_linenumber" name="L131" href="#L131">131</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">void</strong> createMealText(JPanel card, <a href="../../../../kari/nutritionplanner/mealplanner/util/CalculateMeal.html">CalculateMeal</a> cm, <a href="../../../../kari/nutritionplanner/mealplanner/servicelayer/MealCalcHelper.html">MealCalcHelper</a> helper) {
+<a class="jxr_linenumber" name="L131" href="#L131">131</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">void</strong> createMealText(JPanel card, <a href="../../../../kari/nutritionplanner/mealplanner/logic/CalculateMeal.html">CalculateMeal</a> cm, <a href="../../../../kari/nutritionplanner/mealplanner/servicelayer/MealCalcHelper.html">MealCalcHelper</a> helper) {
 <a class="jxr_linenumber" name="L132" href="#L132">132</a>         JPanel pane = <strong class="jxr_keyword">new</strong> JPanel();
 <a class="jxr_linenumber" name="L133" href="#L133">133</a>         BoxLayout boxL = <strong class="jxr_keyword">new</strong> BoxLayout(pane, BoxLayout.PAGE_AXIS);
 <a class="jxr_linenumber" name="L134" href="#L134">134</a>         pane.setLayout(boxL);

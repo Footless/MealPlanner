@@ -1,11 +1,12 @@
 
-package kari.nutritionplanner.mealplanner.servicelayer;
+package kari.nutritionplanner.mealplanner.logic;
 
-import kari.nutritionplanner.mealplanner.util.CalculateMeal;
+import kari.nutritionplanner.mealplanner.logic.CalculateMeal;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
+import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
 import kari.nutritionplanner.mealplanner.util.ProcessIngredients;
 import org.junit.Before;
 import org.junit.Test;

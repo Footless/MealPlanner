@@ -14,9 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package kari.nutritionplanner.mealplanner.util;
+package kari.nutritionplanner.mealplanner.logic;
 
 import kari.nutritionplanner.mealplanner.domain.Meal;
+import kari.nutritionplanner.mealplanner.util.MacroCalculator;
 
 /**
  * CalculateMealin apuluokka, joka pyörittelee luodun aterian raaka-aineita sekä

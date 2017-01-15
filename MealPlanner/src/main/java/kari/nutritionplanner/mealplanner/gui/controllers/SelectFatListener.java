@@ -23,7 +23,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import kari.nutritionplanner.mealplanner.gui.CalcMealView;
-import kari.nutritionplanner.mealplanner.util.CalculateMeal;
+import kari.nutritionplanner.mealplanner.logic.CalculateMeal;
 import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
 
 /**

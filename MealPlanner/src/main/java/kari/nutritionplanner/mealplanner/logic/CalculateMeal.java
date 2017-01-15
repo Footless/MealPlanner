@@ -1,9 +1,11 @@
-package kari.nutritionplanner.mealplanner.util;
+package kari.nutritionplanner.mealplanner.logic;
 
 import java.util.Map;
 import java.util.Random;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
 import kari.nutritionplanner.mealplanner.domain.Meal;
+import kari.nutritionplanner.mealplanner.util.MacroCalculator;
+import kari.nutritionplanner.mealplanner.util.ProcessIngredients;
 
 /**
  * Ohjelman sydän ja aivot, joka muodostaa annetuista arvoista halutunlaisen

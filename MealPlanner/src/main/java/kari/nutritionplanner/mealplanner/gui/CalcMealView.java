@@ -33,7 +33,7 @@ import kari.nutritionplanner.mealplanner.gui.controllers.SelectFatListener;
 import kari.nutritionplanner.mealplanner.gui.controllers.SelectMainIngListener;
 import kari.nutritionplanner.mealplanner.gui.controllers.SelectProtListener;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
-import kari.nutritionplanner.mealplanner.util.CalculateMeal;
+import kari.nutritionplanner.mealplanner.logic.CalculateMeal;
 import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
 
 /**

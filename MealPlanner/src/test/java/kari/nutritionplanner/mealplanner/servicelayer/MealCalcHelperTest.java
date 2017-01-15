@@ -16,7 +16,7 @@
  */
 package kari.nutritionplanner.mealplanner.servicelayer;
 
-import kari.nutritionplanner.mealplanner.util.CalculateMeal;
+import kari.nutritionplanner.mealplanner.logic.CalculateMeal;
 import kari.nutritionplanner.mealplanner.util.ProcessIngredients;
 import org.junit.Before;
 import org.junit.Test;

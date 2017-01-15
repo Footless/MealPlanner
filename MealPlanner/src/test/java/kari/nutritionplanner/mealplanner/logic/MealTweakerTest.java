@@ -14,10 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package kari.nutritionplanner.mealplanner.util;
+package kari.nutritionplanner.mealplanner.logic;
 
+import kari.nutritionplanner.mealplanner.logic.MealTweaker;
+import kari.nutritionplanner.mealplanner.logic.CalculateMeal;
 import kari.nutritionplanner.mealplanner.domain.Meal;
 import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
+import kari.nutritionplanner.mealplanner.util.ProcessIngredients;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
