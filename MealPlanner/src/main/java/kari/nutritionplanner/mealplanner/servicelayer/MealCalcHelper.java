@@ -16,7 +16,6 @@
  */
 package kari.nutritionplanner.mealplanner.servicelayer;
 
-import java.util.List;
 import java.util.Map;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
 import kari.nutritionplanner.mealplanner.domain.Meal;
@@ -163,43 +162,5 @@ public class MealCalcHelper {
             }
         }
         return 0;
-    }
-
-    /**
-     * Käyttöliittymälle tarjottu metodi, joka palauttaa listan kaikista
-     * valittavissa olevista pääraaka-aineista.
-     *
-     * @return listan pääraaka-aineista, jotka ovat käyttäjän valittavissa.
-     * @see Ingredient
-     */
-    public List<Ingredient> getMainIngredients() {
-        return ingredientProcessor.getMainIngredients();
-    }
-
-    /**
-     * Palauttaa Mapin kaikista saatavilla olevista pääraaka-aineista.
-     *
-     * @return Map-olio, jossa kaikki saatavilla olevat pääraaka-aineet.
-     */
-    public Map<Integer, Ingredient> getMainIngredientsAsMap() {
-        return ingredientProcessor.getIngredients().get("mains");
-    }
-
-    /**
-     * Palauttaa Mapin kaikista saatavilla olevista lisäkkeistä.
-     *
-     * @return Map-olio, jossa kaikki saatavilla olevat lisäkkeet.
-     */
-    public Map<Integer, Ingredient> getSideIngredientsAsMap() {
-        return ingredientProcessor.getIngredients().get("sides");
-    }
-
-    /**
-     * Palauttaa saatavilla olevat lisäkkeet listana.
-     *
-     * @return List-olio jossa kaikki saatavilla olevat lisäkkeet.
-     */
-    public List<Ingredient> getSideIngredients() {
-        return ingredientProcessor.getSideIngredients();
     }
 }

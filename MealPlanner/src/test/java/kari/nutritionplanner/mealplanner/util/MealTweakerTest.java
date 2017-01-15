@@ -91,18 +91,12 @@ public class MealTweakerTest {
         assertEquals(1.46, meal.getSauceAmount(), 0.0);
     }
     
-//    @Test
-//    public void testProteinOk() {
-//        meal.setMainIngredientAmount(0);
-//        meal.setMiscAmount(0);
-//        meal.setSauceAmount(0);
-//        meal.setSideIngredientAmount(0);
-//        assertFalse(mt.proteinOk());
-//        meal.setMainIngredientAmount(1.61);
-//        assertTrue(mt.proteinOk());
-//        meal.setMainIngredientAmount(1.7);
-//        assertTrue(mt.proteinOk());
-//        meal.setMainIngredientAmount(1.51);
-//        assertTrue(mt.proteinOk());
-//    }
+    @Test
+    public void testZeroChecker() {
+        mt.getMeal().setSauceAmount(-0.2);
+        mt.getMeal().setSideIngredientAmount(-0.6);
+        mt.checkLessThanZeros();
+        assertEquals(0, mt.getMeal().getSideIngredientAmount(), delta);
+        assertEquals(0, mt.getMeal().getSauceAmount(), delta);
+    }
 }

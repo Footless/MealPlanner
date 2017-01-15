@@ -53,10 +53,13 @@ public class DatabaseAccessReadTest {
     @Test
     public void testGetIngredientById() throws SQLException {
         if (dbAccess.databaseOk()) {
-            Ingredient ing = dbAccess.getIngredient(805);
-            assertEquals("Kuha", ing.getName());
+            Ingredient ing = dbAccess.getIngredient(34307);
+            assertEquals("Nyhtökaura, nude", ing.getName());
             assertTrue(ing.getCalories() > 0);
             assertTrue(ing.getProtein() > 0);
+            assertTrue(ing.getCarb() > 0);
+            assertTrue(ing.getFiber() > 0);
+            assertTrue(ing.getFat() > 0);
         }
 
     }
@@ -66,6 +69,14 @@ public class DatabaseAccessReadTest {
         if (dbAccess.databaseOk()) {
             int id = dbAccess.getIngredientIdByName("Kuha");
             assertEquals(805, id);
+        }
+    }
+    
+    @Test
+    public void testGetIngredientByNameNotFound() throws SQLException {
+        if (dbAccess.databaseOk()) {
+            int id = dbAccess.getIngredientIdByName("antroposentrifugi");
+            assertEquals(0, id);
         }
     }
 
@@ -97,8 +108,8 @@ public class DatabaseAccessReadTest {
         }
     }
     
-    @Test(expected = SQLException.class)
-    public void testClosedDatabaseOnDatabaseOk() throws SQLException {
+    @Test
+    public void testClosedDatabaseOnDatabaseOk() {
         dbAccess.closeConnection();
         assertFalse(dbAccess.databaseOk());
     }

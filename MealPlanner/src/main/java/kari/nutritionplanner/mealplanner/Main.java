@@ -49,7 +49,7 @@ public class Main {
             JOptionPane.showMessageDialog(null, "Tapahtui seuraava virhe ohjelmaa käynnistäessä: " + ex, "Virhe", 0);
             throw new Error(ex);
         }
-        boolean dataBaseOk = true;
+        boolean dataBaseOk = false;
         try {
             new DatabaseSetup();
             DatabaseAccessRead dbAccess = new DatabaseAccessRead();

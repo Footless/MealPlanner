@@ -101,4 +101,9 @@ public class CSVReaderTest {
          reader.closeReader();
          reader.getAllIngredients();
      }
+     
+     @Test
+     public void testCloseReader() {
+         assertTrue(reader.closeReader());
+     }
 }

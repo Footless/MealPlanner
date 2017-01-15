@@ -16,10 +16,7 @@
  */
 package kari.nutritionplanner.mealplanner.servicelayer;
 
-import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
 import kari.nutritionplanner.mealplanner.util.ProcessIngredients;
 import kari.nutritionplanner.mealplanner.util.database.DatabaseAccessRead;
@@ -42,11 +39,8 @@ public class IngredientSearchHelperTest {
     @Before
     public void setUp() {
         DatabaseAccessRead dbAccess = new DatabaseAccessRead();
-        try {
-            this.helper = new IngredientSearchHelper(new ProcessIngredients(dbAccess.databaseOk()));
-        } catch (SQLException ex) {
-            Logger.getLogger(IngredientSearchHelperTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.helper = new IngredientSearchHelper(new ProcessIngredients(dbAccess.databaseOk()));
+
     }
 
     @Test
@@ -58,8 +52,8 @@ public class IngredientSearchHelperTest {
     public void testConstructorClosedDatabase() {
         this.helper = new IngredientSearchHelper(new ProcessIngredients(false));
         assertEquals(null, helper.getIngredientByName("kuha"));
-        assertFalse(helper.removeIngredientFromDB(new Ingredient(0, "test"), "test"));
-        assertFalse(helper.addIngredientToDatabase(new Ingredient(0, "test"), "test"));
+        assertFalse(helper.removeIngredientFromDB(new Ingredient(805, "Kuh"), "mains"));
+        assertFalse(helper.addIngredientToDatabase(new Ingredient(805, "Kuha"), "mains"));
         helper.getReader().closeReader();
         assertEquals(null, helper.search("kana"));
     }
@@ -111,25 +105,34 @@ public class IngredientSearchHelperTest {
 
     @Test
     public void testAddAndRemoveIngredient() {
-        if (helper.getIngredientProcessor().getIngredients().get("sides").containsKey(34110)) {
-            helper.removeIngredientFromDB(new Ingredient(34110, "Maizena suuruste ruskea/vaalea"), "sides");
+        if (helper.getIngredientProcessor().getIngredients().get("sides").containsKey(3208)) {
+            helper.removeIngredientFromDB(new Ingredient(3208, "Kukkakaalimuhennos"), "sides");
         }
-        assertTrue(helper.addIngredientToDatabase(new Ingredient(34110, "Maizena suuruste ruskea/vaalea"), "sides"));
-        assertEquals(34110, helper.getIngredientByName("Maizena suuruste ruskea/vaalea").getId());
-        assertEquals("Maizena suuruste ruskea/vaalea", helper.getIngredientProcessor().getIngredients().get("sides").get(34110).getName());
-        assertTrue(helper.removeIngredientFromDB(new Ingredient(34110, "Maizena suuruste ruskea/vaalea"), "sides"));
-        assertFalse(helper.getIngredientProcessor().getIngredients().get("mains").containsKey(34110));
+        assertTrue(helper.addIngredientToDatabase(new Ingredient(3208, "Kukkakaalimuhennos"), "sides"));
+        assertEquals(3208, helper.getIngredientByName("Kukkakaalimuhennos").getId());
+        assertEquals("Kukkakaalimuhennos", helper.getIngredientProcessor().getIngredients().get("sides").get(3208).getName());
+        assertTrue(helper.removeIngredientFromDB(new Ingredient(3208, "Kukkakaalimuhennos"), "sides"));
+        assertFalse(helper.getIngredientProcessor().getIngredients().get("sides").containsKey(3208));
     }
-    
+
     @Test
     public void testAddIngClosedConnection() {
         helper.getDbWriter().closeConnection();
         assertFalse(helper.addIngredientToDatabase(new Ingredient(34110, "Maizena suuruste ruskea/vaalea"), "sides"));
     }
-    
+
     @Test
     public void testRemoveIngClosedConnection() {
         helper.getDbWriter().closeConnection();
-        assertFalse(helper.removeIngredientFromDB(new Ingredient(34110, "Maizena suuruste ruskea/vaalea"), "mains"));
+        assertFalse(helper.removeIngredientFromDB(new Ingredient(34110, "Maizena suuruste ruskea/vaalea"), "sides"));
+    }
+
+    @Test
+    public void testMacroChecker() {
+        Ingredient ing = new Ingredient(99999, "test");
+        ing.setProtein(4.99);
+        ing.setCalories(100.01);
+        assertFalse(helper.addIngredientToDatabase(ing, "mains"));
+        assertFalse(helper.addIngredientToDatabase(ing, "misc"));
     }
 }

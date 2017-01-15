@@ -22,14 +22,15 @@ public class CalculateMealTest {
     private final double delta = 0.0001;
     private final double bigDelta = 5.5;
     private final double hugeDelta = 9.5;
-    private final double proteinDelta = 15.5;
+    private final double proteinDelta = 19.5;
+    ProcessIngredients pi;
 
     public CalculateMealTest() {
     }
 
     @Before
     public void setUp() {
-        ProcessIngredients pi = new ProcessIngredients(true);
+        this.pi = new ProcessIngredients(true);
         this.cm = new CalculateMeal(pi);
         this.helper = new MealCalcHelper(pi);
     }
@@ -108,7 +109,7 @@ public class CalculateMealTest {
 
     @Test
     public void testGetMaingIngs() {
-        List<Ingredient> ings = helper.getMainIngredients();
+        List<Ingredient> ings = pi.getMainIngredients();
         assertTrue(ings.size() > 4);
     }
 
@@ -125,20 +126,22 @@ public class CalculateMealTest {
             assertEquals(calories, cm.getMeal().getCalories(), hugeDelta);
             assertEquals(protein, cm.getMeal().getProtein(), proteinDelta);
             assertEquals(fat, cm.getMeal().getFat(), bigDelta);
-            assertEquals("Juurekset, uunissa", cm.getMeal().getMisc().getName());
             assertTrue(cm.getMeal().getSauceAmount() >= 0);
             if (cm.getMeal().getSideIngredient().getProtein() >= 3 || cm.getMeal().getMainIngredient().getProtein() >= 20) {
                 assertEquals(1, cm.getMeal().getMiscAmount(), delta);
             } else {
                 assertEquals(0.5, cm.getMeal().getMiscAmount(), delta);
             }
+            assertTrue(cm.getMeal().getMainIngredientAmount() >= 0.5);
+            assertTrue(cm.getMeal().getSideIngredientAmount() >= 0);
+            assertTrue(cm.getMeal().getSauceAmount() >= 0);
         }
 
     }
 
     private int getRandomMain() {
-        int seed = new Random().nextInt(helper.getMainIngredients().size());
-        return helper.getMainIngredients().get(seed).getId();
+        int seed = new Random().nextInt(pi.getMainIngredients().size());
+        return pi.getMainIngredients().get(seed).getId();
     }
 
     @Test

@@ -27,8 +27,9 @@ import static org.junit.Assert.*;
  * @author kari
  */
 public class DatabaseAccessWriteTest {
+
     private DatabaseAccessWrite dbWriter;
-    
+
     public DatabaseAccessWriteTest() {
     }
 
@@ -37,18 +38,24 @@ public class DatabaseAccessWriteTest {
         this.dbWriter = new DatabaseAccessWrite();
     }
 
-     @Test
-     public void testAddIngredientWithSomethingAlreadyThere() throws SQLException {
-         assertTrue(dbWriter.addIntoUserIngredients(new Ingredient(34110, "Maizena suuruste ruskea/vaalea"), "mains"));
-         assertFalse(dbWriter.addIntoUserIngredients(new Ingredient(34110, "Maizena suuruste ruskea/vaalea"), "mains"));
-         assertTrue(dbWriter.removeUserIngredient(new Ingredient(34110, "Maizena suuruste ruskea/vaalea"), "mains"));
-         assertFalse(dbWriter.removeUserIngredient(new Ingredient(34110, "Maizena suuruste ruskea/vaalea"), "mains"));
-     }
-     
-     @Test
-     public void testAddAndRemoveClosedDatabase() {
-         dbWriter.closeConnection();
-         assertFalse(dbWriter.addIntoUserIngredients(new Ingredient(34110, "Maizena suuruste ruskea/vaalea"), "mains"));
-         assertFalse(dbWriter.removeUserIngredient(new Ingredient(34110, "Maizena suuruste ruskea/vaalea"), "mains"));
-     }
+    @Test
+    public void testAddIngredientWithSomethingAlreadyThere() throws SQLException {
+        dbWriter.removeUserIngredient(new Ingredient(34256, "Kirjolohi, kasvatettu"), "mains");
+        assertTrue(dbWriter.addIntoUserIngredients(new Ingredient(34256, "Kirjolohi, kasvatettu"), "mains"));
+        assertFalse(dbWriter.addIntoUserIngredients(new Ingredient(34256, "Kirjolohi, kasvatettu"), "mains"));
+        assertTrue(dbWriter.removeUserIngredient(new Ingredient(34256, "Kirjolohi, kasvatettu"), "mains"));
+        assertFalse(dbWriter.removeUserIngredient(new Ingredient(34256, "Kirjolohi, kasvatettu"), "mains"));
+    }
+
+    @Test
+    public void testAddAndRemoveClosedDatabase() {
+        dbWriter.closeConnection();
+        assertFalse(dbWriter.addIntoUserIngredients(new Ingredient(34256, "Kirjolohi, kasvatettu"), "mains"));
+        assertFalse(dbWriter.removeUserIngredient(new Ingredient(34256, "Kirjolohi, kasvatettu"), "mains"));
+    }
+
+    @Test
+    public void testCloser() {
+        assertTrue(dbWriter.closeConnection());
+    }
 }

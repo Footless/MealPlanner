@@ -44,12 +44,16 @@ public class CSVReader {
 
     /**
      * Sulkee lukijan.
+     *
+     * @return boolean, jos lukijan sulkeminen onnistuu
      */
-    public void closeReader() {
+    public boolean closeReader() {
         try {
             this.reader.close();
+            return true;
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Virhe lukijaa suljettaessa: " + ex, "Virhe", 0);
+            return false;
         }
     }
 
@@ -105,22 +109,8 @@ public class CSVReader {
     public void searchAllMacros(List<Ingredient> allIngs) throws IOException {
         Collections.sort(allIngs, (i1, i2) -> i1.getId() - i2.getId());
         ArrayList<String> macros = new ArrayList<>();
-        InputStream in = getClass().getResourceAsStream("/file/" + fileName);
-        BufferedReader testReader = new BufferedReader(new InputStreamReader(in));
-        String line = null;
-        while ((line = testReader.readLine()) != null) {
-            macros.add(line);
-        }
-        testReader.close();
-        int start = 0;
-        for (Ingredient ing : allIngs) {
-            for (int i = start; i < macros.size(); i++) {
-                if (setMacros(macros.get(i), ing)) {
-                    start = i + 35;
-                    break;
-                }
-            }
-        }
+        addMacrosToListFromFile(macros);
+        setMacrosToAll(allIngs, macros);
     }
 
     /**
@@ -150,9 +140,7 @@ public class CSVReader {
     }
 
     private void addIngredient(List<Ingredient> ingredients, Scanner scanner, String line) {
-        scanner = new Scanner(line);
-        scanner.useLocale(loc);
-        scanner.useDelimiter(";");
+        scanner = setScanner(line);
         int i = 0;
         String id = "";
         while (scanner.hasNext()) {
@@ -168,14 +156,20 @@ public class CSVReader {
         }
     }
 
-    private Ingredient searchForIngredientByName(Scanner scanner, String s, String line) {
-        scanner = new Scanner(line);
+    private Scanner setScanner(String line) {
+        Scanner scanner = new Scanner(line);
+        scanner.useLocale(loc);
         scanner.useDelimiter(";");
+        return scanner;
+    }
+
+    private Ingredient searchForIngredientByName(Scanner scanner, String s, String line) {
+        scanner = setScanner(line);
         int i = 0;
         String id = "";
         while (scanner.hasNext()) {
             String next = scanner.next();
-            if (i == 0 && next.length() < 6 && next.length() > 0) {
+            if (i == 0 && next.length() < 6) {
                 id = next;
             }
             if (i == 1 && next.toLowerCase().contains(s.toLowerCase()) && id.length() > 0) {
@@ -187,26 +181,13 @@ public class CSVReader {
     }
 
     private boolean setMacros(String line, Ingredient ing) {
-        Scanner scanner = new Scanner(line);
-        scanner.useDelimiter(";");
-        scanner.useLocale(loc);
+        Scanner scanner = setScanner(line);
         int i = 0;
         while (scanner.hasNext()) {
             String next = scanner.next();
-            if (i == 0 && next.length() < 6 && Integer.parseInt(next) == ing.getId()) {
-                String macro = scanner.next();
-                if (macro.contains("ENERC")) {
-                    ing.setCalories(Double.parseDouble(scanner.next().replace(',', '.')) / 4.184);
-                } else if (macro.contains("CHOAVL")) {
-                    ing.setCarb(Double.parseDouble(scanner.next().replace(',', '.')));
-                } else if (macro.contentEquals("FAT")) {
-                    ing.setFat(Double.parseDouble(scanner.next().replace(',', '.')));
-                } else if (macro.contains("PROT")) {
-                    ing.setProtein(Double.parseDouble(scanner.next().replace(',', '.')));
-                } else if (macro.contains("FIBC")) {
-                    ing.setFiber(Double.parseDouble(scanner.next().replace(',', '.')));
-                    return true;
-                }
+            boolean macroResult = analyseLineForMacros(next, i, scanner, ing);
+            if (macroResult) {
+                return true;
             }
             i++;
         }
@@ -215,6 +196,47 @@ public class CSVReader {
 
     private String parseString(String s) {
         return s.replace('\'', '´');
+    }
+
+    private void setMacrosToAll(List<Ingredient> allIngs, ArrayList<String> macros) {
+        int start = 0;
+        for (Ingredient ing : allIngs) {
+            for (int i = start; i < macros.size(); i++) {
+                if (setMacros(macros.get(i), ing)) {
+                    start = i;
+                    break;
+                }
+            }
+        }
+    }
+
+    private void addMacrosToListFromFile(ArrayList<String> macros) throws IOException {
+        InputStream in = getClass().getResourceAsStream("/file/" + fileName);
+        try (BufferedReader testReader = new BufferedReader(new InputStreamReader(in))) {
+            String line = null;
+            while ((line = testReader.readLine()) != null) {
+                macros.add(line);
+            }
+        }
+    }
+
+    private boolean analyseLineForMacros(String next, int i, Scanner scanner, Ingredient ing) {
+        if (i == 0 && next.length() < 6 && Integer.parseInt(next) == ing.getId()) {
+            String macro = scanner.next();
+            if (macro.contains("ENERC")) {
+                ing.setCalories(Double.parseDouble(scanner.next().replace(',', '.')) / 4.184);
+            } else if (macro.contains("CHOAVL")) {
+                ing.setCarb(Double.parseDouble(scanner.next().replace(',', '.')));
+            } else if (macro.contentEquals("FAT")) {
+                ing.setFat(Double.parseDouble(scanner.next().replace(',', '.')));
+            } else if (macro.contains("PROT")) {
+                ing.setProtein(Double.parseDouble(scanner.next().replace(',', '.')));
+            } else if (macro.contains("FIBC")) {
+                ing.setFiber(Double.parseDouble(scanner.next().replace(',', '.')));
+                return true;
+            }
+        }
+        return false;
     }
 
 }

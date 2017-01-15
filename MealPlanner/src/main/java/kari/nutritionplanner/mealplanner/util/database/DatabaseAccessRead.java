@@ -60,20 +60,25 @@ public class DatabaseAccessRead {
      * Tarkistaa sekä ensin luotavan taulun että viimeisenä luotavan taulun.
      *
      * @return true tai false sen mukaan onko haluttuja tauluja olemassa.
-     * @throws SQLException jos tietokantaa ei löydy ja yhteys epäonnistuu.
      */
-    public boolean databaseOk() throws SQLException {
-//        conn = DriverManager.getConnection(CONNECTIONADDRESS);
-        DatabaseMetaData dbm = conn.getMetaData();
-        ResultSet tables = dbm.getTables(null, null, "MAINS", null);
-        if (tables.next()) {
-            tables = dbm.getTables(null, null, "MACROS", null);
+    public boolean databaseOk() {
+        try {
+            //        conn = DriverManager.getConnection(CONNECTIONADDRESS);
+            DatabaseMetaData dbm = conn.getMetaData();
+            ResultSet tables = dbm.getTables(null, null, "MAINS", null);
             if (tables.next()) {
+                tables = dbm.getTables(null, null, "MACROS", null);
+                if (tables.next()) {
 //                conn.close();
-                return true;
+                    return true;
+                }
             }
-        }
 //        conn.close();
+            
+        } catch (SQLException ex) {
+            System.err.println("Virhe: " + ex.getLocalizedMessage());
+            return false;
+        }
         return false;
     }
 
@@ -95,7 +100,6 @@ public class DatabaseAccessRead {
             ing = new Ingredient(id, rs.getString("name"));
         }
         addMacros(stmt, ing);
-
 //        conn.close();
         return ing;
     }

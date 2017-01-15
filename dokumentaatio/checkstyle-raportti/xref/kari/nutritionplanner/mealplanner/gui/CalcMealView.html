@@ -41,19 +41,19 @@
 <a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">import</strong> kari.nutritionplanner.mealplanner.gui.controllers.SelectMainIngListener;
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>  <strong class="jxr_keyword">import</strong> kari.nutritionplanner.mealplanner.gui.controllers.SelectProtListener;
 <a class="jxr_linenumber" name="L35" href="#L35">35</a>  <strong class="jxr_keyword">import</strong> kari.nutritionplanner.mealplanner.domain.Ingredient;
-<a class="jxr_linenumber" name="L36" href="#L36">36</a>  <strong class="jxr_keyword">import</strong> kari.nutritionplanner.mealplanner.servicelayer.CalculateMeal;
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>  <strong class="jxr_keyword">import</strong> kari.nutritionplanner.mealplanner.util.CalculateMeal;
 <a class="jxr_linenumber" name="L37" href="#L37">37</a>  <strong class="jxr_keyword">import</strong> kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
 <a class="jxr_linenumber" name="L38" href="#L38">38</a>  
 <a class="jxr_linenumber" name="L39" href="#L39">39</a>  <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L40" href="#L40">40</a>  <em class="jxr_javadoccomment"> * Luokka aterian laskemiselle, sisältää kaikki osat varsinaista aterian</em>
-<a class="jxr_linenumber" name="L41" href="#L41">41</a>  <em class="jxr_javadoccomment"> * laskemista.</em>
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>  <em class="jxr_javadoccomment"> * laskemista varten.</em>
 <a class="jxr_linenumber" name="L42" href="#L42">42</a>  <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>  <em class="jxr_javadoccomment"> * @author kari</em>
 <a class="jxr_linenumber" name="L44" href="#L44">44</a>  <em class="jxr_javadoccomment"> */</em>
 <a class="jxr_linenumber" name="L45" href="#L45">45</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../kari/nutritionplanner/mealplanner/gui/CalcMealView.html">CalcMealView</a> {
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>  
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> CardLayout cardL;
-<a class="jxr_linenumber" name="L48" href="#L48">48</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../kari/nutritionplanner/mealplanner/servicelayer/CalculateMeal.html">CalculateMeal</a> mealCalculator;
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../kari/nutritionplanner/mealplanner/util/CalculateMeal.html">CalculateMeal</a> mealCalculator;
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../kari/nutritionplanner/mealplanner/servicelayer/MealCalcHelper.html">MealCalcHelper</a> helper;
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../kari/nutritionplanner/mealplanner/gui/ComponentFactory.html">ComponentFactory</a> compFactory;
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>  
@@ -68,7 +68,7 @@
 <a class="jxr_linenumber" name="L60" href="#L60">60</a>  <em class="jxr_javadoccomment">     * @param helper MealCalcHelper-olio auttamaan ja säilömään</em>
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>  <em class="jxr_javadoccomment">     * @param compFactory ComponentFactory tekemään komponentteja</em>
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../kari/nutritionplanner/mealplanner/gui/CalcMealView.html">CalcMealView</a>(CardLayout cardL, <a href="../../../../kari/nutritionplanner/mealplanner/servicelayer/CalculateMeal.html">CalculateMeal</a> mealCalculator, <a href="../../../../kari/nutritionplanner/mealplanner/servicelayer/MealCalcHelper.html">MealCalcHelper</a> helper, <a href="../../../../kari/nutritionplanner/mealplanner/gui/ComponentFactory.html">ComponentFactory</a> compFactory) {
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../kari/nutritionplanner/mealplanner/gui/CalcMealView.html">CalcMealView</a>(CardLayout cardL, <a href="../../../../kari/nutritionplanner/mealplanner/util/CalculateMeal.html">CalculateMeal</a> mealCalculator, <a href="../../../../kari/nutritionplanner/mealplanner/servicelayer/MealCalcHelper.html">MealCalcHelper</a> helper, <a href="../../../../kari/nutritionplanner/mealplanner/gui/ComponentFactory.html">ComponentFactory</a> compFactory) {
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>          <strong class="jxr_keyword">this</strong>.cardL = cardL;
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>          <strong class="jxr_keyword">this</strong>.mealCalculator = mealCalculator;
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>          <strong class="jxr_keyword">this</strong>.helper = helper;
@@ -116,7 +116,7 @@
 <a class="jxr_linenumber" name="L108" href="#L108">108</a>     <strong class="jxr_keyword">public</strong> JPanel createCaloriesCard(Container container) {
 <a class="jxr_linenumber" name="L109" href="#L109">109</a>         JPanel card = <strong class="jxr_keyword">new</strong> JPanel(<strong class="jxr_keyword">new</strong> BorderLayout());
 <a class="jxr_linenumber" name="L110" href="#L110">110</a>         JLabel caloriesInstructions = compFactory.createLabel(<span class="jxr_string">"Valitse haluamasi määrä kaloreita:"</span>);
-<a class="jxr_linenumber" name="L111" href="#L111">111</a>         <a href="../../../../kari/nutritionplanner/mealplanner/domain/Ingredient.html">Ingredient</a> ing = mealCalculator.getIngredients().get(<span class="jxr_string">"mains"</span>).get(helper.getMainIngredientId());
+<a class="jxr_linenumber" name="L111" href="#L111">111</a>         <a href="../../../../kari/nutritionplanner/mealplanner/domain/Ingredient.html">Ingredient</a> ing = compFactory.getSearchHelper().getIngredientProcessor().getIngredients().get(<span class="jxr_string">"mains"</span>).get(helper.getMainIngredientId());
 <a class="jxr_linenumber" name="L112" href="#L112">112</a>         <strong class="jxr_keyword">double</strong> mul = getMultiplier(ing);
 <a class="jxr_linenumber" name="L113" href="#L113">113</a>         <strong class="jxr_keyword">int</strong> min = (<strong class="jxr_keyword">int</strong>) Math.ceil(ing.getCalories() * mul);
 <a class="jxr_linenumber" name="L114" href="#L114">114</a>         JSlider calorieSlider = compFactory.createSlider(min, 800, 400);
@@ -136,84 +136,81 @@
 <a class="jxr_linenumber" name="L128" href="#L128">128</a>     <strong class="jxr_keyword">public</strong> JPanel createProteinsCard(Container container) {
 <a class="jxr_linenumber" name="L129" href="#L129">129</a>         JPanel card = <strong class="jxr_keyword">new</strong> JPanel(<strong class="jxr_keyword">new</strong> BorderLayout());
 <a class="jxr_linenumber" name="L130" href="#L130">130</a>         JLabel proteinInstructions = compFactory.createLabel(<span class="jxr_string">"Valitse haluamasi proteiinin määrä:"</span>);
-<a class="jxr_linenumber" name="L131" href="#L131">131</a>         <a href="../../../../kari/nutritionplanner/mealplanner/domain/Ingredient.html">Ingredient</a> ing = mealCalculator.getIngredients().get(<span class="jxr_string">"mains"</span>).get(helper.getMainIngredientId());
-<a class="jxr_linenumber" name="L132" href="#L132">132</a>         System.out.println(<span class="jxr_string">"ing : "</span> + ing);
-<a class="jxr_linenumber" name="L133" href="#L133">133</a>         System.out.println(<span class="jxr_string">"ing protein: "</span> + ing.getProtein());
-<a class="jxr_linenumber" name="L134" href="#L134">134</a>         <strong class="jxr_keyword">double</strong> mul = getMultiplier(ing);
-<a class="jxr_linenumber" name="L135" href="#L135">135</a>         System.out.println(<span class="jxr_string">"mul: "</span> + mul);
-<a class="jxr_linenumber" name="L136" href="#L136">136</a>         <strong class="jxr_keyword">int</strong> min = (<strong class="jxr_keyword">int</strong>) Math.ceil(ing.getProtein() * mul);
-<a class="jxr_linenumber" name="L137" href="#L137">137</a>         JSlider proteinSlider = compFactory.createSlider(min, min * 3, min * 2);
-<a class="jxr_linenumber" name="L138" href="#L138">138</a>         card.add(proteinInstructions, BorderLayout.NORTH);
-<a class="jxr_linenumber" name="L139" href="#L139">139</a>         card.add(proteinSlider, BorderLayout.CENTER);
-<a class="jxr_linenumber" name="L140" href="#L140">140</a>         ActionListener spl = <strong class="jxr_keyword">new</strong> <a href="../../../../kari/nutritionplanner/mealplanner/gui/controllers/SelectProtListener.html">SelectProtListener</a>(<strong class="jxr_keyword">this</strong>, cardL, proteinSlider, container, <span class="jxr_string">"askFat"</span>);
-<a class="jxr_linenumber" name="L141" href="#L141">141</a>         compFactory.addNextAndBackButtons(container, card, <span class="jxr_string">"askCalories"</span>, spl);
-<a class="jxr_linenumber" name="L142" href="#L142">142</a>         <strong class="jxr_keyword">return</strong> card;
-<a class="jxr_linenumber" name="L143" href="#L143">143</a>     }
-<a class="jxr_linenumber" name="L144" href="#L144">144</a> 
-<a class="jxr_linenumber" name="L145" href="#L145">145</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L146" href="#L146">146</a> <em class="jxr_javadoccomment">     * Luo näkymän jossa valitaan haluttu rasvan määrä.</em>
-<a class="jxr_linenumber" name="L147" href="#L147">147</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L148" href="#L148">148</a> <em class="jxr_javadoccomment">     * @param container Kaikki "kortit" sisältävä JPanel</em>
-<a class="jxr_linenumber" name="L149" href="#L149">149</a> <em class="jxr_javadoccomment">     * @return palauttaa valmiin näkymän</em>
-<a class="jxr_linenumber" name="L150" href="#L150">150</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L151" href="#L151">151</a>     <strong class="jxr_keyword">public</strong> JPanel createFatsCard(Container container) {
-<a class="jxr_linenumber" name="L152" href="#L152">152</a>         JPanel card = <strong class="jxr_keyword">new</strong> JPanel(<strong class="jxr_keyword">new</strong> BorderLayout());
-<a class="jxr_linenumber" name="L153" href="#L153">153</a>         JLabel fatInstructions = compFactory.createLabel(<span class="jxr_string">"Valitse haluamasi rasvan määrä:"</span>);
-<a class="jxr_linenumber" name="L154" href="#L154">154</a>         <a href="../../../../kari/nutritionplanner/mealplanner/domain/Ingredient.html">Ingredient</a> ing = mealCalculator.getIngredients().get(<span class="jxr_string">"mains"</span>).get(helper.getMainIngredientId());
-<a class="jxr_linenumber" name="L155" href="#L155">155</a>         <strong class="jxr_keyword">double</strong> mul = getMultiplier(ing);
-<a class="jxr_linenumber" name="L156" href="#L156">156</a>         <strong class="jxr_keyword">int</strong> min = (<strong class="jxr_keyword">int</strong>) Math.ceil(ing.getFat() * mul);
-<a class="jxr_linenumber" name="L157" href="#L157">157</a>         JSlider fatSlider = compFactory.createSlider(min, 40, 20);
-<a class="jxr_linenumber" name="L158" href="#L158">158</a>         card.add(fatInstructions, BorderLayout.NORTH);
-<a class="jxr_linenumber" name="L159" href="#L159">159</a>         card.add(fatSlider, BorderLayout.CENTER);
-<a class="jxr_linenumber" name="L160" href="#L160">160</a>         ActionListener sfl = <strong class="jxr_keyword">new</strong> <a href="../../../../kari/nutritionplanner/mealplanner/gui/controllers/SelectFatListener.html">SelectFatListener</a>(<strong class="jxr_keyword">this</strong>, cardL, mealCalculator, fatSlider, container, <span class="jxr_string">"readyMeal"</span>);
-<a class="jxr_linenumber" name="L161" href="#L161">161</a>         compFactory.addNextAndBackButtons(container, card, <span class="jxr_string">"askProtein"</span>, sfl);
-<a class="jxr_linenumber" name="L162" href="#L162">162</a>         <strong class="jxr_keyword">return</strong> card;
-<a class="jxr_linenumber" name="L163" href="#L163">163</a>     }
-<a class="jxr_linenumber" name="L164" href="#L164">164</a> 
-<a class="jxr_linenumber" name="L165" href="#L165">165</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L166" href="#L166">166</a> <em class="jxr_javadoccomment">     * Luo näkymän jossa näytetään luotu ateria sekä sen sisältämät makrot.</em>
-<a class="jxr_linenumber" name="L167" href="#L167">167</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L168" href="#L168">168</a> <em class="jxr_javadoccomment">     * @param container Kaikki "kortit" sisältävä JPanel</em>
-<a class="jxr_linenumber" name="L169" href="#L169">169</a> <em class="jxr_javadoccomment">     * @return palauttaa valmiin näkymän</em>
-<a class="jxr_linenumber" name="L170" href="#L170">170</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L171" href="#L171">171</a>     <strong class="jxr_keyword">public</strong> JPanel createReadyMealCard(Container container) {
-<a class="jxr_linenumber" name="L172" href="#L172">172</a>         JPanel card = <strong class="jxr_keyword">new</strong> JPanel(<strong class="jxr_keyword">new</strong> BorderLayout());
-<a class="jxr_linenumber" name="L173" href="#L173">173</a>         JLabel title = compFactory.createLabel(<span class="jxr_string">"Tässä ateriasi:"</span>);
-<a class="jxr_linenumber" name="L174" href="#L174">174</a>         compFactory.createMealText(card, mealCalculator, helper);
-<a class="jxr_linenumber" name="L175" href="#L175">175</a>         JPanel buttons = <strong class="jxr_keyword">new</strong> JPanel(<strong class="jxr_keyword">new</strong> GridLayout(2, 1));
-<a class="jxr_linenumber" name="L176" href="#L176">176</a>         JButton backToStart = compFactory.createButton(<span class="jxr_string">"Valmis"</span>);
-<a class="jxr_linenumber" name="L177" href="#L177">177</a>         backToStart.setActionCommand(<span class="jxr_string">"clear"</span>);
-<a class="jxr_linenumber" name="L178" href="#L178">178</a>         JButton back = compFactory.createButton(<span class="jxr_string">"Takaisin"</span>);
-<a class="jxr_linenumber" name="L179" href="#L179">179</a>         ActionListener start = <strong class="jxr_keyword">new</strong> <a href="../../../../kari/nutritionplanner/mealplanner/gui/controllers/SelectCardListener.html">SelectCardListener</a>(cardL, container, <span class="jxr_string">"start"</span>);
-<a class="jxr_linenumber" name="L180" href="#L180">180</a>         ActionListener prevCardL = <strong class="jxr_keyword">new</strong> <a href="../../../../kari/nutritionplanner/mealplanner/gui/controllers/SelectCardListener.html">SelectCardListener</a>(cardL, container, <span class="jxr_string">"askFat"</span>);
-<a class="jxr_linenumber" name="L181" href="#L181">181</a>         back.addActionListener(prevCardL);
-<a class="jxr_linenumber" name="L182" href="#L182">182</a>         backToStart.addActionListener(start);
-<a class="jxr_linenumber" name="L183" href="#L183">183</a>         buttons.add(backToStart);
-<a class="jxr_linenumber" name="L184" href="#L184">184</a>         buttons.add(back);
-<a class="jxr_linenumber" name="L185" href="#L185">185</a>         card.add(buttons, BorderLayout.SOUTH);
-<a class="jxr_linenumber" name="L186" href="#L186">186</a>         card.add(title, BorderLayout.NORTH);
-<a class="jxr_linenumber" name="L187" href="#L187">187</a>         <strong class="jxr_keyword">return</strong> card;
-<a class="jxr_linenumber" name="L188" href="#L188">188</a>     }
-<a class="jxr_linenumber" name="L189" href="#L189">189</a> 
-<a class="jxr_linenumber" name="L190" href="#L190">190</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">double</strong> getMultiplier(<a href="../../../../kari/nutritionplanner/mealplanner/domain/Ingredient.html">Ingredient</a> ing) {
-<a class="jxr_linenumber" name="L191" href="#L191">191</a>         <strong class="jxr_keyword">if</strong> (ing.getProtein() &gt; 23) {
-<a class="jxr_linenumber" name="L192" href="#L192">192</a>             <strong class="jxr_keyword">return</strong> 0.5;
-<a class="jxr_linenumber" name="L193" href="#L193">193</a>         } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L194" href="#L194">194</a>             <strong class="jxr_keyword">return</strong> 1;
-<a class="jxr_linenumber" name="L195" href="#L195">195</a>         }
-<a class="jxr_linenumber" name="L196" href="#L196">196</a>     }
-<a class="jxr_linenumber" name="L197" href="#L197">197</a> 
-<a class="jxr_linenumber" name="L198" href="#L198">198</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L199" href="#L199">199</a> <em class="jxr_javadoccomment">     * Helppo tapa tarjota helper ActionListenerien käyttöön, jokainen</em>
-<a class="jxr_linenumber" name="L200" href="#L200">200</a> <em class="jxr_javadoccomment">     * GetMealListener-luokan toteuttava olio saa konstruktorissa tämän luokan</em>
-<a class="jxr_linenumber" name="L201" href="#L201">201</a> <em class="jxr_javadoccomment">     * parametrinä.</em>
-<a class="jxr_linenumber" name="L202" href="#L202">202</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L203" href="#L203">203</a> <em class="jxr_javadoccomment">     * @return MealCalculateHelper-olio</em>
-<a class="jxr_linenumber" name="L204" href="#L204">204</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L205" href="#L205">205</a>     <strong class="jxr_keyword">public</strong> <a href="../../../../kari/nutritionplanner/mealplanner/servicelayer/MealCalcHelper.html">MealCalcHelper</a> getHelper() {
-<a class="jxr_linenumber" name="L206" href="#L206">206</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>.helper;
-<a class="jxr_linenumber" name="L207" href="#L207">207</a>     }
-<a class="jxr_linenumber" name="L208" href="#L208">208</a> }
+<a class="jxr_linenumber" name="L131" href="#L131">131</a>         <a href="../../../../kari/nutritionplanner/mealplanner/domain/Ingredient.html">Ingredient</a> ing = compFactory.getSearchHelper().getIngredientProcessor().getIngredients().get(<span class="jxr_string">"mains"</span>).get(helper.getMainIngredientId());
+<a class="jxr_linenumber" name="L132" href="#L132">132</a>         <strong class="jxr_keyword">double</strong> mul = getMultiplier(ing);
+<a class="jxr_linenumber" name="L133" href="#L133">133</a>         <strong class="jxr_keyword">int</strong> min = (<strong class="jxr_keyword">int</strong>) Math.ceil(ing.getProtein() * mul);
+<a class="jxr_linenumber" name="L134" href="#L134">134</a>         JSlider proteinSlider = compFactory.createSlider(min, min * 3, min * 2);
+<a class="jxr_linenumber" name="L135" href="#L135">135</a>         card.add(proteinInstructions, BorderLayout.NORTH);
+<a class="jxr_linenumber" name="L136" href="#L136">136</a>         card.add(proteinSlider, BorderLayout.CENTER);
+<a class="jxr_linenumber" name="L137" href="#L137">137</a>         ActionListener spl = <strong class="jxr_keyword">new</strong> <a href="../../../../kari/nutritionplanner/mealplanner/gui/controllers/SelectProtListener.html">SelectProtListener</a>(<strong class="jxr_keyword">this</strong>, cardL, proteinSlider, container, <span class="jxr_string">"askFat"</span>);
+<a class="jxr_linenumber" name="L138" href="#L138">138</a>         compFactory.addNextAndBackButtons(container, card, <span class="jxr_string">"askCalories"</span>, spl);
+<a class="jxr_linenumber" name="L139" href="#L139">139</a>         <strong class="jxr_keyword">return</strong> card;
+<a class="jxr_linenumber" name="L140" href="#L140">140</a>     }
+<a class="jxr_linenumber" name="L141" href="#L141">141</a> 
+<a class="jxr_linenumber" name="L142" href="#L142">142</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L143" href="#L143">143</a> <em class="jxr_javadoccomment">     * Luo näkymän jossa valitaan haluttu rasvan määrä.</em>
+<a class="jxr_linenumber" name="L144" href="#L144">144</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L145" href="#L145">145</a> <em class="jxr_javadoccomment">     * @param container Kaikki "kortit" sisältävä JPanel</em>
+<a class="jxr_linenumber" name="L146" href="#L146">146</a> <em class="jxr_javadoccomment">     * @return palauttaa valmiin näkymän</em>
+<a class="jxr_linenumber" name="L147" href="#L147">147</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L148" href="#L148">148</a>     <strong class="jxr_keyword">public</strong> JPanel createFatsCard(Container container) {
+<a class="jxr_linenumber" name="L149" href="#L149">149</a>         JPanel card = <strong class="jxr_keyword">new</strong> JPanel(<strong class="jxr_keyword">new</strong> BorderLayout());
+<a class="jxr_linenumber" name="L150" href="#L150">150</a>         JLabel fatInstructions = compFactory.createLabel(<span class="jxr_string">"Valitse haluamasi rasvan määrä:"</span>);
+<a class="jxr_linenumber" name="L151" href="#L151">151</a>         <a href="../../../../kari/nutritionplanner/mealplanner/domain/Ingredient.html">Ingredient</a> ing = compFactory.getSearchHelper().getIngredientProcessor().getIngredients().get(<span class="jxr_string">"mains"</span>).get(helper.getMainIngredientId());
+<a class="jxr_linenumber" name="L152" href="#L152">152</a>         <strong class="jxr_keyword">double</strong> mul = getMultiplier(ing);
+<a class="jxr_linenumber" name="L153" href="#L153">153</a>         <strong class="jxr_keyword">int</strong> min = (<strong class="jxr_keyword">int</strong>) Math.ceil(ing.getFat() * mul) + 5;
+<a class="jxr_linenumber" name="L154" href="#L154">154</a>         JSlider fatSlider = compFactory.createSlider(min, min * 4, min * 2);
+<a class="jxr_linenumber" name="L155" href="#L155">155</a>         card.add(fatInstructions, BorderLayout.NORTH);
+<a class="jxr_linenumber" name="L156" href="#L156">156</a>         card.add(fatSlider, BorderLayout.CENTER);
+<a class="jxr_linenumber" name="L157" href="#L157">157</a>         ActionListener sfl = <strong class="jxr_keyword">new</strong> <a href="../../../../kari/nutritionplanner/mealplanner/gui/controllers/SelectFatListener.html">SelectFatListener</a>(<strong class="jxr_keyword">this</strong>, cardL, mealCalculator, fatSlider, container, <span class="jxr_string">"readyMeal"</span>);
+<a class="jxr_linenumber" name="L158" href="#L158">158</a>         compFactory.addNextAndBackButtons(container, card, <span class="jxr_string">"askProtein"</span>, sfl);
+<a class="jxr_linenumber" name="L159" href="#L159">159</a>         <strong class="jxr_keyword">return</strong> card;
+<a class="jxr_linenumber" name="L160" href="#L160">160</a>     }
+<a class="jxr_linenumber" name="L161" href="#L161">161</a> 
+<a class="jxr_linenumber" name="L162" href="#L162">162</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L163" href="#L163">163</a> <em class="jxr_javadoccomment">     * Luo näkymän jossa näytetään luotu ateria sekä sen sisältämät makrot.</em>
+<a class="jxr_linenumber" name="L164" href="#L164">164</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L165" href="#L165">165</a> <em class="jxr_javadoccomment">     * @param container Kaikki "kortit" sisältävä JPanel</em>
+<a class="jxr_linenumber" name="L166" href="#L166">166</a> <em class="jxr_javadoccomment">     * @return palauttaa valmiin näkymän</em>
+<a class="jxr_linenumber" name="L167" href="#L167">167</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L168" href="#L168">168</a>     <strong class="jxr_keyword">public</strong> JPanel createReadyMealCard(Container container) {
+<a class="jxr_linenumber" name="L169" href="#L169">169</a>         JPanel card = <strong class="jxr_keyword">new</strong> JPanel(<strong class="jxr_keyword">new</strong> BorderLayout());
+<a class="jxr_linenumber" name="L170" href="#L170">170</a>         JLabel title = compFactory.createLabel(<span class="jxr_string">"Tässä ateriasi:"</span>);
+<a class="jxr_linenumber" name="L171" href="#L171">171</a>         compFactory.createMealText(card, mealCalculator, helper);
+<a class="jxr_linenumber" name="L172" href="#L172">172</a>         JPanel buttons = <strong class="jxr_keyword">new</strong> JPanel(<strong class="jxr_keyword">new</strong> GridLayout(2, 1));
+<a class="jxr_linenumber" name="L173" href="#L173">173</a>         JButton backToStart = compFactory.createButton(<span class="jxr_string">"Valmis"</span>);
+<a class="jxr_linenumber" name="L174" href="#L174">174</a>         backToStart.setActionCommand(<span class="jxr_string">"clear"</span>);
+<a class="jxr_linenumber" name="L175" href="#L175">175</a>         JButton back = compFactory.createButton(<span class="jxr_string">"Takaisin"</span>);
+<a class="jxr_linenumber" name="L176" href="#L176">176</a>         ActionListener start = <strong class="jxr_keyword">new</strong> <a href="../../../../kari/nutritionplanner/mealplanner/gui/controllers/SelectCardListener.html">SelectCardListener</a>(cardL, container, <span class="jxr_string">"start"</span>);
+<a class="jxr_linenumber" name="L177" href="#L177">177</a>         ActionListener prevCardL = <strong class="jxr_keyword">new</strong> <a href="../../../../kari/nutritionplanner/mealplanner/gui/controllers/SelectCardListener.html">SelectCardListener</a>(cardL, container, <span class="jxr_string">"askFat"</span>);
+<a class="jxr_linenumber" name="L178" href="#L178">178</a>         back.addActionListener(prevCardL);
+<a class="jxr_linenumber" name="L179" href="#L179">179</a>         backToStart.addActionListener(start);
+<a class="jxr_linenumber" name="L180" href="#L180">180</a>         buttons.add(backToStart);
+<a class="jxr_linenumber" name="L181" href="#L181">181</a>         buttons.add(back);
+<a class="jxr_linenumber" name="L182" href="#L182">182</a>         card.add(buttons, BorderLayout.SOUTH);
+<a class="jxr_linenumber" name="L183" href="#L183">183</a>         card.add(title, BorderLayout.NORTH);
+<a class="jxr_linenumber" name="L184" href="#L184">184</a>         <strong class="jxr_keyword">return</strong> card;
+<a class="jxr_linenumber" name="L185" href="#L185">185</a>     }
+<a class="jxr_linenumber" name="L186" href="#L186">186</a> 
+<a class="jxr_linenumber" name="L187" href="#L187">187</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">double</strong> getMultiplier(<a href="../../../../kari/nutritionplanner/mealplanner/domain/Ingredient.html">Ingredient</a> ing) {
+<a class="jxr_linenumber" name="L188" href="#L188">188</a>         <strong class="jxr_keyword">if</strong> (ing.getProtein() &gt; 23) {
+<a class="jxr_linenumber" name="L189" href="#L189">189</a>             <strong class="jxr_keyword">return</strong> 0.5;
+<a class="jxr_linenumber" name="L190" href="#L190">190</a>         } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L191" href="#L191">191</a>             <strong class="jxr_keyword">return</strong> 1;
+<a class="jxr_linenumber" name="L192" href="#L192">192</a>         }
+<a class="jxr_linenumber" name="L193" href="#L193">193</a>     }
+<a class="jxr_linenumber" name="L194" href="#L194">194</a> 
+<a class="jxr_linenumber" name="L195" href="#L195">195</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L196" href="#L196">196</a> <em class="jxr_javadoccomment">     * Helppo tapa tarjota helper ActionListenerien käyttöön, jokainen</em>
+<a class="jxr_linenumber" name="L197" href="#L197">197</a> <em class="jxr_javadoccomment">     * GetMealListener-luokan toteuttava olio saa konstruktorissa tämän luokan</em>
+<a class="jxr_linenumber" name="L198" href="#L198">198</a> <em class="jxr_javadoccomment">     * parametrinä.</em>
+<a class="jxr_linenumber" name="L199" href="#L199">199</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L200" href="#L200">200</a> <em class="jxr_javadoccomment">     * @return MealCalculateHelper-olio</em>
+<a class="jxr_linenumber" name="L201" href="#L201">201</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L202" href="#L202">202</a>     <strong class="jxr_keyword">public</strong> <a href="../../../../kari/nutritionplanner/mealplanner/servicelayer/MealCalcHelper.html">MealCalcHelper</a> getHelper() {
+<a class="jxr_linenumber" name="L203" href="#L203">203</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>.helper;
+<a class="jxr_linenumber" name="L204" href="#L204">204</a>     }
+<a class="jxr_linenumber" name="L205" href="#L205">205</a> }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2017. All rights reserved.</div>

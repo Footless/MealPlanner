@@ -72,6 +72,9 @@ public class ProcessIngredients {
             List<Ingredient> ingredients;
             ingredients = lfnr.getAllIngredients();
             lfnr.searchAllMacros(ingredients);
+            for (Ingredient ing : ingredients) {
+                this.mainIgredients.put(ing.getId(), ing);
+            }
         }
     }
 
@@ -82,6 +85,9 @@ public class ProcessIngredients {
             CSVReader lfnr = new CSVReader("side_ingredients.csv");
             List<Ingredient> ingredients = lfnr.getAllIngredients();
             lfnr.searchAllMacros(ingredients);
+            for (Ingredient ing : ingredients) {
+                this.sideIgredients.put(ing.getId(), ing);
+            }
         }
     }
 
@@ -92,6 +98,9 @@ public class ProcessIngredients {
             CSVReader lfnr = new CSVReader("sauces.csv");
             List<Ingredient> ingredients = lfnr.getAllIngredients();
             lfnr.searchAllMacros(ingredients);
+            for (Ingredient ing : ingredients) {
+                this.sauces.put(ing.getId(), ing);
+            }
         }
     }
 
@@ -102,6 +111,9 @@ public class ProcessIngredients {
             CSVReader lfnr = new CSVReader("sidesAndStuff.csv");
             List<Ingredient> ingredients = lfnr.getAllIngredients();
             lfnr.searchAllMacros(ingredients);
+            for (Ingredient ing : ingredients) {
+                this.sidesAndMisc.put(ing.getId(), ing);
+            }
         }
     }
 
@@ -173,4 +185,10 @@ public class ProcessIngredients {
     public boolean getDatabaseOk() {
         return this.databaseOk;
     }
+
+    public DatabaseAccessRead getDbAccess() {
+        return dbAccess;
+    }
+    
+    
 }

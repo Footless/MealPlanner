@@ -10,4 +10,4 @@ Ohjelma sisältää koko Finelin tarjoaman tietokannan ja käyttäjä voi hakea 
 
 ###Raaka-aineiden tarkastelu ja niiden poistaminen valittavissa olevista###
 
-Käytössä olevia raaka-aineita voi selailla ja niiden ravintoarvoja tutkia "Selaa raaka-aineita"-valikon kautta. Raaka-aineita voi myös poistaa käytöstä, kuitenkin niin että mikään kategoria ei voi olla täysin tyhjä.
+Käytössä olevia raaka-aineita voi selailla ja niiden ravintoarvoja tutkia "Selaa raaka-aineita"-valikon kautta. Raaka-aineita voi myös poistaa käytöstä, kuitenkin niin että mikään kategoria ei voi olla täysin tyhjä. Raaka-aineet luonnollisesti poistuvat vain käyttäjän käytössä olevista raaka-aineista, eivät koko tietokannasta.

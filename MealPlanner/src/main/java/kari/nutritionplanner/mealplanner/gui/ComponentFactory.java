@@ -282,9 +282,9 @@ public class ComponentFactory {
     private void addToolTipForButton(JComponent component, String select) {
         Ingredient ing;
         if (select.contains("main")) {
-            ing = helper.getMainIngredientsAsMap().get(helper.getIdForMainIng(component.getName()));
+            ing = searchHelper.getIngredientProcessor().getIngredients().get("mains").get(helper.getIdForMainIng(component.getName()));
         } else if (select.contains("side")) {
-            ing = helper.getSideIngredientsAsMap().get(helper.getIdForSideIng(component.getName()));
+            ing = searchHelper.getIngredientProcessor().getIngredients().get("sides").get(helper.getIdForSideIng(component.getName()));
         } else {
             ing = null;
         }

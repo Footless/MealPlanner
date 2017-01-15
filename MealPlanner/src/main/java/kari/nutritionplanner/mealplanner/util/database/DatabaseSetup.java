@@ -54,7 +54,7 @@ public class DatabaseSetup {
             setupDatabase();
             conn.close();
         } catch (ClassNotFoundException ex) {
-            System.err.print("Tpahtui virhe tietokantaa määrittäessä: " + ex.getLocalizedMessage());
+            System.err.print("Tapahtui virhe tietokantaa määrittäessä: " + ex.getLocalizedMessage());
         }
     }
 
@@ -96,6 +96,7 @@ public class DatabaseSetup {
         List<Ingredient> allIngs = reader.getAllIngredients();
         reader.closeReader();
         for (Ingredient ing : allIngs) {
+            
             stmt.execute("INSERT INTO INGREDIENTS VALUES(" + ing.getId() + ", '" + ing.getName().toLowerCase() + "')");
         }
         addMacros(allIngs, stmt);

@@ -58,6 +58,10 @@ public class MealTweaker {
         evenUpIngredients();
         roundUpIngredients();
     }
+    
+    protected Meal getMeal() {
+        return this.meal;
+    }
 
     private void proteinAlterer() {
         if (!proteinOk()) {
@@ -159,9 +163,13 @@ public class MealTweaker {
         } else if (fatOk() && meal.getSideIngredientAmount() > 0.05) {
             alterCaloriesFromMainAndSide(toSub);
             // tai sitten vähennetään vähän kaikkia
-        } else {
-            alterCaloriesFromAll(toSub);
+        }  else {
+            alterCaloriesFromSauce(toSub);
         }
+        checkLessThanZeros();
+    }
+    
+    protected void checkLessThanZeros() {
         if (meal.getSideIngredientAmount() < 0) {
             meal.setSideIngredientAmount(0);
         }
@@ -180,7 +188,7 @@ public class MealTweaker {
         } else if (proteinOk()) {
             alterCaloriesFromSideAndSauce(toAdd);
         } else {
-            alterCaloriesFromAll(toAdd);
+            alterCaloriesFromMainAndSide(toAdd);
         }
     }
 
@@ -206,15 +214,6 @@ public class MealTweaker {
         double amountToSubFromSauce = mc.calculateAmountForCalories((toAlter / 8 * 3), meal.getSauce());
         meal.setSideIngredientAmount(meal.getSideIngredientAmount() + amountToSubFromSide);
         meal.setSauceAmount(meal.getSauceAmount() + amountToSubFromSauce);
-    }
-
-    private void alterCaloriesFromAll(double toAlter) {
-        double amountToSubFromSide = mc.calculateAmountForCalories((toAlter / 8 * 5), meal.getSideIngredient());
-        double amountToSubFromSauce = mc.calculateAmountForCalories((toAlter / 8 * 2), meal.getSauce());
-        double amountToSubFromMain = mc.calculateAmountForCalories(toAlter / 8, meal.getMainIngredient());
-        meal.setSideIngredientAmount(meal.getSideIngredientAmount() + amountToSubFromSide);
-        meal.setSauceAmount(meal.getSauceAmount() + amountToSubFromSauce);
-        meal.setMainIngredientAmount(meal.getMainIngredientAmount() + amountToSubFromMain);
     }
 
     private void alterCaloriesFromMainAndSide(double toAlter) {

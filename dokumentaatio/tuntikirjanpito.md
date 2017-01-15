@@ -23,5 +23,8 @@ Päivä | Tunnit | Kuvaus
 9.1.2017 | 3h | tietokannan lisäystä
 10.1.2017 | 8h | tietokannan ja BufferedReaderin kanssa tappelua
 11.1.2017 | 8h | tietokannan loppuun viimeistely, refaktorointia, dokumentaatiota, uusia testejä
-
+12.1.2017 | 4h | tietokannan viimeistelyä...
+13.1.2017 | 2h | tietokannan viilailua, mahdollisuus lisäillä raaka-aineita
+14.1.2017 | 6h | refaktorointia, javadocia, testausta, viilailua
+15.1.2017 | 7h | dokumentointia, refaktorointia, testien hiomista
 

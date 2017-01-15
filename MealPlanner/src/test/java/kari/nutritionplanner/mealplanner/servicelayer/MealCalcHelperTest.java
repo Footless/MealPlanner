@@ -89,16 +89,5 @@ public class MealCalcHelperTest {
         helper.setSideIngredient("misc");
         assertEquals(99999, helper.getSideIngredientId());
     }
-    
-    @Test
-    public void testIngsAsMap() {
-        assertTrue(helper.getMainIngredientsAsMap().size() > 4);
-        assertTrue(helper.getSideIngredientsAsMap().size() > 3);
-    }
-    
-    @Test
-    public void testGetSidesList() {
-        assertTrue(helper.getSideIngredients().size() > 3);
-    }
 }
  

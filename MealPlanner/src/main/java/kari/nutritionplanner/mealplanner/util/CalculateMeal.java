@@ -6,7 +6,8 @@ import kari.nutritionplanner.mealplanner.domain.Ingredient;
 import kari.nutritionplanner.mealplanner.domain.Meal;
 
 /**
- * Ohjelman sydän ja aivot, joka muodostaa annetuista arvoista halutunlaisen aterian.
+ * Ohjelman sydän ja aivot, joka muodostaa annetuista arvoista halutunlaisen
+ * aterian.
  *
  * @author kari
  */
@@ -106,53 +107,87 @@ public class CalculateMeal {
     private void setSauce(double fat) {
         double fatAmountInMeal = meal.getFat();
         if (fatAmountInMeal < fat + 5) {
-            int seed = new Random().nextInt(ingredientProcessor.getIngredients().get("sauces").size());
-            int j = 0;
-            for (Integer i : ingredientProcessor.getIngredients().get("sauces").keySet()) {
-                if (seed == j) {
-                    meal.setSauce(ingredientProcessor.getIngredients().get("sauces").get(i));
-                    break;
-                }
-                j++;
-            }
+            setRandomSauce();
             meal.setSauceAmount(mc.calculateAmountForFat((fat - fatAmountInMeal), meal.getSauce()));
         }
     }
 
-    private void setMisc() {
-        int seed = new Random().nextInt(ingredientProcessor.getIngredients().get("sidesAndMisc").size());
+    private void setRandomSauce() {
+        setRandomIng(3);
+    }
+    
+    private void setRandomMisc() {
+        setRandomIng(4);
+    }
+    
+    private void randomSide() {
+        setRandomIng(2);
+    }
+    
+    private void setRandomIng(int select) {
+        String category = setCategory(select);
+        int seed = new Random().nextInt(ingredientProcessor.getIngredients().get(category).size());
         int j = 0;
-        for (Integer i : ingredientProcessor.getIngredients().get("sidesAndMisc").keySet()) {
+        for (Integer i : ingredientProcessor.getIngredients().get(category).keySet()) {
             if (seed == j) {
-                meal.setMisc(ingredientProcessor.getIngredients().get("sidesAndMisc").get(i));
+                Ingredient ing = ingredientProcessor.getIngredients().get(category).get(i);
+                setRandomIng(ing, select);
                 break;
             }
             j++;
         }
+    }
+    
+    private void setRandomIng(Ingredient ing, int select) {
+        switch (select) {
+            case 2:
+                meal.setSideIngredient(ing);
+                break;
+            case 3:
+                meal.setSauce(ing);
+                break;
+            case 4:
+                meal.setMisc(ing);
+                break;
+            default:
+                break;
+        }
+    }
+    
+    private String setCategory(int select) {
+        String category = "";
+        switch (select) {
+            case 2:
+                category += "sides";
+                break;
+            case 3:
+                category += "sauces";
+                break;
+            case 4:
+                category = "sidesAndMisc";
+                break;
+            default:
+                break;
+        }
+        return category;
+    }
+
+    private void setMisc() {
+        setRandomMisc();
         if (meal.getSideIngredient().getProtein() >= 3 || meal.getMainIngredient().getProtein() >= 20) {
             meal.setMiscAmount(1);
         } else {
             meal.setMiscAmount(0.5);
         }
     }
+    
+    
 
     private void setSideIngredientAmount(double calories) {
         if (meal.getCalories() < calories) {
             double caloriesToAdd = calories - meal.getCalories();
             double sideIngredientAmount = mc.calculateAmountForCalories(caloriesToAdd, meal.getSideIngredient());
             meal.setSideIngredientAmount(sideIngredientAmount);
-        }
-    }
-
-    private void randomSide() {
-        int seed = new Random().nextInt(ingredientProcessor.getIngredients().get("sides").size());
-        int j = 0;
-        for (Integer i : ingredientProcessor.getIngredients().get("sides").keySet()) {
-            if (seed == j) {
-                meal.setSideIngredient(ingredientProcessor.getIngredients().get("sides").get(i));
-                break;
-            }
-            j++;
         }
     }
 

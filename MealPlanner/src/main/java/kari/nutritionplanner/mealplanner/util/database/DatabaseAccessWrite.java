@@ -125,12 +125,15 @@ public class DatabaseAccessWrite {
 
     /**
      * Sulkee tietokantanyhteyden.
+     * @return boolean true jos onnistuu
      */
-    public void closeConnection() {
+    public boolean closeConnection() {
         try {
             conn.close();
+            return true;
         } catch (SQLException ex) {
-            System.err.println("Virhe: " + ex.getLocalizedMessage());
+            System.err.print("Virhe: " + ex.getLocalizedMessage());
+            return false;
         }
     }
 }

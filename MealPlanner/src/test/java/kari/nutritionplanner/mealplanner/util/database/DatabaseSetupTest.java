@@ -18,10 +18,7 @@ package kari.nutritionplanner.mealplanner.util.database;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -30,18 +27,21 @@ import static org.junit.Assert.*;
  * @author kari
  */
 public class DatabaseSetupTest {
+
     private DatabaseSetup db;
-    
+    private DatabaseAccessRead dbReader;
+
     public DatabaseSetupTest() {
     }
 
     @Before
     public void setUp() throws SQLException, IOException {
         this.db = new DatabaseSetup();
+        this.dbReader = new DatabaseAccessRead();
     }
-    
-     @Test
-     public void testConstructor() {
-         assertTrue(this.db != null);
-     }
+
+    @Test
+    public void testConstructor() {
+        assertTrue(this.db != null);
+    }
 }

@@ -107,9 +107,10 @@ public class IngredientSearchHelper {
      * raaka-aineista.
      *
      * @param ing Poistettava raaka-aine
-     * @param select Määrittää mistä raaka-aineista poistetaan, mains, sides, sidesAndMisc vai
-     * sauces.
-     * @return palauttaa true jos poistaminen onnistui, false kaikissa muissa tapauksissa.
+     * @param select Määrittää mistä raaka-aineista poistetaan, mains, sides,
+     * sidesAndMisc vai sauces.
+     * @return palauttaa true jos poistaminen onnistui, false kaikissa muissa
+     * tapauksissa.
      */
     public boolean removeIngredientFromDB(Ingredient ing, String select) {
         if (databaseOk) {
@@ -126,16 +127,16 @@ public class IngredientSearchHelper {
      * Yrittää lisätä annetun raaka-aineen käyttäjän raaka-aineisiin.
      *
      * @param ing Raaka-aine joka halutaan lisätä
-     * @param select Määrittää mihin raaka-aineisiin lisätään, mains, sides, sidesAndMisc vai
-     * sauces. Raaka-ainetta ei voi lisätä jos se on jo ennestään tietokannassa.
+     * @param select Määrittää mihin raaka-aineisiin lisätään, mains, sides,
+     * sidesAndMisc vai sauces. Raaka-ainetta ei voi lisätä jos se on jo
+     * ennestään tietokannassa.
      * @return boolean riippuen onnistumisesta. Jos tietokanta ei ole käytössä,
      * automaattinen false.
      */
     public boolean addIngredientToDatabase(Ingredient ing, String select) {
         if (databaseOk) {
-            if (select.contains("mains") && ing.getProtein() < 5) {
-                return false;
-            } else if (select.contains("misc") && ing.getCalories() > 100) {
+            boolean macroCheck = checkMacroBoundaries(ing, select);
+            if (!macroCheck) {
                 return false;
             }
             boolean result = dbWriter.addIntoUserIngredients(ing, select);
@@ -161,6 +162,15 @@ public class IngredientSearchHelper {
 
     public CSVReader getReader() {
         return reader;
+    }
+
+    private boolean checkMacroBoundaries(Ingredient ing, String select) {
+        if (select.contains("mains") && ing.getProtein() < 5) {
+            return false;
+        } else if (select.contains("misc") && ing.getCalories() > 100) {
+            return false;
+        }
+        return true;
     }
 
 }
