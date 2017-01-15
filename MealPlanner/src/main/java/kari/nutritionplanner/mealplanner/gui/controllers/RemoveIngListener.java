@@ -27,17 +27,32 @@ import kari.nutritionplanner.mealplanner.gui.ComponentFactory;
 import kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelper;
 
 /**
+ * ActionListenerin toteuttava luokka joka poistaa valitun raaka-aineen
+ * tietokannasta.
  *
  * @author kari
  */
 public class RemoveIngListener implements ActionListener {
+
     private final IngredientSearchHelper searchHelper;
     private final JList ingList;
     private final String select;
     private String category;
-    private DefaultListModel listModel;
-    private BrowseIngredientsView view;
-    
+    private final DefaultListModel listModel;
+    private final BrowseIngredientsView view;
+
+    /**
+     * Konstruktori saa parametrina JListin josta poistettava raaka-aine
+     * valitaan, String select joka kuvaa kategoriaa mistä raaka-aine poistetaan
+     * sekä DefaulListModelin jossa raaka-aineiden nimet sijaitsevat sekä useita
+     * apuluokkia.
+     *
+     * @param compFactory ComponentFactory, jonka kautta saadaan IngredientSearchHelper
+     * @param ingList JList, josta raaka-aineet valitaan
+     * @param select Kategoria raaka-aineelle
+     * @param listModel DefaultListModel, missä raaka-aineiden nimet ovat
+     * @param view BrowseIngredientsView, luokka missä raaka-ainelista sijaitsee.
+     */
     public RemoveIngListener(ComponentFactory compFactory, JList ingList, String select, DefaultListModel listModel, BrowseIngredientsView view) {
         this.searchHelper = compFactory.getSearchHelper();
         this.ingList = ingList;
@@ -53,20 +68,18 @@ public class RemoveIngListener implements ActionListener {
         String name = (String) ingList.getSelectedValue();
         Ingredient ing = searchHelper.getIngredientByName(name);
         int response = JOptionPane.showConfirmDialog(null, "Haluako todella poistaa raaka-aineen " + ing.getName() + " tietokannasta "
-                    + category + "?", "Varmista", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                + category + "?", "Varmista", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (response == JOptionPane.YES_OPTION) {
             if (searchHelper.removeIngredientFromDB(ing, select)) {
                 JOptionPane.showMessageDialog(null, "Raaka-aine " + ing.getName() + " poistettu tietokannasta " + category);
                 searchHelper.getIngredientProcessor().updateIngs();
                 view.upgradeIngList(listModel, select);
-//                ingList.validate();
-//                ingList.repaint();
             } else {
                 JOptionPane.showMessageDialog(null, "Raaka-aineen " + ing.getName() + " poistaminen tietokannasta " + category + " epäonnistui.");
             }
         }
     }
-    
+
     private void setCategory(String select) {
         if (select.equalsIgnoreCase("mains")) {
             category += "pääraaka-aineet";

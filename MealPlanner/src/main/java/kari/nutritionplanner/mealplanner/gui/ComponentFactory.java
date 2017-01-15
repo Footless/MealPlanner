@@ -36,16 +36,17 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import kari.nutritionplanner.mealplanner.gui.controllers.AddToIngsListener;
 import kari.nutritionplanner.mealplanner.gui.controllers.SelectCardListener;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
 import kari.nutritionplanner.mealplanner.domain.Meal;
-import kari.nutritionplanner.mealplanner.servicelayer.CalculateMeal;
+import kari.nutritionplanner.mealplanner.gui.controllers.ShowIngMacrosListener;
+import kari.nutritionplanner.mealplanner.util.CalculateMeal;
 import kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelper;
 import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
 
@@ -64,8 +65,9 @@ public class ComponentFactory {
     private final Font f = new Font("Arial", 1, 18);
 
     /**
-     * Konstuktori saa sekä CardLayoutin että MealCalcHelperin parametreinä,
-     * jotta se pystyy paremmin toimimaan CalcMealView:n kanssa.
+     * Konstuktori saa CardLayoutin, MealCalcHelperin sekä
+     * IngredientSearchHelperin parametreinä, jotta se pystyy paremmin toimimaan
+     * CalcMealView:n kanssa.
      *
      * @param cardL CardLayout, jonka päällä käyttöliittymä pyörii
      * @param searchHelper Raaka-aineiden hakemiseen tarkoitettu pikkuluokka
@@ -146,7 +148,6 @@ public class ComponentFactory {
 
     protected JLabel createLabel(String text) {
         JLabel label = new JLabel(text);
-        label.setHorizontalAlignment(SwingConstants.LEFT);
         label.setFont(f);
         return label;
     }
@@ -224,26 +225,6 @@ public class ComponentFactory {
     }
 
     /**
-     * Käytetään luomaan JList annetuista raaka-aineista. Sisältää myös
-     * ListSelecionListenerin luonnin.
-     *
-     * @param searchFieldComp JPanel jonne valmis JList asetetaan
-     * @param results
-     * @see enableIngButtons
-     */
-    protected void createSearchIngList(JPanel searchFieldComp, JList results) {
-        results.addListSelectionListener((ListSelectionEvent e) -> {
-            if (e.getValueIsAdjusting() == false) {
-                if (results.getSelectedIndex() == -1) {
-                    enableIngButtons(searchFieldComp, false);
-                } else {
-                    enableIngButtons(searchFieldComp, true);
-                }
-            }
-        });
-    }
-
-    /**
      * Tekee ActionListenerit raaka-ainehaun nappuloille.
      *
      * @param searchFieldComp JPanel jossa nappulat sijaitsevat.
@@ -266,15 +247,24 @@ public class ComponentFactory {
         addToSides.setActionCommand("sides");
         JButton addToSauces = createButton("Lisää kastikkeisiin");
         addToSauces.setActionCommand("sauces");
-//        JButton addToMiscs = createButton("Lisää lisukkeisiin");
-//        addToMiscs.setActionCommand("miscs");
+        JButton addToMiscs = createButton("Lisää lisukkeisiin");
+        addToMiscs.setActionCommand("misc");
         addToMains.setEnabled(false);
         addToSides.setEnabled(false);
         addToSauces.setEnabled(false);
+        addToMiscs.setEnabled(false);
         panel.add(addToMains);
         panel.add(addToSides);
         panel.add(addToSauces);
+        panel.add(addToMiscs);
         createActionListenersForButtons(searchFieldComp, panel);
+        JButton showMacros = new JButton("Näytä ravintotiedot");
+        JScrollPane scroll = (JScrollPane) searchFieldComp.getComponent(0);
+        JList ingredients = (JList) scroll.getViewport().getComponent(0);
+        ActionListener showMacrosListener = new ShowIngMacrosListener(this, ingredients);
+        showMacros.addActionListener(showMacrosListener);
+        showMacros.setEnabled(false);
+        panel.add(showMacros);
         searchFieldComp.add(panel, BorderLayout.SOUTH);
         panel.validate();
         panel.repaint();

@@ -24,15 +24,27 @@ import kari.nutritionplanner.mealplanner.gui.BrowseIngredientsView;
 import kari.nutritionplanner.mealplanner.gui.ComponentFactory;
 
 /**
+ * Luo ja avaa raaka-aineiden hallintaan käytetyn paneelin.
  *
  * @author kari
  */
 public class BrowseIngsListener implements ActionListener {
+
     private final CardLayout cards;
     private final Container container;
     private final ComponentFactory compFactory;
     private final String nextCard;
 
+    /**
+     * Konstruktori saa parametrina käyttöliittymän alla pyörivän CardLaytoutin,
+     * Containerin jossa kaikki kortit sijaitsevat, ComponentFactoryn sekä
+     * Stringinä seuraavan kortin "osoitteen".
+     *
+     * @param cards CardLayout joka pyörittää käyttöliittymää
+     * @param container Container, JPanel, jossa kaikki käyttöliittymän "kortit" sijaitsevat
+     * @param compFactory ComponentFactory 
+     * @param nextCard String, seuraavan "kortin osoite"
+     */
     public BrowseIngsListener(CardLayout cards, Container container, ComponentFactory compFactory, String nextCard) {
         this.cards = cards;
         this.container = container;
@@ -42,9 +54,9 @@ public class BrowseIngsListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        BrowseIngredientsView biView = new BrowseIngredientsView(cards, container, compFactory);
+        BrowseIngredientsView biView = new BrowseIngredientsView(compFactory);
         biView.createBrowseIngredientsCard(cards, container);
         cards.show(container, nextCard);
     }
-    
+
 }

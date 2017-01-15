@@ -24,8 +24,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
 import kari.nutritionplanner.mealplanner.util.CSVReader;
 
@@ -56,7 +54,7 @@ public class DatabaseSetup {
             setupDatabase();
             conn.close();
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(DatabaseSetup.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.print("Tpahtui virhe tietokantaa määrittäessä: " + ex.getLocalizedMessage());
         }
     }
 
@@ -82,16 +80,6 @@ public class DatabaseSetup {
             stmt.executeUpdate("Create table macros(id int primary key, calories float, protein float, fat float, carb float, fiber float)");
             addIngredientsToDB();
         }
-//        else {
-////            testauskäyttöä varten tiputellaan tauluja.  
-//            stmt.execute("drop table MAINS");
-//            stmt.execute("drop table SIDES");
-//            stmt.execute("drop table MISC");
-//            stmt.execute("drop table SAUCES");
-//            stmt.execute("drop table INGREDIENTS");
-//            stmt.execute("drop table MACROS");
-//            System.out.println("all ok, all tables dropped");
-//        }
     }
 
     private void addIngredientsToDB() throws SQLException, IOException {
@@ -117,7 +105,6 @@ public class DatabaseSetup {
         CSVReader reader = new CSVReader("component_value.csv");
         reader.searchAllMacros(allIngs);
         for (Ingredient ing : allIngs) {
-//            System.out.println("makroja : id: " + ing.getId() + " nimi: " + ing.getName());
             stmt.executeUpdate("INSERT INTO MACROS VALUES(" + ing.getId() + "," + ing.getCalories() + ","
                     + ing.getProtein() + "," + ing.getFat() + "," + ing.getCarb() + ", " + ing.getFiber() + ")");
         }

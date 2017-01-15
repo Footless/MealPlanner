@@ -23,13 +23,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import kari.nutritionplanner.mealplanner.gui.CalcMealView;
-import kari.nutritionplanner.mealplanner.servicelayer.CalculateMeal;
+import kari.nutritionplanner.mealplanner.util.CalculateMeal;
 import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
 
 /**
- * GetMealin toteuttava luokka. Ottaa rasva-arvon talteen ja suorittaa
- * aterian laskemisen, jos mahdollista ja näyttää valmiin aterian.
- * 
+ * GetMealin toteuttava luokka. Ottaa rasva-arvon talteen ja suorittaa aterian
+ * laskemisen, jos mahdollista ja näyttää valmiin aterian.
+ *
  * @author kari
  */
 public class SelectFatListener extends GetMealListener {
@@ -40,6 +40,20 @@ public class SelectFatListener extends GetMealListener {
     private final CalculateMeal cm;
     private final MealCalcHelper helper;
 
+    /**
+     * Konstruktori saa parametrina koko käyttöliittymää pyörittävän
+     * CardLayoutin, containerin joka sisältää kaikki "kortit" sekä seuraavan
+     * kortin "osoitteen" Stringinä. Lisäksi CalculateMeal, joka laskee aterian
+     * ja JSlider josta käyttäjä on valinnut haluamansa rasvan määrän.
+     *
+     * @param view CalcMealView, jossa sijaitsevat kaikki aterian laskemiseen
+     * liittyvät komponentit
+     * @param cardL joka pyörittää koko käyttöliittymää
+     * @param cm CalculateMeal, joka lopulta laskee koko aterian yhteen
+     * @param slider josta käyttäjä on valinnut haluamansa rasvan määrän
+     * @param container Sisältää kaikki kortit
+     * @param nextCard Seuraavan kortin osoite
+     */
     public SelectFatListener(CalcMealView view, CardLayout cardL, CalculateMeal cm, JSlider slider, Container container, String nextCard) {
         super(view, cardL);
         this.slider = slider;

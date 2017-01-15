@@ -47,6 +47,9 @@ public class ProcessIngredients {
         addAll();
     }
     
+    /**
+     * Päivittää raaka-aineet tietokannasta.
+     */
     public void updateIngs() {
         if (databaseOk) {
             clearIngs();

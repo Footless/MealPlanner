@@ -20,11 +20,12 @@ import java.awt.CardLayout;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JPanel;
 import kari.nutritionplanner.mealplanner.gui.CalcMealView;
 import kari.nutritionplanner.mealplanner.gui.UserInterface;
 
 /**
+ * ActionListenerin toteuttava luokka joka aloittaa aterian laskemisen luomalla
+ * ensimmäisen kortin ja siirtymällä siihen.
  *
  * @author kari
  */
@@ -36,6 +37,16 @@ public class StartNewMealListener implements ActionListener {
     private final String card;
     private final CalcMealView cmv;
 
+    /**
+     * Konstruktori saa parametreinä UserInterface-olion seuraavan sivun
+     * tekemistä sekä muita erinäisiä siinä avittavia olioita.
+     *
+     * @param ui UserInterface-olio, jotta seuraava sivu saadaan tehtyä
+     * @param cards CardLayout-olio
+     * @param container JPanel joka koko käyttöliittymän pohjana
+     * @param card String, seuraavan kortin "osoite"
+     * @param cmv CalcMealView, luokka jossa loput kortit tehdään
+     */
     public StartNewMealListener(UserInterface ui, CardLayout cards, Container container, String card, CalcMealView cmv) {
         this.ui = ui;
         this.cards = cards;
@@ -47,8 +58,6 @@ public class StartNewMealListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         ui.createMealCards(container, cmv);
-//        startCard.validate();
-//        startCard.repaint();
         cards.show(container, card);
     }
 

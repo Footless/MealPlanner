@@ -89,12 +89,41 @@ public class DatabaseAccessReadTest {
             assertTrue(ingsMap.get("sides").size() > 3);
             assertTrue(ingsMap.get("sauces").size() > 0);
             assertTrue(ingsMap.get("sidesAndMisc").size() > 0);
-            for (Object object : ingsMap.values()) {
-                Map<Integer, Ingredient> ings = (Map) object;
-                for (Ingredient ing : ings.values()) {
+            ingsMap.values().stream().map((object) -> (Map) object).forEach((ings) -> {
+                ings.values().stream().forEach((ing) -> {
                     assertTrue(ing != null);
-                }
-            }
+                });
+            });
         }
+    }
+    
+    @Test(expected = SQLException.class)
+    public void testClosedDatabaseOnDatabaseOk() throws SQLException {
+        dbAccess.closeConnection();
+        assertFalse(dbAccess.databaseOk());
+    }
+    
+    @Test(expected = SQLException.class)
+    public void testClosedDatabaseOnGetIngId() throws SQLException {
+        dbAccess.closeConnection();
+        assertEquals(null, dbAccess.getIngredient(805));
+    }
+    
+    @Test(expected = SQLException.class)
+    public void testClosedDatabaseOnGetIngByName() throws SQLException {
+        dbAccess.closeConnection();
+        assertEquals(0, dbAccess.getIngredientIdByName("Kuha"));
+    }
+    
+    @Test(expected = SQLException.class)
+    public void testClosedDatabaseOnSearch() throws SQLException {
+        dbAccess.closeConnection();
+        assertEquals(0, dbAccess.searchIngredients("kana").size());
+    }
+    
+    @Test(expected = SQLException.class)
+    public void testClosedDatabaseOnGetUserIngs() throws SQLException {
+        dbAccess.closeConnection();
+        assertEquals(null, dbAccess.getUserIngredients());
     }
 }

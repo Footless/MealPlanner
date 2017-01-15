@@ -32,7 +32,7 @@ public class Main {
      *
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         System.setProperty("file.encoding", "UTF-8");
         Field charset;
         try {
@@ -51,7 +51,7 @@ public class Main {
         }
         boolean dataBaseOk = true;
         try {
-            DatabaseSetup db = new DatabaseSetup();
+            new DatabaseSetup();
             DatabaseAccessRead dbAccess = new DatabaseAccessRead();
             dataBaseOk = dbAccess.databaseOk();
         } catch (SQLException | IOException ex) {

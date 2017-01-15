@@ -38,6 +38,20 @@ public class SelectMainIngListener extends GetMealListener {
     private final Container container;
     private final String nextCard;
 
+    /**
+     * Konstruktori saa parametrina koko käyttöliittymää pyörittävän
+     * CardLayoutin, containerin joka sisältää kaikki "kortit" sekä seuraavan
+     * kortin "osoitteen" Stringinä. Lisäksi Buttongroup, josta käyttäjä on
+     * valinnut haluamansa pääraaka-aineen.
+     *
+     * @param view CalcMealView, jossa sijaitsevat kaikki aterian laskemiseen
+     * liittyvät komponentit
+     * @param cardL joka pyörittää koko käyttöliittymää
+     * @param bg ButtonGroup, josta käyttäjä on valinnut haluamansa
+     * pääraaka-aineen
+     * @param container Sisältää kaikki kortit
+     * @param nextCard Seuraavan kortin osoite
+     */
     public SelectMainIngListener(CalcMealView view, CardLayout cardL, ButtonGroup bg, Container container, String nextCard) {
         super(view, cardL);
         this.helper = view.getHelper();

@@ -17,7 +17,6 @@
 package kari.nutritionplanner.mealplanner.util;
 
 import kari.nutritionplanner.mealplanner.domain.Meal;
-import kari.nutritionplanner.mealplanner.servicelayer.CalculateMeal;
 import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
 import org.junit.Before;
 import org.junit.Test;

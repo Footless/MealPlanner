@@ -18,7 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 import kari.nutritionplanner.mealplanner.gui.controllers.BrowseIngsListener;
 import kari.nutritionplanner.mealplanner.gui.controllers.StartNewMealListener;
-import kari.nutritionplanner.mealplanner.servicelayer.CalculateMeal;
+import kari.nutritionplanner.mealplanner.util.CalculateMeal;
 import kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelper;
 import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
 import kari.nutritionplanner.mealplanner.util.ProcessIngredients;
@@ -42,10 +42,11 @@ public class UserInterface implements Runnable {
     public UserInterface(boolean databaseOk) {
         this.databaseOk = databaseOk;
     }
+
     @Override
     public void run() {
         frame = new JFrame("Meal Planner");
-        frame.setPreferredSize(new Dimension(650, 500));
+        frame.setPreferredSize(new Dimension(650, 600));
         cardL = new CardLayout();
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -84,10 +85,9 @@ public class UserInterface implements Runnable {
         startCard.setLayout(new GridLayout(3, 1, 2, 2));
 
         CalcMealView calcMealView = new CalcMealView(cardL, mealCalculator, helper, compFactory);
-        
+
         JButton getMeal = compFactory.createButton("Laske ateria");
         ActionListener startNewMealListener = new StartNewMealListener(this, cardL, container, "askMainIngredient", calcMealView);
-//        SelectCardListener snml = new SelectCardListener(cardL, container, "askMainIngredient");
         getMeal.addActionListener(startNewMealListener);
 
         JButton addIngredients = compFactory.createButton("Lisää uusia raaka-aineita");
@@ -104,6 +104,13 @@ public class UserInterface implements Runnable {
         return startCard;
     }
 
+    /**
+     * Metodi aloittaa uuden aterian rakentamisen luomalla ensimmäisen kortin
+     * jossa kysytään pääraaka-ainetta.
+     *
+     * @param container Kaikki "kortit" sisältävä JPanel
+     * @param calcMealView Emokortti, jossa kortit varsinaisesti tehdään.
+     */
     public void createMealCards(Container container, CalcMealView calcMealView) {
         JPanel mainIngredientCard = calcMealView.createMainIngredientCard(container);
         container.add(mainIngredientCard, "askMainIngredient");
@@ -117,7 +124,7 @@ public class UserInterface implements Runnable {
     public MealCalcHelper getHelper() {
         return this.helper;
     }
-    
+
     public boolean databaseOk() {
         return this.databaseOk;
     }

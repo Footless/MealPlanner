@@ -21,18 +21,26 @@ import java.awt.event.ActionListener;
 import kari.nutritionplanner.mealplanner.gui.CalcMealView;
 
 /**
- * Abstrakti luokka kaikille aterian lisäämiseen liittyville ActionListenereille.
+ * Abstrakti luokka kaikille aterian lisäämiseen liittyville
+ * ActionListenereille.
  *
  * @author kari
  */
 public abstract class GetMealListener implements ActionListener {
+
     protected CalcMealView view;
     protected CardLayout cardL;
 
+    /**
+     * Konstruktori saa parametrina CalcMealView:n sekä koko käyttöliittymän
+     * alla pyörivän CardLayoutin.
+     *
+     * @param view CalcMealView, emoluokka kaikille aterian laskemiseen liittyville "korteille"
+     * @param cardL CardLayout, koko käyttöliittymää pyörittävä layout
+     */
     public GetMealListener(CalcMealView view, CardLayout cardL) {
         this.view = view;
         this.cardL = cardL;
     }
-    
-    
+
 }

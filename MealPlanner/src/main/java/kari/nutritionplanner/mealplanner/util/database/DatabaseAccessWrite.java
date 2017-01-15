@@ -21,8 +21,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
 
@@ -36,20 +34,24 @@ public class DatabaseAccessWrite {
 
     private final static String CONNECTIONADDRESS = "jdbc:derby:components;create=false";
     private Connection conn;
-    
+
+    /**
+     * Konstruktori määrittää tietokantayhteyden ja avaa sen.
+     */
+
     public DatabaseAccessWrite() {
         try {
             setDBSystemDir();
             Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
-        } catch (ClassNotFoundException ex) {
+            conn = DriverManager.getConnection(CONNECTIONADDRESS);
+        } catch (ClassNotFoundException | SQLException ex) {
             System.err.println("Virhe: " + ex.getLocalizedMessage());
         }
     }
-    
+
     private void setDBSystemDir() {
         System.setProperty("derby.system.home", "db");
     }
-
 
     /**
      * Lisää annetun raaka-aineen käyttäjän omiin raaka-aineisiin. Tarkistaa
@@ -62,7 +64,7 @@ public class DatabaseAccessWrite {
      */
     public boolean addIntoUserIngredients(Ingredient ing, String select) {
         try {
-            conn = DriverManager.getConnection(CONNECTIONADDRESS);
+//            conn = DriverManager.getConnection(CONNECTIONADDRESS);
             boolean check = checkIfIngredientExistsInDatabase(ing, select);
             if (!check) {
                 return addIngredientToDatabase(ing, select);
@@ -73,10 +75,19 @@ public class DatabaseAccessWrite {
         }
         return false;
     }
-    
+
+    /**
+     * Poistaa annetun raaka-aineen annetusta kategoriasta, jos se löytyy
+     * sieltä.
+     *
+     * @param ing Poistettava raaka-aine
+     * @param select Kategoria mistä poistetaan, "mains", "sides", "sauces" ja
+     * "sidesAndMisc"
+     * @return boolean, sen mukaan onnistuuko poistaminen
+     */
     public boolean removeUserIngredient(Ingredient ing, String select) {
         try {
-            conn = DriverManager.getConnection(CONNECTIONADDRESS);
+//            conn = DriverManager.getConnection(CONNECTIONADDRESS);
             boolean check = checkIfIngredientExistsInDatabase(ing, select);
             if (check) {
                 return removeIngredientFromDatabase(ing, select);
@@ -90,10 +101,8 @@ public class DatabaseAccessWrite {
 
     private boolean checkIfIngredientExistsInDatabase(Ingredient ing, String select) throws SQLException {
         Statement stmt = conn.createStatement();
-        System.out.println(ing + " " + select);
         ResultSet rs = stmt.executeQuery("SELECT * FROM " + select + " WHERE id =" + ing.getId());
         while (rs.next()) {
-            System.out.println(rs.getInt("id") + " haettu id: " + ing.getId());
             if (rs.getInt("id") == ing.getId()) {
                 return true;
             }
@@ -112,5 +121,16 @@ public class DatabaseAccessWrite {
         stmt.execute("DELETE FROM " + select + " WHERE id=" + ing.getId());
         boolean success = checkIfIngredientExistsInDatabase(ing, select);
         return !success;
+    }
+
+    /**
+     * Sulkee tietokantanyhteyden.
+     */
+    public void closeConnection() {
+        try {
+            conn.close();
+        } catch (SQLException ex) {
+            System.err.println("Virhe: " + ex.getLocalizedMessage());
+        }
     }
 }

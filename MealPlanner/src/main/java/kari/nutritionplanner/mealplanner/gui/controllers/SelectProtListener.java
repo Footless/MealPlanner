@@ -35,6 +35,15 @@ public class SelectProtListener extends GetMealListener {
     private final JSlider slider;
     private final Container container;
     private final String nextCard;
+    
+    /**
+     * Konstruktori saa tarvittavat komponentit parametreinä.
+     * @param view Pääluokka, jossa kaikki eri kortit sijaitsevat ja missä ne tehdää.
+     * @param cardL CardLayout
+     * @param slider Proteiinin valintaan käytetty JSlider
+     * @param container Kaikki "kortit" sisältävä JPanel
+     * @param nextCard seuraavan kortin nimi Stringinä, CardLayouttia varten
+     */
 
     public SelectProtListener(CalcMealView view, CardLayout cardL, JSlider slider, Container container, String nextCard) {
         super(view, cardL);

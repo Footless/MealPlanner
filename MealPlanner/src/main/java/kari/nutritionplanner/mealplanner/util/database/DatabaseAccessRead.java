@@ -26,8 +26,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
 
 /**
@@ -40,15 +38,19 @@ public class DatabaseAccessRead {
     private final static String CONNECTIONADDRESS = "jdbc:derby:components;create=false";
     private Connection conn;
 
+    /**
+     * Konstruktori määrittää tietokantayhteyden ja avaa sen.
+     */
     public DatabaseAccessRead() {
         try {
             setDBSystemDir();
             Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
-        } catch (ClassNotFoundException ex) {
+            conn = DriverManager.getConnection(CONNECTIONADDRESS);
+        } catch (ClassNotFoundException | SQLException ex) {
             System.err.println("Virhe: " + ex.getLocalizedMessage());
         }
     }
-    
+
     private void setDBSystemDir() {
         System.setProperty("derby.system.home", "db");
     }
@@ -61,17 +63,17 @@ public class DatabaseAccessRead {
      * @throws SQLException jos tietokantaa ei löydy ja yhteys epäonnistuu.
      */
     public boolean databaseOk() throws SQLException {
-        conn = DriverManager.getConnection(CONNECTIONADDRESS);
+//        conn = DriverManager.getConnection(CONNECTIONADDRESS);
         DatabaseMetaData dbm = conn.getMetaData();
         ResultSet tables = dbm.getTables(null, null, "MAINS", null);
         if (tables.next()) {
             tables = dbm.getTables(null, null, "MACROS", null);
             if (tables.next()) {
-                conn.close();
+//                conn.close();
                 return true;
             }
         }
-        conn.close();
+//        conn.close();
         return false;
     }
 
@@ -85,7 +87,7 @@ public class DatabaseAccessRead {
      * @throws SQLException jos yhteys tietokantaan epäonnistuu
      */
     public Ingredient getIngredient(int id) throws SQLException {
-        conn = DriverManager.getConnection(CONNECTIONADDRESS);
+//        conn = DriverManager.getConnection(CONNECTIONADDRESS);
         Statement stmt = conn.createStatement();
         Ingredient ing = null;
         ResultSet rs = stmt.executeQuery("SELECT * FROM INGREDIENTS WHERE id = " + id);
@@ -94,7 +96,7 @@ public class DatabaseAccessRead {
         }
         addMacros(stmt, ing);
 
-        conn.close();
+//        conn.close();
         return ing;
     }
 
@@ -102,7 +104,6 @@ public class DatabaseAccessRead {
         ResultSet macros = stmt.executeQuery("SELECT * FROM MACROS WHERE id = " + ing.getId());
         while (macros.next()) {
             ing.setCalories(macros.getDouble(2));
-//            System.out.println("id: " + ing.getId() + "nimi: " + ing.getName() + ": calories: " + macros.getDouble(2));
             ing.setProtein(macros.getDouble(3));
             ing.setFat(macros.getDouble(4));
             ing.setCarb(macros.getDouble(5));
@@ -120,15 +121,15 @@ public class DatabaseAccessRead {
      * @throws SQLException jos yhteys tietokantaan epäonnistuu
      */
     public int getIngredientIdByName(String s) throws SQLException {
-        conn = DriverManager.getConnection(CONNECTIONADDRESS);
+//        conn = DriverManager.getConnection(CONNECTIONADDRESS);
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT id FROM INGREDIENTS WHERE name = '" + s.toLowerCase() + "'");
         while (rs.next()) {
             int id = rs.getInt("id");
-            conn.close();
+//            conn.close();
             return id;
         }
-        conn.close();
+//        conn.close();
         return 0;
     }
 
@@ -140,7 +141,7 @@ public class DatabaseAccessRead {
      * @throws SQLException jos yhteys epäonnistuu
      */
     public List<Ingredient> searchIngredients(String s) throws SQLException {
-        conn = DriverManager.getConnection(CONNECTIONADDRESS);
+//        conn = DriverManager.getConnection(CONNECTIONADDRESS);
         Statement stmt = conn.createStatement();
         List<Ingredient> ings = new ArrayList<>();
         ResultSet rs = stmt.executeQuery("SELECT * FROM INGREDIENTS WHERE name LIKE '%" + s.toLowerCase() + "%'");
@@ -151,7 +152,7 @@ public class DatabaseAccessRead {
         for (Ingredient ing : ings) {
             addMacros(stmt, ing);
         }
-        conn.close();
+//        conn.close();
         return ings;
     }
 
@@ -165,7 +166,7 @@ public class DatabaseAccessRead {
      * @throws SQLException jos yhteys tietokantaan epäonnistuu
      */
     public Map<String, Map<Integer, Ingredient>> getUserIngredients() throws SQLException {
-        conn = DriverManager.getConnection(CONNECTIONADDRESS);
+//        conn = DriverManager.getConnection(CONNECTIONADDRESS);
         Statement stmt = conn.createStatement();
         Map<String, Map<Integer, Ingredient>> ings = new HashMap<>();
         Map<Integer, Ingredient> mains = addIngredientsToMap(stmt, "MAINS");
@@ -176,7 +177,7 @@ public class DatabaseAccessRead {
         ings.put("sides", sides);
         ings.put("sauces", sauces);
         ings.put("sidesAndMisc", misc);
-        conn.close();
+//        conn.close();
         return ings;
     }
 
@@ -189,5 +190,16 @@ public class DatabaseAccessRead {
         }
 
         return ings;
+    }
+
+    /**
+     * Sulkee tietokantanyhteyden.
+     */
+    public void closeConnection() {
+        try {
+            conn.close();
+        } catch (SQLException ex) {
+            System.err.println("Virhe: " + ex.getLocalizedMessage());
+        }
     }
 }

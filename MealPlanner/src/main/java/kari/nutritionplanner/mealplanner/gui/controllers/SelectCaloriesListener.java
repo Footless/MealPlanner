@@ -27,15 +27,27 @@ import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
 /**
  * ActionListenerin toteuttava luokka. Vaihtaa kaloritkortista proteiinikorttiin
  * ja tallentaa arvon samalla.
- * 
+ *
  * @author kari
  */
 public class SelectCaloriesListener extends GetMealListener {
+
     private final JSlider slider;
     private final Container container;
     private final String nextCard;
     private final MealCalcHelper helper;
 
+    /**
+     * Konstruktori saa parametrina JSliderin, jota käyttämällä käyttäjä on on
+     * valinnut haluamansa kalorimäärän, Containerin jossa kaikki "kortit"
+     * sijaitsevat sekä Stringin joka on seuraavan kortin "osoite".
+     *
+     * @param view CalcMealView, josta otetaan myös MealCalcHelper apuun
+     * @param cardL CardLayout
+     * @param slider JSlider, josta otetaan haluttu kalorimäärä muistiin
+     * @param container Kaikki "kortit" sisältävä JPanel
+     * @param nextCard String, seuraavan kortin osoite
+     */
     public SelectCaloriesListener(CalcMealView view, CardLayout cardL, JSlider slider, Container container, String nextCard) {
         super(view, cardL);
         this.slider = slider;
@@ -43,8 +55,6 @@ public class SelectCaloriesListener extends GetMealListener {
         this.nextCard = nextCard;
         this.helper = view.getHelper();
     }
-    
-    
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -53,5 +63,5 @@ public class SelectCaloriesListener extends GetMealListener {
         helper.setDesiredCalories(slider.getValue());
         cardL.show(container, nextCard);
     }
-    
+
 }

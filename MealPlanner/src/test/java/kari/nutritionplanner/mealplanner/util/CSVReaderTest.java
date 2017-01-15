@@ -70,14 +70,14 @@ public class CSVReaderTest {
          assertTrue(reader.searchMacros(new Ingredient(805, "Kuha")));
      }
      
-     @Rule
-     public ExpectedException thrown = ExpectedException.none();
-     
-     @Test
-     public void testConstructor() {
-         thrown.equals(JOptionPane.class);
-         CSVReader reader2 = new CSVReader("null.csv");
-     }
+//     @Rule
+//     public ExpectedException thrown = ExpectedException.none();
+//     
+//     @Test
+//     public void testConstructor() {
+//         thrown.equals(JOptionPane.class);
+//         CSVReader reader2 = new CSVReader("null.csv");
+//     }
      
      @Test
      public void testSearchAllMacros() throws IOException {

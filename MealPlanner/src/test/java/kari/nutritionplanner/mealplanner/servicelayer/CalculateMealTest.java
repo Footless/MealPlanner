@@ -1,6 +1,7 @@
 
 package kari.nutritionplanner.mealplanner.servicelayer;
 
+import kari.nutritionplanner.mealplanner.util.CalculateMeal;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -19,9 +20,9 @@ public class CalculateMealTest {
     private CalculateMeal cm;
     private MealCalcHelper helper;
     private final double delta = 0.0001;
-    private final double bigDelta = 9.5;
+    private final double bigDelta = 5.5;
     private final double hugeDelta = 9.5;
-    private final double proteinDelta = 11.5;
+    private final double proteinDelta = 15.5;
 
     public CalculateMealTest() {
     }
@@ -37,6 +38,16 @@ public class CalculateMealTest {
     public void testGetIngredientsCreated() {
         Map<String, Map<Integer, Ingredient>> ings = cm.getIngredients();
         assertTrue(ings.size() > 0);
+    }
+    
+    @Test
+    public void testCalculateAllMealInvalidSideId() {
+        assertFalse(cm.calculateAllMeal(805, 45000, 500, 30, 20));
+    }
+    
+    @Test
+    public void testCalculateAllMealNotRandomSide() {
+        assertTrue(cm.calculateAllMeal(805, 204, 500, 30, 20));
     }
 
     @Test
@@ -101,29 +112,29 @@ public class CalculateMealTest {
         assertTrue(ings.size() > 4);
     }
 
-//    @Test
-//    public void testSetWholeMeal() {
-//        for (int i = 0; i < 100; i++) {
-//            cm = new CalculateMeal(true);
-//            Ingredient ing = cm.getIngredients().get("mains").get(getRandomMain());
-//            int calories = new Random().nextInt(300) + 300;
-//            double protein = calories / 20;
-//            double fat = calories / 30;
-//            cm.getMeal().setSauceAmount(-5.5);
-//            assertTrue(cm.calculateAllMeal(ing.getId(), 99999, calories, protein, fat));
-//            assertEquals(calories, cm.getMeal().getCalories(), hugeDelta);
-//            assertEquals(protein, cm.getMeal().getProtein(), proteinDelta);
-//            assertEquals(fat, cm.getMeal().getFat(), bigDelta);
-//            assertEquals("juurekset, uunissa", cm.getMeal().getMisc().getName());
-//            assertTrue(cm.getMeal().getSauceAmount() >= 0);
-//            if (cm.getMeal().getSideIngredient().getProtein() >= 3 || cm.getMeal().getMainIngredient().getProtein() >= 20) {
-//                assertEquals(1, cm.getMeal().getMiscAmount(), delta);
-//            } else {
-//                assertEquals(0.5, cm.getMeal().getMiscAmount(), delta);
-//            }
-//        }
-//
-//    }
+    @Test
+    public void testSetWholeMeal() {
+        for (int i = 0; i < 100; i++) {
+            cm = new CalculateMeal(new ProcessIngredients(true));
+            Ingredient ing = cm.getIngredients().get("mains").get(getRandomMain());
+            int calories = new Random().nextInt(300) + 300;
+            double protein = calories / 20;
+            double fat = calories / 30;
+            cm.getMeal().setSauceAmount(-5.5);
+            assertTrue(cm.calculateAllMeal(ing.getId(), 99999, calories, protein, fat));
+            assertEquals(calories, cm.getMeal().getCalories(), hugeDelta);
+            assertEquals(protein, cm.getMeal().getProtein(), proteinDelta);
+            assertEquals(fat, cm.getMeal().getFat(), bigDelta);
+            assertEquals("Juurekset, uunissa", cm.getMeal().getMisc().getName());
+            assertTrue(cm.getMeal().getSauceAmount() >= 0);
+            if (cm.getMeal().getSideIngredient().getProtein() >= 3 || cm.getMeal().getMainIngredient().getProtein() >= 20) {
+                assertEquals(1, cm.getMeal().getMiscAmount(), delta);
+            } else {
+                assertEquals(0.5, cm.getMeal().getMiscAmount(), delta);
+            }
+        }
+
+    }
 
     private int getRandomMain() {
         int seed = new Random().nextInt(helper.getMainIngredients().size());

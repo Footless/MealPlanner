@@ -38,6 +38,16 @@ public class SearchIngListener implements ActionListener {
     private final IngredientSearchHelper searchHelper;
     private final DefaultListModel listModel;
 
+    /**
+     * Konstruktori saa parametrina JTextFieldin mihin käyttäjä on syöttänyt
+     * hakusanan, DefaultListModelin johon tulokset tulostetaan sekä
+     * IngredientSearchHelperin, joka tarjoaa työkalut tietokantahakuun.
+     *
+     * @param searchField JTextField, hakukenttä mihin hakutermi on syötetty
+     * @param listModel DefaultListModel, johon haun tulokset tulostetaan
+     * @param searchHelper IngredientSearchHelper, joka tarjoaa työkalut
+     * tietokannasta hakemiseen
+     */
     public SearchIngListener(JTextField searchField, DefaultListModel listModel, IngredientSearchHelper searchHelper) {
         this.searchField = searchField;
         this.listModel = listModel;

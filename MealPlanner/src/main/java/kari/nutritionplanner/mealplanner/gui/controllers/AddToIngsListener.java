@@ -27,7 +27,7 @@ import kari.nutritionplanner.mealplanner.servicelayer.IngredientSearchHelper;
 
 /**
  * ActionListener, joka käsittelee uuden raaka-aineen lisäämistä valittavissa
- * oleviin raaka-aineisiin. 11.1.2017 yhä keskeneräinen.
+ * oleviin raaka-aineisiin.
  *
  * @author kari
  */
@@ -37,6 +37,17 @@ public class AddToIngsListener implements ActionListener {
     private final IngredientSearchHelper searchHelper;
     private String category;
 
+    /**
+     * Konstruktori, joka saa parametrinä JPanel searchFieldCompin, jossa
+     * sijaitsevat kaikki hakemiseen ja lisäämiseen liittyvät komponentit sekä
+     * IngredientSearchHelperin, joka tarjoaa metodeita tietokannan
+     * päivittämiseen.
+     *
+     * @param searchFieldComp JPanel jossa hakemiseen ja lisäämiseen liittyvät
+     * komponentit kuten lista raaka-aineista ja napit joilla raaka-aine
+     * lisätään sijaitsevat 
+     * @param searchHelper IngredientSearchHelper joka tarjoaa yhteyden tietokantaan metodiensa kautta
+     */
     public AddToIngsListener(JPanel searchFieldComp, IngredientSearchHelper searchHelper) {
         JScrollPane scroll = (JScrollPane) searchFieldComp.getComponent(0);
         this.list = (JList) scroll.getViewport().getComponent(0);
@@ -63,12 +74,17 @@ public class AddToIngsListener implements ActionListener {
             if (response == JOptionPane.YES_OPTION) {
                 addToIngredients(name, e.getActionCommand());
             }
+        } else if (e.getActionCommand().equalsIgnoreCase("misc")) {
+            int response = showConfirmDialog(name);
+            if (response == JOptionPane.YES_OPTION) {
+                addToIngredients(name, e.getActionCommand());
+            }
         }
     }
-    
+
     private int showConfirmDialog(String name) {
         int response = JOptionPane.showConfirmDialog(null, "Haluako todella lisätä raaka-aineen " + name + " tietokantaan "
-                    + category + "?", "Varmista", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                + category + "?", "Varmista", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         return response;
     }
 
@@ -90,6 +106,8 @@ public class AddToIngsListener implements ActionListener {
             category += "lisäkkeet";
         } else if (e.getActionCommand().equalsIgnoreCase("sauces")) {
             category += "kastikkeet";
+        } else if (e.getActionCommand().equalsIgnoreCase("misc")) {
+            category += "lisukkeet";
         }
     }
 }

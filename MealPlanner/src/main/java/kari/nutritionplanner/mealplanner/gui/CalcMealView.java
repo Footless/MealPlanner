@@ -33,12 +33,12 @@ import kari.nutritionplanner.mealplanner.gui.controllers.SelectFatListener;
 import kari.nutritionplanner.mealplanner.gui.controllers.SelectMainIngListener;
 import kari.nutritionplanner.mealplanner.gui.controllers.SelectProtListener;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
-import kari.nutritionplanner.mealplanner.servicelayer.CalculateMeal;
+import kari.nutritionplanner.mealplanner.util.CalculateMeal;
 import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
 
 /**
  * Luokka aterian laskemiselle, sisältää kaikki osat varsinaista aterian
- * laskemista.
+ * laskemista varten.
  *
  * @author kari
  */
@@ -129,8 +129,6 @@ public class CalcMealView {
         JPanel card = new JPanel(new BorderLayout());
         JLabel proteinInstructions = compFactory.createLabel("Valitse haluamasi proteiinin määrä:");
         Ingredient ing = helper.getMainIngredientsAsMap().get(helper.getMainIngredientId());
-        System.out.println("ing: " + ing);
-        System.out.println("ing protein: " + ing.getProtein());
         double mul = getMultiplier(ing);
         int min = (int) Math.ceil(ing.getProtein() * mul);
         JSlider proteinSlider = compFactory.createSlider(min, min * 3, min * 2);
@@ -152,8 +150,8 @@ public class CalcMealView {
         JLabel fatInstructions = compFactory.createLabel("Valitse haluamasi rasvan määrä:");
         Ingredient ing = helper.getMainIngredientsAsMap().get(helper.getMainIngredientId());
         double mul = getMultiplier(ing);
-        int min = (int) Math.ceil(ing.getFat() * mul);
-        JSlider fatSlider = compFactory.createSlider(min, 40, 20);
+        int min = (int) Math.ceil(ing.getFat() * mul) + 5;
+        JSlider fatSlider = compFactory.createSlider(min, min * 4, min * 2);
         card.add(fatInstructions, BorderLayout.NORTH);
         card.add(fatSlider, BorderLayout.CENTER);
         ActionListener sfl = new SelectFatListener(this, cardL, mealCalculator, fatSlider, container, "readyMeal");

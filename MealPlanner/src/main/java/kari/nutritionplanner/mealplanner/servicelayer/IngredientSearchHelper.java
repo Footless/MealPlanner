@@ -82,9 +82,11 @@ public class IngredientSearchHelper {
             return null;
         }
     }
+
     /**
-     * Palauttaa Ingredient-olion annetun nimen perusteella. Vaatii tarkan, oikean nimen toimiakseen.
-     * 
+     * Palauttaa Ingredient-olion annetun nimen perusteella. Vaatii tarkan,
+     * oikean nimen toimiakseen.
+     *
      * @param name Raaka-aineen koko nimi.
      * @return Ingredient, jossa kaikki arvot asetettuna.
      */
@@ -99,10 +101,23 @@ public class IngredientSearchHelper {
         }
         return null;
     }
-    
+
+    /**
+     * Poistaa annetun raaka-aineen tietokannasta, käyttäjän omista
+     * raaka-aineista.
+     *
+     * @param ing Poistettava raaka-aine
+     * @param select Määrittää mistä raaka-aineista poistetaan, mains, sides, sidesAndMisc vai
+     * sauces.
+     * @return palauttaa true jos poistaminen onnistui, false kaikissa muissa tapauksissa.
+     */
     public boolean removeIngredientFromDB(Ingredient ing, String select) {
         if (databaseOk) {
-            return dbWriter.removeUserIngredient(ing, select);
+            boolean result = dbWriter.removeUserIngredient(ing, select);
+            if (result) {
+                ingredientProcessor.updateIngs();
+            }
+            return result;
         }
         return false;
     }
@@ -111,14 +126,23 @@ public class IngredientSearchHelper {
      * Yrittää lisätä annetun raaka-aineen käyttäjän raaka-aineisiin.
      *
      * @param ing Raaka-aine joka halutaan lisätä
-     * @param select Määrittää mihin raaka-aineisiin lisätään, mains, sides vai
+     * @param select Määrittää mihin raaka-aineisiin lisätään, mains, sides, sidesAndMisc vai
      * sauces. Raaka-ainetta ei voi lisätä jos se on jo ennestään tietokannassa.
      * @return boolean riippuen onnistumisesta. Jos tietokanta ei ole käytössä,
      * automaattinen false.
      */
     public boolean addIngredientToDatabase(Ingredient ing, String select) {
         if (databaseOk) {
-            return dbWriter.addIntoUserIngredients(ing, select);
+            if (select.contains("mains") && ing.getProtein() < 5) {
+                return false;
+            } else if (select.contains("misc") && ing.getCalories() > 100) {
+                return false;
+            }
+            boolean result = dbWriter.addIntoUserIngredients(ing, select);
+            if (result) {
+                ingredientProcessor.updateIngs();
+            }
+            return result;
         }
         return false;
     }
@@ -126,6 +150,17 @@ public class IngredientSearchHelper {
     public ProcessIngredients getIngredientProcessor() {
         return ingredientProcessor;
     }
-    
-    
+
+    public DatabaseAccessRead getDbAccess() {
+        return dbAccess;
+    }
+
+    public DatabaseAccessWrite getDbWriter() {
+        return dbWriter;
+    }
+
+    public CSVReader getReader() {
+        return reader;
+    }
+
 }

@@ -86,7 +86,9 @@ public class Meal {
     /**
      * Laskee yhteen aterian sisältämän rasvan.
      *
-     * @return aterian sisältämän rasvan määrän liukulukuna.
+     * @return aterian sisältämän rasvan määrän liukulukuna. Ateriassa on
+     * pohjalla aina 5 grammaa rasvaa, millä kuvataan ruoanvalmistukseen
+     * käytettyä rasvaa.
      */
     public double getFat() {
         double fat = 0;

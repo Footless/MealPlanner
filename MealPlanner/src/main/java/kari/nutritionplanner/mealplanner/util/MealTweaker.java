@@ -49,8 +49,9 @@ public class MealTweaker {
     }
 
     /**
-     * Tekee kaikki taiat. Pyörittelee makroja ja säätää niitä, lopuksi
-     * pyöristää määrät järkevään muotoon.
+     * Luokan päämetodi, joka säätää raaka-aineiden määriä kohti haluttuja
+     * makroja. Pyörittelee raaka-aineiden määriä aikansa ja säätää niitä,
+     * lopuksi pyöristää määrät järkevään muotoon.
      *
      */
     public void tweakMeal() {
@@ -148,7 +149,10 @@ public class MealTweaker {
             // jos protskut ok, vähennetään lisäkettä ja soosia, jos lisäkettä on
         } else if (proteinOk() && meal.getSideIngredientAmount() > 0.05) {
             alterCaloriesFromSideAndSauce(toSub);
-            // jos protskut tai rasva ok ja joko soosi tai lisäke on lähellä nollaa, vähennetään pääraaka-ainetta
+            // jos protskut ei ok, vähennetään soosia, koska priorisoimme protskut rasvan edelle
+        } else if (!proteinOk()) {
+            alterCaloriesFromSauce(toSub);
+            // jos protskut ok ja joko soosi tai lisäke on lähellä nollaa, vähennetään pääraaka-ainetta
         } else if (proteinOk() && (meal.getSideIngredientAmount() < 0.1 || meal.getSauceAmount() < 0.1)) {
             alterCaloriesFromMain(toSub);
             // jos rasva ok, vähennetään pääraaka-ainetta ja lisuketta, jos lisuketta on
@@ -171,6 +175,8 @@ public class MealTweaker {
         // jos protskut ja rasva ok, lisää vain lisäkettä
         if (proteinOk() && fatOk()) {
             alterCaloriesFromSide(toAdd);
+        } else if (!proteinOk()) {
+            alterCaloriesFromMain(toAdd);
         } else if (proteinOk()) {
             alterCaloriesFromSideAndSauce(toAdd);
         } else {
@@ -222,4 +228,10 @@ public class MealTweaker {
         double amountToSubFromMain = mc.calculateAmountForCalories(toAlter, meal.getMainIngredient());
         meal.setMainIngredientAmount(meal.getMainIngredientAmount() + amountToSubFromMain);
     }
+
+    private void alterCaloriesFromSauce(double toAlter) {
+        double amountToSubFromSauce = mc.calculateAmountForCalories(toAlter, meal.getSauce());
+        meal.setSauceAmount(meal.getSauceAmount() + amountToSubFromSauce);
+    }
+
 }

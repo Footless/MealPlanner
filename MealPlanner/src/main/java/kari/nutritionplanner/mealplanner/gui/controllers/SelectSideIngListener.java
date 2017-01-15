@@ -33,11 +33,25 @@ import kari.nutritionplanner.mealplanner.servicelayer.MealCalcHelper;
  * @author kari
  */
 public class SelectSideIngListener extends GetMealListener {
+
     private final MealCalcHelper helper;
     private final ButtonGroup bg;
     private final Container container;
     private final String nextCard;
 
+    /**
+     * Konstruktori saa parametrina koko käyttöliittymää pyörittävän
+     * CardLayoutin, containerin joka sisältää kaikki "kortit" sekä seuraavan
+     * kortin "osoitteen" Stringinä. Lisäksi parametrina ButtonGroup josta
+     * käyttäjä on valinnut haluamansa lisäkkeen.
+     *
+     * @param view CalcMealView CalcMealView, jossa sijaitsevat kaikki aterian
+     * laskemiseen liittyvät komponentit
+     * @param cardL CardLayout joka pyörittää koko käyttöliittymää
+     * @param bg ButtonGroup josta käyttäjä on valinnut haluamansa lisäkkeen
+     * @param container Container Sisältää kaikki kortit
+     * @param nextCard String Seuraavan kortin osoite
+     */
     public SelectSideIngListener(CalcMealView view, CardLayout cardL, ButtonGroup bg, Container container, String nextCard) {
         super(view, cardL);
         this.helper = view.getHelper();

@@ -1,16 +1,12 @@
-package kari.nutritionplanner.mealplanner.servicelayer;
+package kari.nutritionplanner.mealplanner.util;
 
-import kari.nutritionplanner.mealplanner.util.ProcessIngredients;
 import java.util.Map;
 import java.util.Random;
 import kari.nutritionplanner.mealplanner.domain.Ingredient;
 import kari.nutritionplanner.mealplanner.domain.Meal;
-import kari.nutritionplanner.mealplanner.util.MacroCalculator;
-import kari.nutritionplanner.mealplanner.util.MealTweaker;
 
 /**
- * Käyttöliittymän ja logiikkaluokkien väliin sijoittuva luokka. Tarkoitettu
- * halutun aterian muodostamiseen ja tarjoaa apumetodeja sen muodostamiseen.
+ * Ohjelman sydän ja aivot, joka muodostaa annetuista arvoista halutunlaisen aterian.
  *
  * @author kari
  */
@@ -21,8 +17,9 @@ public class CalculateMeal {
     private final ProcessIngredients ingredientProcessor;
 
     /**
-     * Konstruktori. Luo ProcessIngredients-olion ja hakee sen metodilla
-     * raaka-aineet. Luo uuden tyhjän Meal-olion virheitä ja nulleja estämään.
+     * Konstruktori. Saa parametrinä ProcessIngredients-olion jonka metodilla
+     * luokka saa raaka-aineet käyttöönsä. Luo uuden tyhjän Meal-olion virheitä
+     * ja nulleja estämään.
      *
      * @param ingredientProcessor ProcessIngredients, josta myös saadaan tieto
      * tietokannan käytettävyydestä.
@@ -108,16 +105,30 @@ public class CalculateMeal {
 
     private void setSauce(double fat) {
         double fatAmountInMeal = meal.getFat();
-        if (fatAmountInMeal < fat) {
-            Ingredient sauce = ingredientProcessor.getIngredients().get("sauces").get(5009);
-            meal.setSauce(sauce);
-            meal.setSauceAmount(mc.calculateAmountForFat((fat - fatAmountInMeal), sauce));
+        if (fatAmountInMeal < fat + 5) {
+            int seed = new Random().nextInt(ingredientProcessor.getIngredients().get("sauces").size());
+            int j = 0;
+            for (Integer i : ingredientProcessor.getIngredients().get("sauces").keySet()) {
+                if (seed == j) {
+                    meal.setSauce(ingredientProcessor.getIngredients().get("sauces").get(i));
+                    break;
+                }
+                j++;
+            }
+            meal.setSauceAmount(mc.calculateAmountForFat((fat - fatAmountInMeal), meal.getSauce()));
         }
     }
 
     private void setMisc() {
-        Ingredient misc = ingredientProcessor.getIngredients().get("sidesAndMisc").get(33182);
-        meal.setMisc(misc);
+        int seed = new Random().nextInt(ingredientProcessor.getIngredients().get("sidesAndMisc").size());
+        int j = 0;
+        for (Integer i : ingredientProcessor.getIngredients().get("sidesAndMisc").keySet()) {
+            if (seed == j) {
+                meal.setMisc(ingredientProcessor.getIngredients().get("sidesAndMisc").get(i));
+                break;
+            }
+            j++;
+        }
         if (meal.getSideIngredient().getProtein() >= 3 || meal.getMainIngredient().getProtein() >= 20) {
             meal.setMiscAmount(1);
         } else {
@@ -134,7 +145,7 @@ public class CalculateMeal {
     }
 
     private void randomSide() {
-        int seed = new Random().nextInt(ingredientProcessor.getIngredients().get("sides").size() - 1);
+        int seed = new Random().nextInt(ingredientProcessor.getIngredients().get("sides").size());
         int j = 0;
         for (Integer i : ingredientProcessor.getIngredients().get("sides").keySet()) {
             if (seed == j) {
